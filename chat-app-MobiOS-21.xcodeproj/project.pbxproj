@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A2BFECD26FA64B30063F831 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2BFECC26FA64B30063F831 /* AppDelegate.swift */; };
+		3A2BFED126FA64B30063F831 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2BFED026FA64B30063F831 /* ViewController.swift */; };
+		3A2BFED426FA64B30063F831 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A2BFED226FA64B30063F831 /* Main.storyboard */; };
+		3A2BFED626FA64B50063F831 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A2BFED526FA64B50063F831 /* Assets.xcassets */; };
+		3A2BFED926FA64B50063F831 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A2BFED726FA64B50063F831 /* LaunchScreen.storyboard */; };
 		3AE6DDDF26F90F4A00191D7A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE6DDDE26F90F4A00191D7A /* AppDelegate.swift */; };
 		3AE6DDE326F90F4A00191D7A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE6DDE226F90F4A00191D7A /* ViewController.swift */; };
 		3AE6DDE626F90F4A00191D7A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AE6DDE426F90F4A00191D7A /* Main.storyboard */; };
@@ -15,6 +20,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3A2BFECA26FA64B30063F831 /* chat-without-print.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "chat-without-print.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A2BFECC26FA64B30063F831 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		3A2BFED026FA64B30063F831 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		3A2BFED326FA64B30063F831 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		3A2BFED526FA64B50063F831 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3A2BFED826FA64B50063F831 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		3A2BFEDA26FA64B50063F831 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3AE6DDDB26F90F4A00191D7A /* chat-app-MobiOS-21.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "chat-app-MobiOS-21.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AE6DDDE26F90F4A00191D7A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3AE6DDE226F90F4A00191D7A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -25,6 +37,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		3A2BFEC726FA64B30063F831 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3AE6DDD826F90F4A00191D7A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -35,10 +54,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3A2BFECB26FA64B30063F831 /* chat-without-print */ = {
+			isa = PBXGroup;
+			children = (
+				3A2BFECC26FA64B30063F831 /* AppDelegate.swift */,
+				3A2BFED026FA64B30063F831 /* ViewController.swift */,
+				3A2BFED226FA64B30063F831 /* Main.storyboard */,
+				3A2BFED526FA64B50063F831 /* Assets.xcassets */,
+				3A2BFED726FA64B50063F831 /* LaunchScreen.storyboard */,
+				3A2BFEDA26FA64B50063F831 /* Info.plist */,
+			);
+			path = "chat-without-print";
+			sourceTree = "<group>";
+		};
 		3AE6DDD226F90F4A00191D7A = {
 			isa = PBXGroup;
 			children = (
 				3AE6DDDD26F90F4A00191D7A /* chat-app-MobiOS-21 */,
+				3A2BFECB26FA64B30063F831 /* chat-without-print */,
 				3AE6DDDC26F90F4A00191D7A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -47,6 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				3AE6DDDB26F90F4A00191D7A /* chat-app-MobiOS-21.app */,
+				3A2BFECA26FA64B30063F831 /* chat-without-print.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -67,6 +101,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		3A2BFEC926FA64B30063F831 /* chat-without-print */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3A2BFEDD26FA64B50063F831 /* Build configuration list for PBXNativeTarget "chat-without-print" */;
+			buildPhases = (
+				3A2BFEC626FA64B30063F831 /* Sources */,
+				3A2BFEC726FA64B30063F831 /* Frameworks */,
+				3A2BFEC826FA64B30063F831 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "chat-without-print";
+			productName = "chat-without-print";
+			productReference = 3A2BFECA26FA64B30063F831 /* chat-without-print.app */;
+			productType = "com.apple.product-type.application";
+		};
 		3AE6DDDA26F90F4A00191D7A /* chat-app-MobiOS-21 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3AE6DDEF26F90F4B00191D7A /* Build configuration list for PBXNativeTarget "chat-app-MobiOS-21" */;
@@ -90,9 +141,12 @@
 		3AE6DDD326F90F4A00191D7A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1250;
+				LastSwiftUpdateCheck = 1300;
 				LastUpgradeCheck = 1250;
 				TargetAttributes = {
+					3A2BFEC926FA64B30063F831 = {
+						CreatedOnToolsVersion = 13.0;
+					};
 					3AE6DDDA26F90F4A00191D7A = {
 						CreatedOnToolsVersion = 12.5.1;
 					};
@@ -112,11 +166,22 @@
 			projectRoot = "";
 			targets = (
 				3AE6DDDA26F90F4A00191D7A /* chat-app-MobiOS-21 */,
+				3A2BFEC926FA64B30063F831 /* chat-without-print */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		3A2BFEC826FA64B30063F831 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A2BFED926FA64B50063F831 /* LaunchScreen.storyboard in Resources */,
+				3A2BFED626FA64B50063F831 /* Assets.xcassets in Resources */,
+				3A2BFED426FA64B30063F831 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3AE6DDD926F90F4A00191D7A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -130,6 +195,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3A2BFEC626FA64B30063F831 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A2BFED126FA64B30063F831 /* ViewController.swift in Sources */,
+				3A2BFECD26FA64B30063F831 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3AE6DDD726F90F4A00191D7A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -142,6 +216,22 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		3A2BFED226FA64B30063F831 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3A2BFED326FA64B30063F831 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		3A2BFED726FA64B50063F831 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3A2BFED826FA64B50063F831 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
 		3AE6DDE426F90F4A00191D7A /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -161,6 +251,68 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		3A2BFEDB26FA64B50063F831 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ZDR42PTGTK;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "chat-without-print/Info.plist";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mobios.chat-without-print";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		3A2BFEDC26FA64B50063F831 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ZDR42PTGTK;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "chat-without-print/Info.plist";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mobios.chat-without-print";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
 		3AE6DDED26F90F4B00191D7A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -212,7 +364,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -267,7 +419,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -285,6 +437,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZDR42PTGTK;
 				INFOPLIST_FILE = "chat-app-MobiOS-21/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -292,7 +445,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mobios.chat-app-MobiOS-21";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -304,6 +457,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZDR42PTGTK;
 				INFOPLIST_FILE = "chat-app-MobiOS-21/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -311,13 +465,22 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mobios.chat-app-MobiOS-21";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3A2BFEDD26FA64B50063F831 /* Build configuration list for PBXNativeTarget "chat-without-print" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3A2BFEDB26FA64B50063F831 /* Debug */,
+				3A2BFEDC26FA64B50063F831 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		3AE6DDD626F90F4A00191D7A /* Build configuration list for PBXProject "chat-app-MobiOS-21" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
