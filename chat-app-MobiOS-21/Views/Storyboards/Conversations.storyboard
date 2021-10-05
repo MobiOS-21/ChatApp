@@ -83,7 +83,13 @@
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="GVM-39-2hG" secondAttribute="trailing" id="gRO-H1-Dtw"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Tinkoff Chat" id="AhB-KF-OfE"/>
+                    <navigationItem key="navigationItem" title="Tinkoff Chat" id="AhB-KF-OfE">
+                        <barButtonItem key="rightBarButtonItem" title="Profile" id="zSb-Mg-idV">
+                            <connections>
+                                <action selector="tapProfileBtn:" destination="Y6W-OH-hqX" id="qAM-K9-LMb"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="GVM-39-2hG" id="CBy-rH-oyi"/>
                     </connections>

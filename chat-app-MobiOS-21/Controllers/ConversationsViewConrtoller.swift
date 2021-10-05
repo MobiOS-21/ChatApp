@@ -63,6 +63,11 @@ class ConversationsViewController: UIViewController {
         tableView.estimatedRowHeight = 30
         tableView.rowHeight = UITableView.automaticDimension
     }
+    @IBAction func tapProfileBtn(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "ProfileVC")
+        self.present(vc, animated: true)
+    }
 }
 
 extension ConversationsViewController: UITableViewDelegate, UITableViewDataSource {
