@@ -23,7 +23,7 @@ final class ConversationsTableCell: UITableViewCell {
         }
         if model.message == nil {
             lastMessageLabel.text = "No messages yet"
-            lastMessageLabel.font = UIFont(name: "Futura", size: 14)
+            lastMessageLabel.font = UIFont(name: "Kefa", size: 14)
         } else {
             lastMessageLabel.font = .systemFont(ofSize: 13)
             lastMessageLabel.text = model.message

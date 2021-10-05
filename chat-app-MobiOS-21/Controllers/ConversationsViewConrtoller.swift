@@ -10,32 +10,48 @@ import UIKit
 class ConversationsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
-    private let mockArray: [[ConversationsModel]] = [[
-        ConversationsModel(name: "Ronald Robertson", message: "An suas viderer pro. Vis cu magna altera, ex his vivendo atomorum.",
-                           date: Date(), online: true, hasUnreadMessages: true),
-        ConversationsModel(name: "Ronald Robertson Ronald Robertson Ronald Robertson Ronald Robertson",
-                           message: "test message", date: Date(timeIntervalSince1970: 151351519), online: true, hasUnreadMessages: false),
-        ConversationsModel(name: "Johnny Watson", message: "message",
-                           date: Date(timeIntervalSince1970: 21125515), online: false, hasUnreadMessages: false),
-        ConversationsModel(name: "Johnny Watson 2", message: "test message",
-                           date: nil, online: false, hasUnreadMessages: false),
-        ConversationsModel(name: "Arthur Bell", message: nil,
-                           date: Date(timeIntervalSince1970: 21216515), online: false, hasUnreadMessages: false),
-        ConversationsModel(name: "Johnny Watson", message: nil,
-                           date: Date(timeIntervalSince1970: 21125515), online: false, hasUnreadMessages: false),
-        ConversationsModel(name: "Johnny Watson", message: nil,
-                           date: Date(timeIntervalSince1970: 21125515), online: false, hasUnreadMessages: false),
-        ConversationsModel(name: "Johnny Watson", message: nil,
-                           date: Date(timeIntervalSince1970: 21125515), online: false, hasUnreadMessages: false),
-        ConversationsModel(name: nil, message: nil,
-                           date: Date(timeIntervalSince1970: 21125515), online: false, hasUnreadMessages: false),
-        ConversationsModel(name: "test", message: "test", date: Date(), online: false, hasUnreadMessages: true)],
-                                                     [
-                                                        ConversationsModel(name: "test", message: "test fsd fsd fsd  \n fdgfdgdf", date: Date(), online: true, hasUnreadMessages: true),
-                                                        ConversationsModel(name: "test", message: "test", date: Date(), online: true, hasUnreadMessages: true),
-                                                        ConversationsModel(name: "test", message: "test", date: Date(), online: true, hasUnreadMessages: true),
-                                                        ConversationsModel(name: "test", message: "test", date: Date(), online: true, hasUnreadMessages: true),
-                                                        ConversationsModel(name: "test", message: "test", date: Date(), online: true, hasUnreadMessages: true)]
+    private let mockArray: [[ConversationsModel]] = [
+        [
+            ConversationsModel(name: "Ronald Robertson", message: "An suas viderer pro. Vis cu magna altera, ex his vivendo atomorum.", date: Date(), online: true, hasUnreadMessages: true),
+            ConversationsModel(name: "Ronald Robertson Ronald Robertson Ronald Robertson Ronald Robertson",
+                               message: "test message", date: Date(timeIntervalSince1970: 151351519), online: true, hasUnreadMessages: false),
+            ConversationsModel(name: "Johnny Watson", message: "message",
+                               date: Date(timeIntervalSince1970: 21125515), online: false, hasUnreadMessages: false),
+            ConversationsModel(name: "Johnny Watson 2", message: "test message",
+                               date: nil, online: false, hasUnreadMessages: false),
+            ConversationsModel(name: "Arthur Bell", message: nil,
+                               date: Date(timeIntervalSince1970: 21216515), online: false, hasUnreadMessages: false),
+            ConversationsModel(name: "Alex Dergilev", message: "An suas viderer pro. Vis cu magna altera, ex his vivendo atomorum.An suas viderer pro. Vis cu magna altera, ex his vivendo atomorum.",
+                               date: Date(timeIntervalSince1970: 211225515), online: false, hasUnreadMessages: false),
+            ConversationsModel(name: "Oleg sinev", message: "something message",
+                               date: Date(timeIntervalSince1970: 211255515), online: false, hasUnreadMessages: false),
+            ConversationsModel(name: "Johnny Watson", message: nil,
+                               date: Date(timeIntervalSince1970: 211125515), online: false, hasUnreadMessages: false),
+            ConversationsModel(name: nil, message: nil,
+                               date: Date(timeIntervalSince1970: 2112325515), online: false, hasUnreadMessages: false),
+            ConversationsModel(name: "test", message: "test", date: Date(), online: false, hasUnreadMessages: true)
+        ],
+        [
+            ConversationsModel(name: "Ronald Robertson", message: "An suas viderer pro. Vis cu magna altera, ex his vivendo atomorum.",
+                               date: Date(), online: true, hasUnreadMessages: true),
+            ConversationsModel(name: "Ronald Robertson Ronald Robertson Ronald Robertson Ronald Robertson",
+                               message: "test message", date: Date(timeIntervalSince1970: 151351519), online: true, hasUnreadMessages: false),
+            ConversationsModel(name: "Johnny Watson", message: "message",
+                               date: Date(timeIntervalSince1970: 21125515), online: false, hasUnreadMessages: false),
+            ConversationsModel(name: "Johnny Watson 2", message: "test message",
+                               date: nil, online: false, hasUnreadMessages: false),
+            ConversationsModel(name: "Arthur Bell", message: nil,
+                               date: Date(timeIntervalSince1970: 21216515), online: false, hasUnreadMessages: false),
+            ConversationsModel(name: "Alex Dergilev", message: nil,
+                               date: Date(timeIntervalSince1970: 211225515), online: false, hasUnreadMessages: false),
+            ConversationsModel(name: "Oleg sinev", message: "something message",
+                               date: Date(timeIntervalSince1970: 211255515), online: false, hasUnreadMessages: false),
+            ConversationsModel(name: "Johnny Watson", message: nil,
+                               date: Date(timeIntervalSince1970: 211125515), online: false, hasUnreadMessages: false),
+            ConversationsModel(name: nil, message: nil,
+                               date: Date(timeIntervalSince1970: 2112325515), online: false, hasUnreadMessages: false),
+            ConversationsModel(name: "test", message: "An suas viderer pro. Vis cu magna altera, ex his vivendo atomorum.An suas viderer pro. Vis cu magna altera, ex his vivendo atomorum.", date: Date(), online: false, hasUnreadMessages: true)
+        ]
     ]
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +60,7 @@ class ConversationsViewController: UIViewController {
     }
     
     private func configureUI() {
-        tableView.estimatedRowHeight = 60
+        tableView.estimatedRowHeight = 30
         tableView.rowHeight = UITableView.automaticDimension
     }
 }
@@ -67,5 +83,12 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return section == 0 ? "Online": "History"
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let chatName = mockArray[indexPath.section][indexPath.row].name
+        let vc = ConversationViewController()
+        vc.title = chatName
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
