@@ -69,5 +69,7 @@ class ConversationTableCell: UITableViewCell {
     
     override func prepareForReuse() {
         messageLabel.text = nil
+        trailingConstraint?.isActive = false
+        leadingConstraint?.isActive = false
     }
 }
