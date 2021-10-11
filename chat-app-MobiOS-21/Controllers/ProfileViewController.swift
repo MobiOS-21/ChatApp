@@ -62,6 +62,10 @@ Autolayout считается не сразу, а данный метод сиг
         imagePicker.present(from: userAvatar)
     }
     
+    @IBAction func tappedCloseBtn(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     func didSelect(image: UIImage?) {
         guard let image = image else { return }
         userAvatar.image = image
