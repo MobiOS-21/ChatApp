@@ -84,6 +84,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Tinkoff Chat" id="AhB-KF-OfE">
+                        <barButtonItem key="leftBarButtonItem" title="Themes" id="NKK-cr-Vcb">
+                            <connections>
+                                <action selector="tapThemesBtn:" destination="Y6W-OH-hqX" id="jeU-MA-pwK"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Profile" id="zSb-Mg-idV">
                             <connections>
                                 <action selector="tapProfileBtn:" destination="Y6W-OH-hqX" id="qAM-K9-LMb"/>
@@ -97,6 +102,69 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1039.1304347826087" y="60.9375"/>
+        </scene>
+        <!--Themes View Controller-->
+        <scene sceneID="Pnh-NQ-OVC">
+            <objects>
+                <viewController storyboardIdentifier="ThemesVC" id="AsO-7d-Eg8" customClass="ThemesViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="vSO-zx-Yf3">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="Mao-Bu-VUK">
+                                <rect key="frame" x="64" y="376" width="286" height="154"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mW2-fK-FLQ">
+                                        <rect key="frame" x="0.0" y="0.0" width="286" height="30"/>
+                                        <color key="backgroundColor" red="0.89411764709999997" green="0.90980392160000001" blue="0.51449997969897954" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Theme 1"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Ai-eg-oA5">
+                                        <rect key="frame" x="0.0" y="62" width="286" height="30"/>
+                                        <color key="backgroundColor" red="0.89411764709999997" green="0.90980392160000001" blue="0.51449997969897954" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Theme 2"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dYY-uO-We4">
+                                        <rect key="frame" x="0.0" y="124" width="286" height="30"/>
+                                        <color key="backgroundColor" red="0.89411764709999997" green="0.90980392160000001" blue="0.51449997969897954" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Theme 3"/>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qie-ll-WEQ">
+                                <rect key="frame" x="298" y="60" width="100" height="36"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="Lxt-oG-dqE"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="8" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Close"/>
+                                <connections>
+                                    <action selector="tapCloseBtn:" destination="AsO-7d-Eg8" eventType="touchUpInside" id="KDQ-YH-A2g"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="XOR-0U-PQJ"/>
+                        <color key="backgroundColor" systemColor="systemYellowColor"/>
+                        <constraints>
+                            <constraint firstItem="Mao-Bu-VUK" firstAttribute="leading" secondItem="XOR-0U-PQJ" secondAttribute="leading" constant="64" id="A2l-M9-MTc"/>
+                            <constraint firstItem="XOR-0U-PQJ" firstAttribute="trailing" secondItem="qie-ll-WEQ" secondAttribute="trailing" constant="16" id="P8k-Fv-uip"/>
+                            <constraint firstItem="Mao-Bu-VUK" firstAttribute="centerX" secondItem="XOR-0U-PQJ" secondAttribute="centerX" id="bMP-W5-8gp"/>
+                            <constraint firstItem="XOR-0U-PQJ" firstAttribute="trailing" secondItem="Mao-Bu-VUK" secondAttribute="trailing" constant="64" id="dcE-0e-1rC"/>
+                            <constraint firstItem="Mao-Bu-VUK" firstAttribute="centerY" secondItem="XOR-0U-PQJ" secondAttribute="centerY" id="fow-FA-Tbi"/>
+                            <constraint firstItem="qie-ll-WEQ" firstAttribute="top" secondItem="XOR-0U-PQJ" secondAttribute="top" constant="16" id="rMd-Jn-e73"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="X1a-Ze-g0M"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZMe-hE-Ebu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1947.826086956522" y="60.9375"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Eth-OD-WQk">
@@ -123,6 +191,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

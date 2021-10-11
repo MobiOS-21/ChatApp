@@ -68,6 +68,12 @@ class ConversationsViewController: UIViewController {
         let vc = storyboard.instantiateViewController(withIdentifier: "ProfileVC")
         self.present(vc, animated: true)
     }
+    @IBAction func tapThemesBtn(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Conversations", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "ThemesVC")
+        (vc as? ThemesViewController)?.delegate = self
+        self.present(vc, animated: true)
+    }
 }
 
 extension ConversationsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -95,5 +101,11 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
         let vc = ConversationViewController()
         vc.title = chatName
         navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
+extension ConversationsViewController: ThemesViewControllerDelegate {
+    func themesViewController(_ controller: ThemesViewController!, didSelectTheme selectedTheme: UIColor!) {
+        debugPrint("Theme is \(String(describing: selectedTheme))")
     }
 }
