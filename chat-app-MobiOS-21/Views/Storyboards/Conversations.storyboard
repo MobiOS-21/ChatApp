@@ -119,18 +119,27 @@
                                         <color key="backgroundColor" red="0.89411764709999997" green="0.90980392160000001" blue="0.51449997969897954" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="Theme 1"/>
+                                        <connections>
+                                            <action selector="setTheme1:" destination="AsO-7d-Eg8" eventType="touchUpInside" id="ZQ5-Te-Nct"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Ai-eg-oA5">
                                         <rect key="frame" x="0.0" y="62" width="286" height="30"/>
                                         <color key="backgroundColor" red="0.89411764709999997" green="0.90980392160000001" blue="0.51449997969897954" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="Theme 2"/>
+                                        <connections>
+                                            <action selector="setTheme2:" destination="AsO-7d-Eg8" eventType="touchUpInside" id="dGh-ZG-WES"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dYY-uO-We4">
                                         <rect key="frame" x="0.0" y="124" width="286" height="30"/>
                                         <color key="backgroundColor" red="0.89411764709999997" green="0.90980392160000001" blue="0.51449997969897954" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="Theme 3"/>
+                                        <connections>
+                                            <action selector="setTheme3:" destination="AsO-7d-Eg8" eventType="touchUpInside" id="Zj0-z7-nth"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>

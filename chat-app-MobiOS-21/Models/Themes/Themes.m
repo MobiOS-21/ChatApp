@@ -30,6 +30,15 @@
     [theme3 release];
     theme3 = nil;
     
+    [theme1Dark release];
+    theme1Dark = nil;
+    
+    [theme2Light release];
+    theme2Light = nil;
+    
+    [theme3Pink release];
+    theme3Pink = nil;
+    
     [super dealloc];
 }
 

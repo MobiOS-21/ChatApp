@@ -63,6 +63,11 @@ class ConversationsViewController: UIViewController {
         tableView.estimatedRowHeight = 30
         tableView.rowHeight = UITableView.automaticDimension
     }
+    
+    private func logThemeChanging(selectedTheme: UIColor) {
+        debugPrint("Theme is \(String(describing: selectedTheme))")
+    }
+    
     @IBAction func tapProfileBtn(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "ProfileVC")
@@ -105,7 +110,7 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
 }
 
 extension ConversationsViewController: ThemesViewControllerDelegate {
-    func themesViewController(_ controller: ThemesViewController!, didSelectTheme selectedTheme: UIColor!) {
-        debugPrint("Theme is \(String(describing: selectedTheme))")
+    func themesViewController(_ controller: ThemesViewController, didSelectTheme selectedTheme: UIColor) {
+        logThemeChanging(selectedTheme: selectedTheme)
     }
 }
