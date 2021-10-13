@@ -24,6 +24,9 @@
 		3AE6DDE626F90F4A00191D7A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AE6DDE426F90F4A00191D7A /* Main.storyboard */; };
 		3AE6DDE826F90F4B00191D7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3AE6DDE726F90F4B00191D7A /* Assets.xcassets */; };
 		3AE6DDEB26F90F4B00191D7A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AE6DDE926F90F4B00191D7A /* LaunchScreen.storyboard */; };
+		3AEE4AD5271769FD006A63C0 /* ThemesViewControllerSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE4AD4271769FD006A63C0 /* ThemesViewControllerSwift.swift */; };
+		3AEE4AD727176BD3006A63C0 /* ThemesSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE4AD627176BD3006A63C0 /* ThemesSwift.swift */; };
+		3AEE4AD9271770AB006A63C0 /* UserDefaults+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE4AD8271770AB006A63C0 /* UserDefaults+extensions.swift */; };
 		3AFF11962714C3B7005991C5 /* ThemesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFF11952714C3B7005991C5 /* ThemesViewController.m */; };
 		3AFF119A2714C5F2005991C5 /* Themes.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFF11992714C5F2005991C5 /* Themes.m */; };
 /* End PBXBuildFile section */
@@ -48,6 +51,9 @@
 		3AE6DDE726F90F4B00191D7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3AE6DDEA26F90F4B00191D7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3AE6DDEC26F90F4B00191D7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3AEE4AD4271769FD006A63C0 /* ThemesViewControllerSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesViewControllerSwift.swift; sourceTree = "<group>"; };
+		3AEE4AD627176BD3006A63C0 /* ThemesSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesSwift.swift; sourceTree = "<group>"; };
+		3AEE4AD8271770AB006A63C0 /* UserDefaults+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+extensions.swift"; sourceTree = "<group>"; };
 		3AFF11932714C189005991C5 /* ThemesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThemesViewController.h; sourceTree = "<group>"; };
 		3AFF11942714C3B7005991C5 /* chat-app-MobiOS-21-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "chat-app-MobiOS-21-Bridging-Header.h"; sourceTree = "<group>"; };
 		3AFF11952714C3B7005991C5 /* ThemesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThemesViewController.m; sourceTree = "<group>"; };
@@ -132,6 +138,7 @@
 				3A44DC0027024C8200F45CB3 /* UIViewController+extensions.swift */,
 				3A44DC0227024E4100F45CB3 /* String+extensions.swift */,
 				3A0060D2270B8DCD0047EFAE /* Date+extensions.swift */,
+				3AEE4AD8271770AB006A63C0 /* UserDefaults+extensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -173,6 +180,7 @@
 				3AFF11952714C3B7005991C5 /* ThemesViewController.m */,
 				3AFF11942714C3B7005991C5 /* chat-app-MobiOS-21-Bridging-Header.h */,
 				3AFF119B2714C7E6005991C5 /* ThemesViewControllerDelegate.h */,
+				3AEE4AD4271769FD006A63C0 /* ThemesViewControllerSwift.swift */,
 			);
 			path = Themes;
 			sourceTree = "<group>";
@@ -182,6 +190,7 @@
 			children = (
 				3AFF11982714C5A0005991C5 /* Themes.h */,
 				3AFF11992714C5F2005991C5 /* Themes.m */,
+				3AEE4AD627176BD3006A63C0 /* ThemesSwift.swift */,
 			);
 			path = Themes;
 			sourceTree = "<group>";
@@ -265,13 +274,16 @@
 				3AE6DDDF26F90F4A00191D7A /* AppDelegate.swift in Sources */,
 				3A44DC0327024E4100F45CB3 /* String+extensions.swift in Sources */,
 				3A721A07270CC79C001A7DCC /* ConversationTableCell.swift in Sources */,
+				3AEE4AD727176BD3006A63C0 /* ThemesSwift.swift in Sources */,
 				3A0060D3270B8DCD0047EFAE /* Date+extensions.swift in Sources */,
 				3A0060D1270B889D0047EFAE /* ConversationsModel.swift in Sources */,
 				3A0060CE270B83690047EFAE /* ConversationsTableCell.swift in Sources */,
 				3A721A09270CC904001A7DCC /* ConversationModel.swift in Sources */,
 				3A0060CB270B817E0047EFAE /* ConversationsViewConrtoller.swift in Sources */,
+				3AEE4AD5271769FD006A63C0 /* ThemesViewControllerSwift.swift in Sources */,
 				3AFF119A2714C5F2005991C5 /* Themes.m in Sources */,
 				3A721A05270CC432001A7DCC /* ConversationViewController.swift in Sources */,
+				3AEE4AD9271770AB006A63C0 /* UserDefaults+extensions.swift in Sources */,
 				3A44DBFF27024BD500F45CB3 /* ImagePickerHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -13,6 +13,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        if let color = UserDefaults.standard.colorForKey(key: UserDefaults.UDKeys.selectedTheme.rawValue) {
+            UINavigationBar.appearance().backgroundColor = color
+        }
         debugPrint("application moved from not running to inactive: \(#function)")
         return true
     }

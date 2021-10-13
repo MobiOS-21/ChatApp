@@ -59,6 +59,7 @@ class ConversationsViewController: UIViewController {
         configureUI()
     }
     
+    //MARK: - Private
     private func configureUI() {
         tableView.estimatedRowHeight = 30
         tableView.rowHeight = UITableView.automaticDimension
@@ -66,18 +67,43 @@ class ConversationsViewController: UIViewController {
     
     private func logThemeChanging(selectedTheme: UIColor) {
         debugPrint("Theme is \(String(describing: selectedTheme))")
+        save(selectedTheme: selectedTheme)
     }
     
+    private func save(selectedTheme: UIColor) {
+        UserDefaults.standard.setColor(color: selectedTheme, forKey: UserDefaults.UDKeys.selectedTheme.rawValue)
+    }
+    
+    private func showAlertForThemesVC() {
+        let showThemesSwiftVC: (UIAlertAction) -> Void = {[weak self] _ in
+            guard let self = self else { return }
+            let storyboard = UIStoryboard(name: "Conversations", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "ThemesVCSwift")
+            (vc as? ThemesViewControllerSwift)?.didSelectThemeClosure = self.logThemeChanging(selectedTheme:)
+            self.present(vc, animated: true)
+        }
+        
+        let showThemesObjcVC: (UIAlertAction) -> Void = {[weak self] _ in
+            guard let self = self else { return }
+            let storyboard = UIStoryboard(name: "Conversations", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "ThemesVC")
+            (vc as? ThemesViewController)?.delegate = self
+            self.present(vc, animated: true)
+        }
+        self.openAlert(message: "Select themes view controller type",
+                       actionTitles: ["ThemesVC Swift", "Themes VC Objective-c"],
+                       actionStyles: [.default, .default],
+                       actions: [showThemesSwiftVC, showThemesObjcVC])
+    }
+    //MARK: - IBActions
     @IBAction func tapProfileBtn(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "ProfileVC")
         self.present(vc, animated: true)
     }
+    
     @IBAction func tapThemesBtn(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Conversations", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "ThemesVC")
-        (vc as? ThemesViewController)?.delegate = self
-        self.present(vc, animated: true)
+        showAlertForThemesVC()
     }
 }
 

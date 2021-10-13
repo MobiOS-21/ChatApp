@@ -59,6 +59,15 @@
     }
 }
 
+-(void)updateNavBar {
+    /// костыль со стековерфлоу
+    for (UIWindow *window in [UIApplication sharedApplication].windows) {
+        for (UIView *view in window.subviews) {
+            [view removeFromSuperview];
+            [window addSubview:view];
+        }
+    }
+}
 //MARK: - IBActions
 - (IBAction)tapCloseBtn:(UIButton *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -68,18 +77,21 @@
     [_delegate themesViewController:self didSelectTheme:[self.model theme1Dark]];
     self.view.backgroundColor = [self.model theme1Dark];
     [[UINavigationBar appearance] setBackgroundColor: [self.model theme1Dark]];
+    [self updateNavBar];
 }
 
 - (IBAction)setTheme2:(UIButton *)sender {
     [_delegate themesViewController:self didSelectTheme:[self.model theme2Light]];
     self.view.backgroundColor = [self.model theme2Light];
     [[UINavigationBar appearance] setBackgroundColor: [self.model theme2Light]];
+    [self updateNavBar];
 }
 
 - (IBAction)setTheme3:(UIButton *)sender {
     [_delegate themesViewController:self didSelectTheme:[self.model theme3Pink]];
     self.view.backgroundColor = [self.model theme3Pink];
     [[UINavigationBar appearance] setBackgroundColor: [self.model theme3Pink]];
+    [self updateNavBar];
 }
 
 @end
