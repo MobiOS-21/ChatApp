@@ -11,35 +11,47 @@ class ProfileViewController: UIViewController, ImagePickerDelegate {
     //MARK: - IBOutlets
     @IBOutlet weak var userAvatar: UIImageView!
     @IBOutlet weak var editAvatarButton: UIButton!
-    @IBOutlet weak var userNameLabel: UILabel!
-    @IBOutlet weak var userDescriptionLabel: UILabel!
-    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var userNameTF: UITextField!
+    @IBOutlet weak var userDescriptionTV: UITextView!
+    @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var saveBtnContainer: UIStackView!
     
     private lazy var imagePicker: ImagePickerHelper = ImagePickerHelper(presentationController: self, delegate: self)
     //MARK: - Lifecycle
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        
-        print("В данном методе невозможно распечатать фрейм кнопки, так как кнопка еще не инициализированна")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(editAvatarButton.frame)
         setupDefaultImage()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         
-        print(editAvatarButton.frame)
-        print("""
-Фрейм кнопки в методах viewDidLoad и viewDidAppear отличается, так как на этом этапе уже отработал метод viewDidLayoutSubviews
-Autolayout считается не сразу, а данный метод сигнализирует о том, что произошел расчет фреймов у вьюшек вьюконтроллера на основании констрейнтов
-"""
-        )
+        let notifier = NotificationCenter.default
+        notifier.addObserver(self,
+                             selector: #selector(keyboardWillShowNotification(_:)),
+                             name: UIWindow.keyboardWillShowNotification,
+                             object: nil)
+        notifier.addObserver(self,
+                             selector: #selector(keyboardWillHideNotification(_:)),
+                             name: UIWindow.keyboardWillHideNotification,
+                             object: nil)
+        //
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
+        self.view.addGestureRecognizer(tapGesture)
     }
     
+    @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
+        view.endEditing(true)
+    }
+    
+    @objc func keyboardWillShowNotification(_ notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            let keyboardHeight = keyboardSize.height
+            self.view.frame.origin.y = -1.0 * keyboardHeight
+        }
+    }
+    
+    @objc func keyboardWillHideNotification(_ notification: NSNotification) {
+        self.view.frame.origin.y = 0
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -47,15 +59,20 @@ Autolayout считается не сразу, а данный метод сиг
     }
     
     final private func setupDefaultImage() {
-        guard let userName = userNameLabel.text else { return }
+        guard let userName = userNameTF.text else { return }
         let userInitials = Array(userName.components(separatedBy: " ").compactMap({ $0.first }).prefix(2))
-        let initialsFontSize = userAvatar.frame.width / 2
+        let initialsFontSize = userAvatar.frame.width / 3
         userAvatar.image = String(userInitials).image(withAttributes: [.font: UIFont.systemFont(ofSize: initialsFontSize, weight: .bold)])
     }
     
     final private func configureUI() {
-        saveButton.layer.cornerRadius = 14
+        editButton.layer.cornerRadius = 14
         userAvatar.layer.cornerRadius = userAvatar.frame.width / 2
+        
+        userDescriptionTV.layer.borderWidth = 1.0
+        userDescriptionTV.layer.borderColor = UIColor.lightGray.cgColor
+        userDescriptionTV.layer.cornerRadius = 8
+        userDescriptionTV.clipsToBounds = true
     }
     
     @IBAction func tappedEditButton(_ sender: Any) {
@@ -64,6 +81,12 @@ Autolayout считается не сразу, а данный метод сиг
     
     @IBAction func tappedCloseBtn(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func tappedSaveGCDBtn(_ sender: Any) {
+    }
+ 
+    @IBAction func tappedSaveOperationBtn(_ sender: Any) {
     }
     
     func didSelect(image: UIImage?) {
