@@ -17,6 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let color = UserDefaults.standard.colorForKey(key: UserDefaults.UDKeys.selectedTheme.rawValue) {
             UINavigationBar.appearance().backgroundColor = color
         }
+        
+        GCDDataManager().readData { _ in }
         debugPrint("application moved from not running to inactive: \(#function)")
         return true
     }

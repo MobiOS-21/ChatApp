@@ -7,7 +7,11 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController, ImagePickerDelegate {
+enum ProfileScreenState {
+    case saving, editing, disabled
+}
+
+final class ProfileViewController: UIViewController, ImagePickerDelegate {
     //MARK: - IBOutlets
     @IBOutlet weak var userAvatar: UIImageView!
     @IBOutlet weak var editAvatarButton: UIButton!
@@ -18,10 +22,13 @@ class ProfileViewController: UIViewController, ImagePickerDelegate {
     @IBOutlet weak var saveBtnContainer: UIStackView!
     
     private lazy var imagePicker: ImagePickerHelper = ImagePickerHelper(presentationController: self, delegate: self)
+    private var currentState: ProfileScreenState = .disabled
+    private let currentProfile = ProfileFileManager.shared.currentProfile
+    private var currentFileManager: ProfileDataManagerProtocol = GCDDataManager()
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupDefaultImage()
+        setupProfileInfo()
         
         let notifier = NotificationCenter.default
         notifier.addObserver(self,
@@ -35,6 +42,12 @@ class ProfileViewController: UIViewController, ImagePickerDelegate {
         //
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
         self.view.addGestureRecognizer(tapGesture)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        configureUI()
     }
     
     @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
@@ -51,18 +64,23 @@ class ProfileViewController: UIViewController, ImagePickerDelegate {
     @objc func keyboardWillHideNotification(_ notification: NSNotification) {
         self.view.frame.origin.y = 0
     }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        configureUI()
-    }
     
+    //MARK: - Private
     final private func setupDefaultImage() {
         guard let userName = userNameTF.text else { return }
         let userInitials = Array(userName.components(separatedBy: " ").compactMap({ $0.first }).prefix(2))
         let initialsFontSize = userAvatar.frame.width / 3
         userAvatar.image = String(userInitials).image(withAttributes: [.font: UIFont.systemFont(ofSize: initialsFontSize, weight: .bold)])
+    }
+    
+    private func setupProfileInfo() {
+        userNameTF.text = currentProfile?.userName
+        userDescriptionTV.text = currentProfile?.userDecription
+        if let imageData = currentProfile?.userAvater {
+            userAvatar.image = UIImage(data: imageData)
+        } else if currentProfile?.userName != nil {
+            setupDefaultImage()
+        }
     }
     
     final private func configureUI() {
@@ -75,7 +93,85 @@ class ProfileViewController: UIViewController, ImagePickerDelegate {
         userDescriptionTV.clipsToBounds = true
     }
     
-    @IBAction func tappedEditButton(_ sender: Any) {
+    private func updateUI() {
+        switch currentState {
+        case .saving:
+            activityIndicator.startAnimating()
+            editButton.setTitle("Cancel", for: .normal)
+            editButton.isEnabled = true
+            editAvatarButton.isEnabled = false
+            userDescriptionTV.isUserInteractionEnabled = false
+            saveBtnContainer.isUserInteractionEnabled = false
+            userNameTF.isUserInteractionEnabled = false
+        case .editing:
+            activityIndicator.stopAnimating()
+            editButton.setTitle("Cancel", for: .normal)
+            editButton.isEnabled = true
+            editAvatarButton.isEnabled = true
+            userDescriptionTV.isUserInteractionEnabled = true
+            saveBtnContainer.isUserInteractionEnabled = true
+            userNameTF.isUserInteractionEnabled = true
+        case .disabled:
+            activityIndicator.stopAnimating()
+            editButton.setTitle("Edit", for: .normal)
+            editButton.isEnabled = true
+            editAvatarButton.isEnabled = false
+            userDescriptionTV.isUserInteractionEnabled = false
+            saveBtnContainer.isUserInteractionEnabled = false
+            userNameTF.isUserInteractionEnabled = false
+        }
+    }
+    
+    private func configureNewProfile() -> ProfileModel {
+        return ProfileModel(userName: userNameTF.text,
+                            userDecription: userDescriptionTV.text,
+                            userAvater: userAvatar.image?.pngData())
+    }
+    
+    private func showOKAlert() {
+        let action: (UIAlertAction) -> Void = { _ in }
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.openAlert(title: "Data saved", actionTitles: ["OK"], actionStyles: [.default], actions: [action])
+        }
+    }
+    
+    private func showErrorAlert(saveAction: @escaping () -> Void) {
+        let okaction: (UIAlertAction) -> Void = {[weak self] _ in
+            guard let self = self else { return }
+            self.currentState = .editing
+            self.updateUI()
+        }
+        let retryAction: (UIAlertAction) -> Void = { _ in
+            saveAction()
+        }
+        
+        self.openAlert(title: "Error", message: "failed to save data",
+                       actionTitles: ["OK", "Retry"], actionStyles: [.default, .default],
+                       actions: [okaction, retryAction])
+    }
+    
+    private func saveProfileInfo() {
+        currentFileManager.saveData(profile: configureNewProfile()) {[weak self] status in
+            guard let self = self else { return }
+            switch status {
+            case .success:
+                DispatchQueue.main.async {
+                    self.showOKAlert()
+                    self.currentState = .disabled
+                    self.updateUI()
+                }
+            case .error:
+                DispatchQueue.main.async {
+                    self.showErrorAlert(saveAction: self.saveProfileInfo)
+                }
+            }
+        }
+    }
+    
+
+    //MARK: - IBActions
+    @IBAction func tappedEditAvaterButton(_ sender: Any) {
         imagePicker.present(from: userAvatar)
     }
     
@@ -84,11 +180,25 @@ class ProfileViewController: UIViewController, ImagePickerDelegate {
     }
     
     @IBAction func tappedSaveGCDBtn(_ sender: Any) {
-    }
- 
-    @IBAction func tappedSaveOperationBtn(_ sender: Any) {
+        currentState = .saving
+        currentFileManager = GCDDataManager()
+        updateUI()
+        saveProfileInfo()
     }
     
+    @IBAction func tappedSaveOperationBtn(_ sender: Any) {
+        currentState = .saving
+        currentFileManager = OperationDataManager()
+        updateUI()
+        saveProfileInfo()
+    }
+    
+    @IBAction func tappedEditBtn(_ sender: Any) {
+        currentState = currentState == .disabled ? .editing : .disabled
+        updateUI()
+    }
+    
+    //MARK: - ImagePickerDelegate
     func didSelect(image: UIImage?) {
         guard let image = image else { return }
         userAvatar.image = image

@@ -71,7 +71,9 @@ class ConversationsViewController: UIViewController {
     }
     
     private func save(selectedTheme: UIColor) {
-        UserDefaults.standard.setColor(color: selectedTheme, forKey: UserDefaults.UDKeys.selectedTheme.rawValue)
+        DispatchQueue.global(qos: .background).async {
+            UserDefaults.standard.setColor(color: selectedTheme, forKey: UserDefaults.UDKeys.selectedTheme.rawValue)
+        }
     }
     
     private func showAlertForThemesVC() {
