@@ -8,7 +8,7 @@
 import UIKit
 
 enum ProfileScreenState {
-    case saving, editing, disabled
+    case saving, editStart, disabled, changeProfile
 }
 
 final class ProfileViewController: UIViewController, ImagePickerDelegate {
@@ -39,9 +39,11 @@ final class ProfileViewController: UIViewController, ImagePickerDelegate {
                              selector: #selector(keyboardWillHideNotification(_:)),
                              name: UIWindow.keyboardWillHideNotification,
                              object: nil)
-        //
+
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
         self.view.addGestureRecognizer(tapGesture)
+        
+        userNameTF.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
     override func viewDidLayoutSubviews() {
@@ -65,7 +67,18 @@ final class ProfileViewController: UIViewController, ImagePickerDelegate {
         self.view.frame.origin.y = 0
     }
     
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        checkFieldsChanges()
+    }
+    
     //MARK: - Private
+    private func checkFieldsChanges() {
+        if currentState != .changeProfile {
+            currentState = .changeProfile
+            updateUI()
+        }
+    }
+    
     final private func setupDefaultImage() {
         guard let userName = userNameTF.text else { return }
         let userInitials = Array(userName.components(separatedBy: " ").compactMap({ $0.first }).prefix(2))
@@ -97,28 +110,40 @@ final class ProfileViewController: UIViewController, ImagePickerDelegate {
         switch currentState {
         case .saving:
             activityIndicator.startAnimating()
+            saveBtnContainer.isHidden = false
             editButton.setTitle("Cancel", for: .normal)
             editButton.isEnabled = true
             editAvatarButton.isEnabled = false
             userDescriptionTV.isUserInteractionEnabled = false
             saveBtnContainer.isUserInteractionEnabled = false
             userNameTF.isUserInteractionEnabled = false
-        case .editing:
+        case .editStart:
             activityIndicator.stopAnimating()
+            saveBtnContainer.isHidden = false
+            editButton.setTitle("Cancel", for: .normal)
+            editButton.isEnabled = true
+            editAvatarButton.isEnabled = true
+            userDescriptionTV.isUserInteractionEnabled = true
+            saveBtnContainer.isUserInteractionEnabled = false
+            userNameTF.isUserInteractionEnabled = true
+        case .disabled:
+            activityIndicator.stopAnimating()
+            saveBtnContainer.isHidden = true
+            editButton.setTitle("Edit", for: .normal)
+            editButton.isEnabled = true
+            editAvatarButton.isEnabled = true
+            userDescriptionTV.isUserInteractionEnabled = false
+            saveBtnContainer.isUserInteractionEnabled = false
+            userNameTF.isUserInteractionEnabled = false
+        case .changeProfile:
+            activityIndicator.stopAnimating()
+            saveBtnContainer.isHidden = false
             editButton.setTitle("Cancel", for: .normal)
             editButton.isEnabled = true
             editAvatarButton.isEnabled = true
             userDescriptionTV.isUserInteractionEnabled = true
             saveBtnContainer.isUserInteractionEnabled = true
             userNameTF.isUserInteractionEnabled = true
-        case .disabled:
-            activityIndicator.stopAnimating()
-            editButton.setTitle("Edit", for: .normal)
-            editButton.isEnabled = true
-            editAvatarButton.isEnabled = false
-            userDescriptionTV.isUserInteractionEnabled = false
-            saveBtnContainer.isUserInteractionEnabled = false
-            userNameTF.isUserInteractionEnabled = false
         }
     }
     
@@ -139,7 +164,7 @@ final class ProfileViewController: UIViewController, ImagePickerDelegate {
     private func showErrorAlert(saveAction: @escaping () -> Void) {
         let okaction: (UIAlertAction) -> Void = {[weak self] _ in
             guard let self = self else { return }
-            self.currentState = .editing
+            self.currentState = .editStart
             self.updateUI()
         }
         let retryAction: (UIAlertAction) -> Void = { _ in
@@ -194,14 +219,29 @@ final class ProfileViewController: UIViewController, ImagePickerDelegate {
     }
     
     @IBAction func tappedEditBtn(_ sender: Any) {
-        currentState = currentState == .disabled ? .editing : .disabled
+        currentState = currentState == .disabled ? .editStart : .disabled
+        
         updateUI()
+        
+        if currentState == .editStart {
+            userNameTF.becomeFirstResponder()
+        } else {
+            setupProfileInfo()
+        }
     }
     
     //MARK: - ImagePickerDelegate
     func didSelect(image: UIImage?) {
         guard let image = image else { return }
+        currentState = .changeProfile
+        updateUI()
         userAvatar.image = image
         userAvatar.contentMode = .scaleAspectFill
+    }
+}
+
+extension ProfileViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        checkFieldsChanges()
     }
 }
