@@ -99,7 +99,7 @@ class ConversationsViewController: UIViewController {
     }
     //MARK: - IBActions
     @IBAction func tapProfileBtn(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let storyboard = UIStoryboard(name: "Profile", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "ProfileVC")
         self.present(vc, animated: true)
     }

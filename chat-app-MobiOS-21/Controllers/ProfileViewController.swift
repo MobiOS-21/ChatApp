@@ -20,6 +20,7 @@ final class ProfileViewController: UIViewController, ImagePickerDelegate {
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var saveBtnContainer: UIStackView!
+    @IBOutlet var scrollView: UIScrollView!
     
     private lazy var imagePicker: ImagePickerHelper = ImagePickerHelper(presentationController: self, delegate: self)
     private var currentState: ProfileScreenState = .disabled
@@ -59,12 +60,14 @@ final class ProfileViewController: UIViewController, ImagePickerDelegate {
     @objc func keyboardWillShowNotification(_ notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             let keyboardHeight = keyboardSize.height
-            self.view.frame.origin.y = -1.0 * keyboardHeight
+            scrollView.contentInset = .init(top: 0, left: 0, bottom: keyboardHeight + 60, right: 0)
+            scrollView.setContentOffset(.init(x: 0, y: keyboardHeight), animated: true)
         }
     }
     
     @objc func keyboardWillHideNotification(_ notification: NSNotification) {
-        self.view.frame.origin.y = 0
+        scrollView.contentInset = .zero
+        scrollView.setContentOffset(.zero, animated: true)
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
@@ -236,7 +239,6 @@ final class ProfileViewController: UIViewController, ImagePickerDelegate {
         currentState = .changeProfile
         updateUI()
         userAvatar.image = image
-        userAvatar.contentMode = .scaleAspectFill
     }
 }
 
