@@ -6,65 +6,69 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class ConversationsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
-    private let mockArray: [[ConversationsModel]] = [
-        [
-            ConversationsModel(name: "Ronald Robertson", message: "An suas viderer pro. Vis cu magna altera, ex his vivendo atomorum.", date: Date(), online: true, hasUnreadMessages: true),
-            ConversationsModel(name: "Ronald Robertson Ronald Robertson Ronald Robertson Ronald Robertson",
-                               message: "test message", date: Date(timeIntervalSince1970: 151351519), online: true, hasUnreadMessages: false),
-            ConversationsModel(name: "Johnny Watson", message: "message",
-                               date: Date(timeIntervalSince1970: 21125515), online: false, hasUnreadMessages: false),
-            ConversationsModel(name: "Johnny Watson 2", message: "test message",
-                               date: nil, online: false, hasUnreadMessages: false),
-            ConversationsModel(name: "Arthur Bell", message: nil,
-                               date: Date(timeIntervalSince1970: 21216515), online: false, hasUnreadMessages: false),
-            ConversationsModel(name: "Alex Dergilev", message: "An suas viderer pro. Vis cu magna altera, ex his vivendo atomorum.An suas viderer pro. Vis cu magna altera, ex his vivendo atomorum.",
-                               date: Date(timeIntervalSince1970: 211225515), online: false, hasUnreadMessages: false),
-            ConversationsModel(name: "Oleg sinev", message: "something message",
-                               date: Date(timeIntervalSince1970: 211255515), online: false, hasUnreadMessages: false),
-            ConversationsModel(name: "Johnny Watson", message: nil,
-                               date: Date(timeIntervalSince1970: 211125515), online: false, hasUnreadMessages: false),
-            ConversationsModel(name: nil, message: nil,
-                               date: Date(timeIntervalSince1970: 2112325515), online: false, hasUnreadMessages: false),
-            ConversationsModel(name: "test", message: "test", date: Date(), online: false, hasUnreadMessages: true)
-        ],
-        [
-            ConversationsModel(name: "Ronald Robertson", message: "An suas viderer pro. Vis cu magna altera, ex his vivendo atomorum.",
-                               date: Date(), online: true, hasUnreadMessages: true),
-            ConversationsModel(name: "Ronald Robertson Ronald Robertson Ronald Robertson Ronald Robertson",
-                               message: "test message", date: Date(timeIntervalSince1970: 151351519), online: true, hasUnreadMessages: false),
-            ConversationsModel(name: "Johnny Watson", message: "message",
-                               date: Date(timeIntervalSince1970: 21125515), online: false, hasUnreadMessages: false),
-            ConversationsModel(name: "Johnny Watson 2", message: "test message",
-                               date: nil, online: false, hasUnreadMessages: false),
-            ConversationsModel(name: "Arthur Bell", message: nil,
-                               date: Date(timeIntervalSince1970: 21216515), online: false, hasUnreadMessages: false),
-            ConversationsModel(name: "Alex Dergilev", message: nil,
-                               date: Date(timeIntervalSince1970: 211225515), online: false, hasUnreadMessages: false),
-            ConversationsModel(name: "Oleg sinev", message: "something message",
-                               date: Date(timeIntervalSince1970: 211255515), online: false, hasUnreadMessages: false),
-            ConversationsModel(name: "Johnny Watson", message: nil,
-                               date: Date(timeIntervalSince1970: 211125515), online: false, hasUnreadMessages: false),
-            ConversationsModel(name: nil, message: nil,
-                               date: Date(timeIntervalSince1970: 2112325515), online: false, hasUnreadMessages: false),
-            ConversationsModel(name: "test",
-                               message: "An suas viderer pro. Vis cu magna altera, ex his vivendo atomorum.An suas viderer pro. Vis cu magna altera, ex his vivendo atomorum.",
-                               date: Date(), online: false, hasUnreadMessages: true)
-        ]
-    ]
+    private lazy var channels: [Channel] = []
+    private lazy var reference = db.collection("channels")
+    
+    private lazy var db = Firestore.firestore()
+    
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureUI()
+        fetchChanellsData()
     }
     
     // MARK: - Private
     private func configureUI() {
         tableView.estimatedRowHeight = 30
         tableView.rowHeight = UITableView.automaticDimension
+    }
+    
+    private func fetchChanellsData() {
+        reference.addSnapshotListener {[weak self] querySnapshot, error in
+            guard let self = self,
+                  let snapshot = querySnapshot else {
+                print("Error fetching documents: \(error!)")
+                return
+            }
+            snapshot.documents.forEach { document in
+                var name: String = ""
+                var lastActivity: Date?
+                if let documentName = document["name"] as? String {
+                    name = documentName
+                }
+                if let documentDate = document["lastActivity"] as? Timestamp {
+                    lastActivity = Date(timeIntervalSince1970: TimeInterval(documentDate.seconds))
+                }
+                self.channels.append(Channel(identifier: document.documentID,
+                                             name: name,
+                                             lastMessage: document["lastMessage"] as? String,
+                                             lastActivity: lastActivity))
+            }
+            self.updateTableView()
+//            snapshot.documentChanges.forEach { diff in
+//                if (diff.type == .added) {
+//                    print("New city: \(diff.document.data())")
+//                }
+//                if (diff.type == .modified) {
+//                    print("Modified city: \(diff.document.data())")
+//                }
+//                if (diff.type == .removed) {
+//                    print("Removed city: \(diff.document.data())")
+//                }
+//            }
+        }
+    }
+    
+    private func updateTableView() {
+        channels.sort(by: { $0.lastActivity ?? Date(timeIntervalSince1970: 0) > $1.lastActivity ?? Date(timeIntervalSince1970: 0) })
+        tableView.reloadData()
     }
     
     private func logThemeChanging(selectedTheme: UIColor) {
@@ -112,27 +116,19 @@ class ConversationsViewController: UIViewController {
 }
 
 extension ConversationsViewController: UITableViewDelegate, UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return mockArray.count
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return mockArray[section].count
+        return channels.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ConversationsTableCell.reuseIdentifire, for: indexPath) as? ConversationsTableCell else { fatalError() }
         
-        cell.configureCell(with: mockArray[indexPath.section][indexPath.row])
+        cell.configureCell(with: channels[indexPath.row])
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? "Online": "History"
-    }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let chatName = mockArray[indexPath.section][indexPath.row].name
+        let chatName = channels[indexPath.row].name
         let vc = ConversationViewController()
         vc.title = chatName
         navigationController?.pushViewController(vc, animated: true)

@@ -14,27 +14,24 @@ final class ConversationsTableCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var lastMessageLabel: UILabel!
     
-    func configureCell(with model: ConversationsCellConfiguration) {
+    func configureCell(with model: ChannelsCellConfiguration) {
         userNameLabel.text = model.name
-        if let date = model.date {
+        if let date = model.lastActivity {
             dateLabel.text = Calendar.current.isDateInToday(date) ? date.toString(format: "HH:mm") : date.toString(format: "dd MMM")
         } else {
             dateLabel.text = nil
         }
-        if model.message == nil {
+        if model.lastMessage == nil {
             lastMessageLabel.text = "No messages yet"
             lastMessageLabel.font = UIFont(name: "Kefa", size: 14)
         } else {
             lastMessageLabel.font = .systemFont(ofSize: 13)
-            lastMessageLabel.text = model.message
-        }
-        contentView.backgroundColor = model.online ? UIColor(named: "userOnlineColor") : .white
-        if model.hasUnreadMessages {
-            lastMessageLabel.font = .boldSystemFont(ofSize: 13)
+            lastMessageLabel.text = model.lastMessage
         }
     }
 
     override func prepareForReuse() {
+        super.prepareForReuse()
         userNameLabel.text = nil
         dateLabel.text = nil
         lastMessageLabel.text = nil
