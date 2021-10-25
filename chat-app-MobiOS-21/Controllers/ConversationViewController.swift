@@ -40,7 +40,7 @@ class ConversationViewController: UIViewController {
     
     private func randomString(length: Int) -> String {
         let letters = "abcdefgh ijklmnopqrstuv wxyzABCDE FGHIJKLMNOPQ RSTUVWXYZ0123456789"
-        return String((0..<length).map{ _ in letters.randomElement()! })
+        return String((0..<length).map { _ in letters.randomElement()! })
     }
 }
 

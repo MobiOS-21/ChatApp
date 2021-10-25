@@ -11,7 +11,7 @@ class ThemesViewControllerSwift: UIViewController {
     var didSelectThemeClosure: ((_ selectedTheme: UIColor) -> Void)?
     private let themesModel = ThemesSwift(theme1: .systemGray, theme2: .white, theme3: .systemPink)
     
-    //MARK: - Private
+    // MARK: - Private
     private func updateVavBar() {
         for window in UIApplication.shared.windows {
             for view in window.subviews {
@@ -27,7 +27,7 @@ class ThemesViewControllerSwift: UIViewController {
         UINavigationBar.appearance().backgroundColor = color
         updateVavBar()
     }
-    //MARK: - IBActions
+    // MARK: - IBActions
     @IBAction private func tapToCloseBtn() {
         self.dismiss(animated: true, completion: nil)
     }

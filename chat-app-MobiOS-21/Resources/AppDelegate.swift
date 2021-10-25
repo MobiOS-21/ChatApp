@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         debugPrint("application will move from not running to inactive: \(#function)")
         return true
     }
@@ -48,4 +48,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         debugPrint("application moved from background to close \(#function)")
     }
 }
-

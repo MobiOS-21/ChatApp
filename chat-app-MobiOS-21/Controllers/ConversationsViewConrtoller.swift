@@ -50,7 +50,9 @@ class ConversationsViewController: UIViewController {
                                date: Date(timeIntervalSince1970: 211125515), online: false, hasUnreadMessages: false),
             ConversationsModel(name: nil, message: nil,
                                date: Date(timeIntervalSince1970: 2112325515), online: false, hasUnreadMessages: false),
-            ConversationsModel(name: "test", message: "An suas viderer pro. Vis cu magna altera, ex his vivendo atomorum.An suas viderer pro. Vis cu magna altera, ex his vivendo atomorum.", date: Date(), online: false, hasUnreadMessages: true)
+            ConversationsModel(name: "test",
+                               message: "An suas viderer pro. Vis cu magna altera, ex his vivendo atomorum.An suas viderer pro. Vis cu magna altera, ex his vivendo atomorum.",
+                               date: Date(), online: false, hasUnreadMessages: true)
         ]
     ]
     override func viewDidLoad() {
@@ -59,7 +61,7 @@ class ConversationsViewController: UIViewController {
         configureUI()
     }
     
-    //MARK: - Private
+    // MARK: - Private
     private func configureUI() {
         tableView.estimatedRowHeight = 30
         tableView.rowHeight = UITableView.automaticDimension
@@ -97,7 +99,7 @@ class ConversationsViewController: UIViewController {
                        actionStyles: [.default, .default],
                        actions: [showThemesSwiftVC, showThemesObjcVC])
     }
-    //MARK: - IBActions
+    // MARK: - IBActions
     @IBAction func tapProfileBtn(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Profile", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "ProfileVC")

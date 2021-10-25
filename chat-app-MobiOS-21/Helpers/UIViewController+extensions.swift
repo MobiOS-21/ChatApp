@@ -8,27 +8,26 @@
 import UIKit
 import AVKit
 
-extension UIViewController{
-    
+extension UIViewController {
     
     // Global Alert
     // Define Your number of buttons, styles and completion
     public func openAlert(title: String? = nil,
                           message: String? = nil,
-                          alertStyle:UIAlertController.Style = .alert,
-                          actionTitles:[String] = [],
-                          actionStyles:[UIAlertAction.Style] = [],
+                          alertStyle: UIAlertController.Style = .alert,
+                          actionTitles: [String] = [],
+                          actionStyles: [UIAlertAction.Style] = [],
                           actions: [((UIAlertAction) -> Void)] = [],
                           autoDismiss: Bool = false,
-                          from sourceView: UIView? = nil){
+                          from sourceView: UIView? = nil) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: alertStyle)
-        for(index, indexTitle) in actionTitles.enumerated(){
+        for(index, indexTitle) in actionTitles.enumerated() {
             let action = UIAlertAction(title: indexTitle, style: actionStyles[index], handler: actions[index])
             alertController.addAction(action)
         }
         self.present(alertController, animated: true) {
             if autoDismiss {
-                _ = Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { (timer) in
+                _ = Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { (_) in
                     alertController.dismiss(animated: true, completion: nil)
                 })
             }
@@ -37,7 +36,7 @@ extension UIViewController{
     
     public func canOpenCamera() -> Bool {
         let authStatus = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
-        switch (authStatus) {
+        switch authStatus {
         case .restricted, .denied:
             let yesAction: (UIAlertAction) -> Void = { _ in
                 UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
