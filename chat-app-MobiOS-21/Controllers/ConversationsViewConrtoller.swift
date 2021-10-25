@@ -71,7 +71,9 @@ class ConversationsViewController: UIViewController {
     }
     
     private func save(selectedTheme: UIColor) {
-        UserDefaults.standard.setColor(color: selectedTheme, forKey: UserDefaults.UDKeys.selectedTheme.rawValue)
+        DispatchQueue.global(qos: .background).async {
+            UserDefaults.standard.setColor(color: selectedTheme, forKey: UserDefaults.UDKeys.selectedTheme.rawValue)
+        }
     }
     
     private func showAlertForThemesVC() {
@@ -97,7 +99,7 @@ class ConversationsViewController: UIViewController {
     }
     //MARK: - IBActions
     @IBAction func tapProfileBtn(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let storyboard = UIStoryboard(name: "Profile", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "ProfileVC")
         self.present(vc, animated: true)
     }

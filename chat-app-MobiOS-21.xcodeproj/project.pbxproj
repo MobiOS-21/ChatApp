@@ -20,13 +20,16 @@
 		3A721A07270CC79C001A7DCC /* ConversationTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A721A06270CC79C001A7DCC /* ConversationTableCell.swift */; };
 		3A721A09270CC904001A7DCC /* ConversationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A721A08270CC904001A7DCC /* ConversationModel.swift */; };
 		3AE6DDDF26F90F4A00191D7A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE6DDDE26F90F4A00191D7A /* AppDelegate.swift */; };
-		3AE6DDE326F90F4A00191D7A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE6DDE226F90F4A00191D7A /* ViewController.swift */; };
-		3AE6DDE626F90F4A00191D7A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AE6DDE426F90F4A00191D7A /* Main.storyboard */; };
+		3AE6DDE626F90F4A00191D7A /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AE6DDE426F90F4A00191D7A /* Profile.storyboard */; };
 		3AE6DDE826F90F4B00191D7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3AE6DDE726F90F4B00191D7A /* Assets.xcassets */; };
 		3AE6DDEB26F90F4B00191D7A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AE6DDE926F90F4B00191D7A /* LaunchScreen.storyboard */; };
 		3AEE4AD5271769FD006A63C0 /* ThemesViewControllerSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE4AD4271769FD006A63C0 /* ThemesViewControllerSwift.swift */; };
 		3AEE4AD727176BD3006A63C0 /* ThemesSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE4AD627176BD3006A63C0 /* ThemesSwift.swift */; };
 		3AEE4AD9271770AB006A63C0 /* UserDefaults+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE4AD8271770AB006A63C0 /* UserDefaults+extensions.swift */; };
+		3AFC1D1C272095AB0042E71E /* ProfileFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFC1D1B272095AA0042E71E /* ProfileFileManager.swift */; };
+		3AFC1D1E272096020042E71E /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFC1D1D272096020042E71E /* ProfileModel.swift */; };
+		3AFC1D212720A6E20042E71E /* GCDDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFC1D202720A6E20042E71E /* GCDDataManager.swift */; };
+		3AFC1D232720B3A80042E71E /* OperationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFC1D222720B3A80042E71E /* OperationDataManager.swift */; };
 		3AFF11962714C3B7005991C5 /* ThemesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFF11952714C3B7005991C5 /* ThemesViewController.m */; };
 		3AFF119A2714C5F2005991C5 /* Themes.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFF11992714C5F2005991C5 /* Themes.m */; };
 /* End PBXBuildFile section */
@@ -46,14 +49,17 @@
 		3A721A08270CC904001A7DCC /* ConversationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationModel.swift; sourceTree = "<group>"; };
 		3AE6DDDB26F90F4A00191D7A /* chat-app-MobiOS-21.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "chat-app-MobiOS-21.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AE6DDDE26F90F4A00191D7A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3AE6DDE226F90F4A00191D7A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		3AE6DDE526F90F4A00191D7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		3AE6DDE526F90F4A00191D7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Profile.storyboard; sourceTree = "<group>"; };
 		3AE6DDE726F90F4B00191D7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3AE6DDEA26F90F4B00191D7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3AE6DDEC26F90F4B00191D7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3AEE4AD4271769FD006A63C0 /* ThemesViewControllerSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesViewControllerSwift.swift; sourceTree = "<group>"; };
 		3AEE4AD627176BD3006A63C0 /* ThemesSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesSwift.swift; sourceTree = "<group>"; };
 		3AEE4AD8271770AB006A63C0 /* UserDefaults+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+extensions.swift"; sourceTree = "<group>"; };
+		3AFC1D1B272095AA0042E71E /* ProfileFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFileManager.swift; sourceTree = "<group>"; };
+		3AFC1D1D272096020042E71E /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
+		3AFC1D202720A6E20042E71E /* GCDDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDDataManager.swift; sourceTree = "<group>"; };
+		3AFC1D222720B3A80042E71E /* OperationDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationDataManager.swift; sourceTree = "<group>"; };
 		3AFF11932714C189005991C5 /* ThemesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThemesViewController.h; sourceTree = "<group>"; };
 		3AFF11942714C3B7005991C5 /* chat-app-MobiOS-21-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "chat-app-MobiOS-21-Bridging-Header.h"; sourceTree = "<group>"; };
 		3AFF11952714C3B7005991C5 /* ThemesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThemesViewController.m; sourceTree = "<group>"; };
@@ -85,7 +91,7 @@
 		3A0060CF270B87A00047EFAE /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
-				3AE6DDE426F90F4A00191D7A /* Main.storyboard */,
+				3AE6DDE426F90F4A00191D7A /* Profile.storyboard */,
 				3AE6DDE926F90F4B00191D7A /* LaunchScreen.storyboard */,
 				3A0060C8270B7FD90047EFAE /* Conversations.storyboard */,
 			);
@@ -105,7 +111,6 @@
 			isa = PBXGroup;
 			children = (
 				3AFF11922714C169005991C5 /* Themes */,
-				3AE6DDE226F90F4A00191D7A /* ViewController.swift */,
 				3A44DBFB27023AF800F45CB3 /* ProfileViewController.swift */,
 				3A0060CA270B817E0047EFAE /* ConversationsViewConrtoller.swift */,
 				3A721A04270CC432001A7DCC /* ConversationViewController.swift */,
@@ -119,6 +124,7 @@
 				3AFF11972714C590005991C5 /* Themes */,
 				3A0060D0270B889D0047EFAE /* ConversationsModel.swift */,
 				3A721A08270CC904001A7DCC /* ConversationModel.swift */,
+				3AFC1D1D272096020042E71E /* ProfileModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -162,6 +168,7 @@
 		3AE6DDDD26F90F4A00191D7A /* chat-app-MobiOS-21 */ = {
 			isa = PBXGroup;
 			children = (
+				3AFC1D1A2720958F0042E71E /* Services */,
 				3A44DBFD27024BC000F45CB3 /* Helpers */,
 				3A44DBFA27023AC500F45CB3 /* Resources */,
 				3A44DBF927023ABD00F45CB3 /* Models */,
@@ -171,6 +178,24 @@
 				3AE6DDEC26F90F4B00191D7A /* Info.plist */,
 			);
 			path = "chat-app-MobiOS-21";
+			sourceTree = "<group>";
+		};
+		3AFC1D1A2720958F0042E71E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				3AFC1D1F2720A6AC0042E71E /* Profile */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		3AFC1D1F2720A6AC0042E71E /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				3AFC1D1B272095AA0042E71E /* ProfileFileManager.swift */,
+				3AFC1D202720A6E20042E71E /* GCDDataManager.swift */,
+				3AFC1D222720B3A80042E71E /* OperationDataManager.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		3AFF11922714C169005991C5 /* Themes */ = {
@@ -256,7 +281,7 @@
 				3AE6DDEB26F90F4B00191D7A /* LaunchScreen.storyboard in Resources */,
 				3A0060C9270B7FD90047EFAE /* Conversations.storyboard in Resources */,
 				3AE6DDE826F90F4B00191D7A /* Assets.xcassets in Resources */,
-				3AE6DDE626F90F4A00191D7A /* Main.storyboard in Resources */,
+				3AE6DDE626F90F4A00191D7A /* Profile.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,8 +295,8 @@
 				3AFF11962714C3B7005991C5 /* ThemesViewController.m in Sources */,
 				3A44DC0127024C8200F45CB3 /* UIViewController+extensions.swift in Sources */,
 				3A44DBFC27023AF800F45CB3 /* ProfileViewController.swift in Sources */,
-				3AE6DDE326F90F4A00191D7A /* ViewController.swift in Sources */,
 				3AE6DDDF26F90F4A00191D7A /* AppDelegate.swift in Sources */,
+				3AFC1D212720A6E20042E71E /* GCDDataManager.swift in Sources */,
 				3A44DC0327024E4100F45CB3 /* String+extensions.swift in Sources */,
 				3A721A07270CC79C001A7DCC /* ConversationTableCell.swift in Sources */,
 				3AEE4AD727176BD3006A63C0 /* ThemesSwift.swift in Sources */,
@@ -282,6 +307,9 @@
 				3A0060CB270B817E0047EFAE /* ConversationsViewConrtoller.swift in Sources */,
 				3AEE4AD5271769FD006A63C0 /* ThemesViewControllerSwift.swift in Sources */,
 				3AFF119A2714C5F2005991C5 /* Themes.m in Sources */,
+				3AFC1D1E272096020042E71E /* ProfileModel.swift in Sources */,
+				3AFC1D232720B3A80042E71E /* OperationDataManager.swift in Sources */,
+				3AFC1D1C272095AB0042E71E /* ProfileFileManager.swift in Sources */,
 				3A721A05270CC432001A7DCC /* ConversationViewController.swift in Sources */,
 				3AEE4AD9271770AB006A63C0 /* UserDefaults+extensions.swift in Sources */,
 				3A44DBFF27024BD500F45CB3 /* ImagePickerHelper.swift in Sources */,
@@ -291,12 +319,12 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		3AE6DDE426F90F4A00191D7A /* Main.storyboard */ = {
+		3AE6DDE426F90F4A00191D7A /* Profile.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				3AE6DDE526F90F4A00191D7A /* Base */,
 			);
-			name = Main.storyboard;
+			name = Profile.storyboard;
 			sourceTree = "<group>";
 		};
 		3AE6DDE926F90F4B00191D7A /* LaunchScreen.storyboard */ = {
