@@ -13,7 +13,7 @@ protocol ChannelsCellConfiguration: AnyObject {
     var lastActivity: Date? { get set }
 }
 
-class Channel: ChannelsCellConfiguration {
+class Channel: Encodable, ChannelsCellConfiguration {
     var identifier: String
     var name: String
     var lastMessage: String?

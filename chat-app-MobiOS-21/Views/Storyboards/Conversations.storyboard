@@ -89,11 +89,18 @@
                                 <action selector="tapThemesBtn:" destination="Y6W-OH-hqX" id="jeU-MA-pwK"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Profile" id="zSb-Mg-idV">
-                            <connections>
-                                <action selector="tapProfileBtn:" destination="Y6W-OH-hqX" id="qAM-K9-LMb"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Profile" id="zSb-Mg-idV">
+                                <connections>
+                                    <action selector="tapProfileBtn:" destination="Y6W-OH-hqX" id="qAM-K9-LMb"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="add" id="Nsu-Tb-mZA">
+                                <connections>
+                                    <action selector="tapCreateChannelBtn:" destination="Y6W-OH-hqX" id="C3y-L5-Wju"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="GVM-39-2hG" id="CBy-rH-oyi"/>

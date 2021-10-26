@@ -37,32 +37,35 @@ class ConversationsViewController: UIViewController {
                 print("Error fetching documents: \(error!)")
                 return
             }
-            snapshot.documents.forEach { document in
+
+            snapshot.documentChanges.forEach { diff in
                 var name: String = ""
                 var lastActivity: Date?
-                if let documentName = document["name"] as? String {
+                if let documentName = diff.document["name"] as? String {
                     name = documentName
                 }
-                if let documentDate = document["lastActivity"] as? Timestamp {
+                if let documentDate = diff.document["lastActivity"] as? Timestamp {
                     lastActivity = Date(timeIntervalSince1970: TimeInterval(documentDate.seconds))
                 }
-                self.channels.append(Channel(identifier: document.documentID,
-                                             name: name,
-                                             lastMessage: document["lastMessage"] as? String,
-                                             lastActivity: lastActivity))
+                
+                switch diff.type {
+                case .added:
+                    self.channels.append(Channel(identifier: diff.document.documentID,
+                                                 name: name,
+                                                 lastMessage: diff.document["lastMessage"] as? String,
+                                                 lastActivity: lastActivity))
+                case .modified:
+                    if let index = self.channels.firstIndex(where: { $0.identifier == diff.document.documentID }) {
+                        self.channels[index] = Channel(identifier: diff.document.documentID,
+                                                       name: name,
+                                                       lastMessage: diff.document["lastMessage"] as? String,
+                                                       lastActivity: lastActivity)
+                    }
+                case .removed:
+                    self.channels.removeAll(where: { $0.identifier == diff.document.documentID })
+                }
             }
             self.updateTableView()
-//            snapshot.documentChanges.forEach { diff in
-//                if (diff.type == .added) {
-//                    print("New city: \(diff.document.data())")
-//                }
-//                if (diff.type == .modified) {
-//                    print("Modified city: \(diff.document.data())")
-//                }
-//                if (diff.type == .removed) {
-//                    print("Removed city: \(diff.document.data())")
-//                }
-//            }
         }
     }
     
@@ -108,6 +111,21 @@ class ConversationsViewController: UIViewController {
         let storyboard = UIStoryboard(name: "Profile", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "ProfileVC")
         self.present(vc, animated: true)
+    }
+    
+    @IBAction func tapCreateChannelBtn(_ sender: Any) {
+        let alert = UIAlertController(title: "Create channel", message: "Alert Message", preferredStyle: .alert)
+        alert.addTextField { textField in
+            textField.placeholder = "Enter channel name"
+        }
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Create", style: .default, handler: {[weak self] _ in
+            guard let self = self, let channelName = alert.textFields?.first?.text  else { return }
+            let channel = Channel(identifier: UUID().uuidString, name: channelName, lastMessage: nil, lastActivity: nil)
+            self.reference.addDocument(data: channel.dictionary)
+        }))
+        present(alert, animated: true, completion: nil)
     }
     
     @IBAction func tapThemesBtn(_ sender: Any) {
