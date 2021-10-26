@@ -146,9 +146,9 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let chatName = channels[indexPath.row].name
-        let vc = ConversationViewController()
-        vc.title = chatName
+        let channel = channels[indexPath.row]
+        let vc = ConversationViewController(channel: channel)
+        vc.title = channel.name
         navigationController?.pushViewController(vc, animated: true)
     }
 }

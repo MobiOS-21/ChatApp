@@ -10,6 +10,15 @@ import UIKit
 class ConversationTableCell: UITableViewCell {
     static let reuseIdentifier = "ConversationTableCell"
     private let containerView = UIView()
+    
+    private let userNameLabel: UILabel = {
+        let lb = UILabel()
+        lb.textColor = .orange
+        lb.font = .boldSystemFont(ofSize: 20)
+        lb.numberOfLines = 1
+        return lb
+    }()
+    
     private let messageLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .black
@@ -18,6 +27,12 @@ class ConversationTableCell: UITableViewCell {
         return lb
     }()
     
+    private let messageStackView: UIStackView = {
+        let sv = UIStackView()
+        sv.spacing = 4
+        sv.axis = .vertical
+        return sv
+    }()
     private var leadingConstraint: NSLayoutConstraint?
     private var trailingConstraint: NSLayoutConstraint?
     
@@ -34,19 +49,21 @@ class ConversationTableCell: UITableViewCell {
     
     private func configureLayout() {
         contentView.addSubview(containerView)
-        containerView.addSubview(messageLabel)
+        contentView.addSubview(messageStackView)
+        messageStackView.addArrangedSubview(userNameLabel)
+        messageStackView.addArrangedSubview(messageLabel)
+        messageStackView.translatesAutoresizingMaskIntoConstraints = false
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.layer.cornerRadius = 16
-        messageLabel.translatesAutoresizingMaskIntoConstraints = false
         let constraints = [
             containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
+            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             containerView.widthAnchor.constraint(lessThanOrEqualToConstant: 3 / 4 * contentView.frame.width),
             
-            messageLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 16),
-            messageLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
-            messageLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-            messageLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -16)
+            messageStackView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 16),
+            messageStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            messageStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            messageStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -16)
         ]
         NSLayoutConstraint.activate(constraints)
         
@@ -55,21 +72,26 @@ class ConversationTableCell: UITableViewCell {
     }
     
     func configureCell(with model: MessageCellConfiguration) {
-        messageLabel.text = model.text
-        if model.isMyMessage {
-            trailingConstraint?.isActive = false
-            leadingConstraint?.isActive = true
-            containerView.backgroundColor = UIColor(named: "myMessageColor")
-        } else {
+        messageLabel.text = model.content
+        userNameLabel.text = model.senderName
+        if let deviceId = UIDevice.current.identifierForVendor?.uuidString, model.senderId == deviceId {
             trailingConstraint?.isActive = true
             leadingConstraint?.isActive = false
+            containerView.backgroundColor = UIColor(named: "myMessageColor")
+            userNameLabel.isHidden = true
+        } else {
+            trailingConstraint?.isActive = false
+            leadingConstraint?.isActive = true
             containerView.backgroundColor = UIColor(named: "userMessageColor")
+            userNameLabel.isHidden = false
         }
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         messageLabel.text = nil
+        userNameLabel.text = nil
+        userNameLabel.isHidden = false
         trailingConstraint?.isActive = false
         leadingConstraint?.isActive = false
     }
