@@ -12,6 +12,8 @@
 		3A0060CE270B83690047EFAE /* ConversationsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0060CD270B83690047EFAE /* ConversationsTableCell.swift */; };
 		3A0060D1270B889D0047EFAE /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0060D0270B889D0047EFAE /* Channel.swift */; };
 		3A0060D3270B8DCD0047EFAE /* Date+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0060D2270B8DCD0047EFAE /* Date+extensions.swift */; };
+		3A0C3184272B1163001B63BC /* MessageInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0C3183272B1163001B63BC /* MessageInputView.swift */; };
+		3A0C3186272B1AEA001B63BC /* PaddingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0C3185272B1AEA001B63BC /* PaddingTextField.swift */; };
 		3A12BFC2272884D400D86C17 /* Codable+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A12BFC1272884D400D86C17 /* Codable+extension.swift */; };
 		3A3092342727314700BE31BE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3A3092332727314700BE31BE /* GoogleService-Info.plist */; };
 		3A44DBFC27023AF800F45CB3 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A44DBFB27023AF800F45CB3 /* ProfileViewController.swift */; };
@@ -43,6 +45,8 @@
 		3A0060CD270B83690047EFAE /* ConversationsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsTableCell.swift; sourceTree = "<group>"; };
 		3A0060D0270B889D0047EFAE /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		3A0060D2270B8DCD0047EFAE /* Date+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extensions.swift"; sourceTree = "<group>"; };
+		3A0C3183272B1163001B63BC /* MessageInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputView.swift; sourceTree = "<group>"; };
+		3A0C3185272B1AEA001B63BC /* PaddingTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingTextField.swift; sourceTree = "<group>"; };
 		3A12BFC1272884D400D86C17 /* Codable+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Codable+extension.swift"; sourceTree = "<group>"; };
 		3A3092332727314700BE31BE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3A44DBFB27023AF800F45CB3 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -112,6 +116,7 @@
 			children = (
 				3A0060CF270B87A00047EFAE /* Storyboards */,
 				3A0060CC270B834B0047EFAE /* Cells */,
+				3A0C3183272B1163001B63BC /* MessageInputView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -155,6 +160,7 @@
 				3A0060D2270B8DCD0047EFAE /* Date+extensions.swift */,
 				3AEE4AD8271770AB006A63C0 /* UserDefaults+extensions.swift */,
 				3A12BFC1272884D400D86C17 /* Codable+extension.swift */,
+				3A0C3185272B1AEA001B63BC /* PaddingTextField.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -355,7 +361,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which \"${PODS_ROOT}/SwiftLint/swiftlint\" >/dev/null; then\n    ${PODS_ROOT}/SwiftLint/swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "if which \"${PODS_ROOT}/SwiftLint/swiftlint\" >/dev/null; then\n    ${PODS_ROOT}/SwiftLint/swiftlint autocorrect\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 		F25026DE1D7BCB62F38192D2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -387,6 +393,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3AFF11962714C3B7005991C5 /* ThemesViewController.m in Sources */,
+				3A0C3186272B1AEA001B63BC /* PaddingTextField.swift in Sources */,
 				3A44DC0127024C8200F45CB3 /* UIViewController+extensions.swift in Sources */,
 				3A44DBFC27023AF800F45CB3 /* ProfileViewController.swift in Sources */,
 				3AE6DDDF26F90F4A00191D7A /* AppDelegate.swift in Sources */,
@@ -404,6 +411,7 @@
 				3AFF119A2714C5F2005991C5 /* Themes.m in Sources */,
 				3AFC1D1E272096020042E71E /* ProfileModel.swift in Sources */,
 				3AFC1D232720B3A80042E71E /* OperationDataManager.swift in Sources */,
+				3A0C3184272B1163001B63BC /* MessageInputView.swift in Sources */,
 				3AFC1D1C272095AB0042E71E /* ProfileFileManager.swift in Sources */,
 				3A721A05270CC432001A7DCC /* ConversationViewController.swift in Sources */,
 				3AEE4AD9271770AB006A63C0 /* UserDefaults+extensions.swift in Sources */,

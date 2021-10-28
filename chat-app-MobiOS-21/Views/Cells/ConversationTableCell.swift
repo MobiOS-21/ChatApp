@@ -14,7 +14,7 @@ class ConversationTableCell: UITableViewCell {
     private let userNameLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .orange
-        lb.font = .boldSystemFont(ofSize: 20)
+        lb.font = .boldSystemFont(ofSize: 16)
         lb.numberOfLines = 1
         return lb
     }()
@@ -22,7 +22,7 @@ class ConversationTableCell: UITableViewCell {
     private let messageLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .black
-        lb.font = .systemFont(ofSize: 16)
+        lb.font = .systemFont(ofSize: 13)
         lb.numberOfLines = 0
         return lb
     }()
