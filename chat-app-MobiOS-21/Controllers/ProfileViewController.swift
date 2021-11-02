@@ -12,7 +12,7 @@ enum ProfileScreenState {
 }
 
 final class ProfileViewController: UIViewController, ImagePickerDelegate {
-    //MARK: - IBOutlets
+    // MARK: - IBOutlets
     @IBOutlet weak var userAvatar: UIImageView!
     @IBOutlet weak var editAvatarButton: UIButton!
     @IBOutlet weak var userNameTF: UITextField!
@@ -26,7 +26,7 @@ final class ProfileViewController: UIViewController, ImagePickerDelegate {
     private var currentState: ProfileScreenState = .disabled
     private let currentProfile = ProfileFileManager.shared.currentProfile
     private var currentFileManager: ProfileDataManagerProtocol = GCDDataManager()
-    //MARK: - Lifecycle
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupProfileInfo()
@@ -74,7 +74,7 @@ final class ProfileViewController: UIViewController, ImagePickerDelegate {
         checkFieldsChanges()
     }
     
-    //MARK: - Private
+    // MARK: - Private
     private func checkFieldsChanges() {
         if currentState != .changeProfile {
             currentState = .changeProfile
@@ -196,9 +196,8 @@ final class ProfileViewController: UIViewController, ImagePickerDelegate {
             }
         }
     }
-    
 
-    //MARK: - IBActions
+    // MARK: - IBActions
     @IBAction func tappedEditAvaterButton(_ sender: Any) {
         imagePicker.present(from: userAvatar)
     }
@@ -233,7 +232,7 @@ final class ProfileViewController: UIViewController, ImagePickerDelegate {
         }
     }
     
-    //MARK: - ImagePickerDelegate
+    // MARK: - ImagePickerDelegate
     func didSelect(image: UIImage?) {
         guard let image = image else { return }
         currentState = .changeProfile

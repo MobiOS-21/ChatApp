@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Tinkoff Chat-->
+        <!--Channels-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
                 <viewController id="Y6W-OH-hqX" customClass="ConversationsViewController" customModule="chat_app_MobiOS_21" customModuleProvider="target" sceneMemberID="viewController">
@@ -20,7 +20,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="GVM-39-2hG">
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ConversationsTableCell" rowHeight="66" id="ly4-M8-U3i" customClass="ConversationsTableCell" customModule="chat_app_MobiOS_21" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ConversationsTableCell" rowHeight="66" id="ly4-M8-U3i" customClass="ConversationsTableCell" customModule="chat_app_MobiOS_21" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="44.5" width="414" height="66"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ly4-M8-U3i" id="O7q-HY-EEk">
@@ -83,17 +83,24 @@
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="GVM-39-2hG" secondAttribute="trailing" id="gRO-H1-Dtw"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Tinkoff Chat" id="AhB-KF-OfE">
-                        <barButtonItem key="leftBarButtonItem" title="Themes" id="NKK-cr-Vcb">
+                    <navigationItem key="navigationItem" title="Channels" id="AhB-KF-OfE">
+                        <barButtonItem key="leftBarButtonItem" image="settings" id="NKK-cr-Vcb">
                             <connections>
                                 <action selector="tapThemesBtn:" destination="Y6W-OH-hqX" id="jeU-MA-pwK"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Profile" id="zSb-Mg-idV">
-                            <connections>
-                                <action selector="tapProfileBtn:" destination="Y6W-OH-hqX" id="qAM-K9-LMb"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Profile" id="zSb-Mg-idV">
+                                <connections>
+                                    <action selector="tapProfileBtn:" destination="Y6W-OH-hqX" id="qAM-K9-LMb"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="add" id="Nsu-Tb-mZA">
+                                <connections>
+                                    <action selector="tapCreateChannelBtn:" destination="Y6W-OH-hqX" id="C3y-L5-Wju"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="GVM-39-2hG" id="CBy-rH-oyi"/>
@@ -266,6 +273,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="settings" width="25" height="25"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

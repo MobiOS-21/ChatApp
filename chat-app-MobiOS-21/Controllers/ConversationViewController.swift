@@ -6,41 +6,160 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class ConversationViewController: UIViewController {
-    private var messages: [ConversationModel] = [
-        ConversationModel(text: "small message", isMyMessage: Bool.random()),
-        ConversationModel(text: "multiline message \n message \n message", isMyMessage: Bool.random())
-    ]
+    // MARK: - Properties
+    private var messages: [Message] = []
+    private let channel: Channel
+    // MARK: - Firestore
+    private lazy var db = Firestore.firestore()
+    private lazy var reference: CollectionReference = {
+        return db.collection("channels").document(channel.identifier).collection("messages")
+    }()
+    
+    // MARK: - UI
     private let tableView = UITableView(frame: .zero, style: .plain)
+    private let messageInputView = MessageInputView()
+    
+    private var bottomConstraint: NSLayoutConstraint?
+    
+    // MARK: - Lifecycle
+    init(channel: Channel) {
+        self.channel = channel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        generateMessages()
         configureUI()
+        configureGestures()
+        fetchChanelMessages()
     }
     
+    // MARK: - Private
     private func configureUI() {
         view.addSubview(tableView)
-        tableView.frame = view.bounds
+        view.addSubview(messageInputView)
+        
+        messageInputView.sendButtonCallback = sendMessage(message:)
+        
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        messageInputView.translatesAutoresizingMaskIntoConstraints = false
+        
         tableView.dataSource = self
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(ConversationTableCell.self, forCellReuseIdentifier: ConversationTableCell.reuseIdentifier)
         tableView.separatorStyle = .none
+        
+        let constraints = [
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            
+            messageInputView.topAnchor.constraint(equalTo: tableView.bottomAnchor),
+            messageInputView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            messageInputView.heightAnchor.constraint(equalToConstant: 80),
+            messageInputView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+        ]
+        NSLayoutConstraint.activate(constraints)
+        bottomConstraint = messageInputView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        bottomConstraint?.isActive = true
     }
     
-    private func generateMessages() {
-        let numberOfMessages = Int.random(in: 5...100)
-        for _ in 0...numberOfMessages {
-            messages.append(ConversationModel(text: randomString(length: Int.random(in: 10...500)), isMyMessage: Bool.random()))
+    private func fetchChanelMessages() {
+        reference.addSnapshotListener {[weak self] querySnapshot, error in
+            guard let self = self,
+                  let snapshot = querySnapshot else {
+                      print("Error fetching documents: \(String(describing: error))")
+                      return
+                  }
+            
+            snapshot.documentChanges.forEach { diff in
+                guard let content = diff.document["content"] as? String else {
+                    fatalError()
+                }
+                guard let createdTimestamp = diff.document["created"] as? Timestamp else {
+                    fatalError()
+                }
+                var senderId: String = ""
+                /// сделал так потому что кто-то кидает senderID, а кто-то senderId
+                if let senderID = diff.document["senderID"] as? String {
+                    senderId = senderID
+                } else if let senderID = diff.document["senderID"] as? String {
+                    senderId = senderID
+                }
+                guard var senderName = diff.document["senderName"] as? String else {
+                    fatalError()
+                }
+                if senderName.isEmpty { senderName = "No name" }
+                let message = Message(content: content,
+                                      created: Date(timeIntervalSince1970: TimeInterval(createdTimestamp.seconds)),
+                                                     senderId: senderId,
+                                                     senderName: senderName)
+                switch diff.type {
+                case .added:
+                    self.messages.append(message)
+                case .modified:
+                    if let index = self.messages.firstIndex(where: { $0.senderId == senderId && $0.created == message.created }) {
+                        self.messages[index] = message
+                    }
+                case .removed:
+                    self.messages.removeAll(where: { $0.senderId == senderId && $0.created == message.created })
+                }
+            }
+            self.updateTableView()
         }
     }
     
-    private func randomString(length: Int) -> String {
-        let letters = "abcdefgh ijklmnopqrstuv wxyzABCDE FGHIJKLMNOPQ RSTUVWXYZ0123456789"
-        return String((0..<length).map{ _ in letters.randomElement()! })
+    private func updateTableView() {
+        messages.sort(by: { $0.created < $1.created })
+        tableView.reloadData()
+        guard messages.count > 0 else { return }
+        tableView.scrollToRow(at: IndexPath(row: messages.count - 1, section: 0), at: .bottom, animated: false)
+    }
+
+    private func configureGestures() {
+        let notifier = NotificationCenter.default
+        notifier.addObserver(self,
+                             selector: #selector(keyboardWillShowNotification(_:)),
+                             name: UIWindow.keyboardWillShowNotification,
+                             object: nil)
+        notifier.addObserver(self,
+                             selector: #selector(keyboardWillHideNotification(_:)),
+                             name: UIWindow.keyboardWillHideNotification,
+                             object: nil)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
+        self.view.addGestureRecognizer(tapGesture)
+    }
+    
+    private func sendMessage(message: String) {
+        let message = Message(content: message, created: Date())
+        self.reference.addDocument(data: message.toDict)
+    }
+    
+    // MARK: - Objc
+    @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
+        view.endEditing(true)
+    }
+    
+    @objc func keyboardWillShowNotification(_ notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let keyboardHeight = keyboardSize.height
+            bottomConstraint?.constant = -keyboardHeight
+            tableView.layoutIfNeeded()
+        }
+    }
+    
+    @objc func keyboardWillHideNotification(_ notification: NSNotification) {
+        bottomConstraint?.constant = 0
     }
 }
 
