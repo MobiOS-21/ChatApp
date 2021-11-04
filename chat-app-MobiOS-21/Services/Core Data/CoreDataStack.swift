@@ -98,10 +98,18 @@ class CoreDataStack {
         return dbchannel
     }
     
-    func getChannels() {
+    func printSQLiteDB() {
         let fetchRequest: NSFetchRequest<DBChannel> = DBChannel.fetchRequest()
         do {
-            _ = try mainContext.fetch(fetchRequest)
+            let channels = try mainContext.fetch(fetchRequest)
+            print("Всего каналов: \(channels.count)")
+            for channel in channels {
+                print("{channel name: \(channel.name ?? "")\nchannel identifier: \(channel.identifier ?? "")")
+                guard let messages = channel.messages as? Set<DBMessage> else { continue }
+                print("messages count: \(messages.count) [")
+                let messagesInfo = messages.compactMap({ "senderName: \($0.senderName ?? ""), content: \($0.content ?? "") \n" }).reduce("", +)
+                print(messagesInfo + "]} \n")
+            }
         } catch {
             debugPrint(error.localizedDescription)
         }
