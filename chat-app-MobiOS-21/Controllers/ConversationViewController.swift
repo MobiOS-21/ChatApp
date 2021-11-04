@@ -89,10 +89,10 @@ class ConversationViewController: UIViewController {
                     fatalError()
                 }
                 var senderId: String = ""
-                /// сделал так потому что кто-то кидает senderID, а кто-то senderId
+                // сделал так потому что кто-то кидает senderID, а кто-то senderId
                 if let senderID = diff.document["senderID"] as? String {
                     senderId = senderID
-                } else if let senderID = diff.document["senderID"] as? String {
+                } else if let senderID = diff.document["senderId"] as? String {
                     senderId = senderID
                 }
                 guard var senderName = diff.document["senderName"] as? String else {

@@ -2,10 +2,10 @@
   "colors" : [
     {
       "color" : {
-        "platform" : "universal",
+        "platform" : "ios",
         "reference" : "secondaryLabelColor"
       },
-      "idiom" : "universal"
+      "idiom" : "iphone"
     },
     {
       "appearances" : [
@@ -23,7 +23,7 @@
           "red" : "1.000"
         }
       },
-      "idiom" : "universal"
+      "idiom" : "iphone"
     }
   ],
   "info" : {

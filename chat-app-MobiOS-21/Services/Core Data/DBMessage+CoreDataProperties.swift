@@ -22,3 +22,13 @@ extension DBMessage {
     @NSManaged public var channel: DBChannel?
 
 }
+
+extension DBMessage {
+    convenience init(model: Message, in context: NSManagedObjectContext) {
+        self.init(context: context)
+        self.content = model.content
+        self.created = model.created
+        self.senderId = model.senderId
+        self.senderName = model.senderName
+    }
+}

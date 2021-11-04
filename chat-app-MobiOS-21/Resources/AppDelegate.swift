@@ -20,6 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         GCDDataManager().readData { _ in }
+        
+        CoreDataStack.shared.getChannels()
         FirebaseApp.configure()
         return true
     }
