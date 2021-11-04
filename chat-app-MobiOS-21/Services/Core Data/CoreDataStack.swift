@@ -110,5 +110,51 @@ class CoreDataStack {
 
 // MARK: - Message actions
 extension CoreDataStack {
+    func performMessageAction(message: Message, channelId: String, actionType: DBAction) {
+        switch actionType {
+        case .add:
+            saveMessage(message: message, channelId: channelId)
+        case .edit:
+            editMessage(message: message)
+        case .remove:
+            removeMessage(message: message)
+        }
+        saveContext(context: backgroundContext)
+    }
     
+    private func saveMessage(message: Message, channelId: String) {
+        let context = backgroundContext
+        guard let dbchannel = getDBChannel(by: channelId) else { return }
+        let dbMessage = DBMessage(model: message, in: context)
+        dbchannel.addToMessages(dbMessage)
+    }
+    
+    private func editMessage(message: Message) {
+        guard let dbMessage = getDBMessage(by: message) else {
+            return
+        }
+        dbMessage.created = message.created
+        dbMessage.senderId = message.senderId
+        dbMessage.content = message.content
+        dbMessage.senderName = message.senderName
+    }
+    
+    private func removeMessage(message: Message) {
+        guard let dbMessage = getDBMessage(by: message) else {
+            return
+        }
+        backgroundContext.delete(dbMessage)
+    }
+    
+    private func getDBMessage(by message: Message) -> DBMessage? {
+        let fetchRequest: NSFetchRequest<DBMessage> = DBMessage.fetchRequest()
+        let predicate = NSPredicate(format: "content == %@ && senderId == %@ && created == %@",
+                                    message.content, message.senderId, message.created as NSDate)
+        fetchRequest.predicate = predicate
+        fetchRequest.fetchLimit = 1
+        guard let dbMessage = try? backgroundContext.fetch(fetchRequest).first else {
+            return nil
+        }
+        return dbMessage
+    }
 }
