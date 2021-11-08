@@ -89,10 +89,10 @@ class ConversationViewController: UIViewController {
                     fatalError()
                 }
                 var senderId: String = ""
-                /// сделал так потому что кто-то кидает senderID, а кто-то senderId
+                // сделал так потому что кто-то кидает senderID, а кто-то senderId
                 if let senderID = diff.document["senderID"] as? String {
                     senderId = senderID
-                } else if let senderID = diff.document["senderID"] as? String {
+                } else if let senderID = diff.document["senderId"] as? String {
                     senderId = senderID
                 }
                 guard var senderName = diff.document["senderName"] as? String else {
@@ -106,12 +106,15 @@ class ConversationViewController: UIViewController {
                 switch diff.type {
                 case .added:
                     self.messages.append(message)
+                    CoreDataStack.shared.performMessageAction(message: message, channelId: self.channel.identifier, actionType: .add)
                 case .modified:
                     if let index = self.messages.firstIndex(where: { $0.senderId == senderId && $0.created == message.created }) {
                         self.messages[index] = message
+                        CoreDataStack.shared.performMessageAction(message: message, channelId: self.channel.identifier, actionType: .edit)
                     }
                 case .removed:
                     self.messages.removeAll(where: { $0.senderId == senderId && $0.created == message.created })
+                    CoreDataStack.shared.performMessageAction(message: message, channelId: self.channel.identifier, actionType: .remove)
                 }
             }
             self.updateTableView()

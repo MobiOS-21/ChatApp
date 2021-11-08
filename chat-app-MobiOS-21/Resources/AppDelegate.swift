@@ -20,6 +20,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         GCDDataManager().readData { _ in }
+        
+        DispatchQueue.main.async {
+            CoreDataStack.shared.printSQLiteDB()
+        }
         FirebaseApp.configure()
         return true
     }

@@ -47,22 +47,22 @@ class ConversationsViewController: UIViewController {
                 if let documentDate = diff.document["lastActivity"] as? Timestamp {
                     lastActivity = Date(timeIntervalSince1970: TimeInterval(documentDate.seconds))
                 }
-                
+                let channel = Channel(identifier: diff.document.documentID,
+                                      name: name,
+                                      lastMessage: diff.document["lastMessage"] as? String,
+                                      lastActivity: lastActivity)
                 switch diff.type {
                 case .added:
-                    self.channels.append(Channel(identifier: diff.document.documentID,
-                                                 name: name,
-                                                 lastMessage: diff.document["lastMessage"] as? String,
-                                                 lastActivity: lastActivity))
+                    self.channels.append(channel)
+                    CoreDataStack.shared.performChannelAction(channel: channel, actionType: .add)
                 case .modified:
                     if let index = self.channels.firstIndex(where: { $0.identifier == diff.document.documentID }) {
-                        self.channels[index] = Channel(identifier: diff.document.documentID,
-                                                       name: name,
-                                                       lastMessage: diff.document["lastMessage"] as? String,
-                                                       lastActivity: lastActivity)
+                        self.channels[index] = channel
+                        CoreDataStack.shared.performChannelAction(channel: channel, actionType: .edit)
                     }
                 case .removed:
-                    self.channels.removeAll(where: { $0.identifier == diff.document.documentID })
+                    self.channels.removeAll(where: { $0.identifier == channel.identifier })
+                    CoreDataStack.shared.performChannelAction(channel: channel, actionType: .remove)
                 }
             }
             self.updateTableView()
