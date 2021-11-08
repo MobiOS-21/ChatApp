@@ -11,11 +11,11 @@ import FirebaseFirestore
 class ConversationViewController: UIViewController {
     // MARK: - Properties
     private var messages: [Message] = []
-    private let channel: Channel
+    private let channelId: String
     // MARK: - Firestore
     private lazy var db = Firestore.firestore()
     private lazy var reference: CollectionReference = {
-        return db.collection("channels").document(channel.identifier).collection("messages")
+        return db.collection("channels").document(channelId).collection("messages")
     }()
     
     // MARK: - UI
@@ -25,8 +25,8 @@ class ConversationViewController: UIViewController {
     private var bottomConstraint: NSLayoutConstraint?
     
     // MARK: - Lifecycle
-    init(channel: Channel) {
-        self.channel = channel
+    init(channelId: String) {
+        self.channelId = channelId
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -106,15 +106,15 @@ class ConversationViewController: UIViewController {
                 switch diff.type {
                 case .added:
                     self.messages.append(message)
-                    CoreDataStack.shared.performMessageAction(message: message, channelId: self.channel.identifier, actionType: .add)
+                    CoreDataStack.shared.performMessageAction(message: message, channelId: self.channelId, actionType: .add)
                 case .modified:
                     if let index = self.messages.firstIndex(where: { $0.senderId == senderId && $0.created == message.created }) {
                         self.messages[index] = message
-                        CoreDataStack.shared.performMessageAction(message: message, channelId: self.channel.identifier, actionType: .edit)
+                        CoreDataStack.shared.performMessageAction(message: message, channelId: self.channelId, actionType: .edit)
                     }
                 case .removed:
                     self.messages.removeAll(where: { $0.senderId == senderId && $0.created == message.created })
-                    CoreDataStack.shared.performMessageAction(message: message, channelId: self.channel.identifier, actionType: .remove)
+                    CoreDataStack.shared.performMessageAction(message: message, channelId: self.channelId, actionType: .remove)
                 }
             }
             self.updateTableView()
