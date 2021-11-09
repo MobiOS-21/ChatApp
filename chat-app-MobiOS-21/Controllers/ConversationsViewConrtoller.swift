@@ -180,6 +180,13 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
         vc.title = channel.name
         navigationController?.pushViewController(vc, animated: true)
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            guard let channelId = fetchedResultsController.object(at: indexPath).identifier else { return }
+            reference.document(channelId).delete()
+        }
+    }
 }
 
 extension ConversationsViewController: ThemesViewControllerDelegate {

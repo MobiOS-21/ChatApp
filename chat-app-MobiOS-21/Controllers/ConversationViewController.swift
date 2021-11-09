@@ -130,27 +130,25 @@ class ConversationViewController: UIViewController {
                 if senderName.isEmpty { senderName = "No name" }
                 let message = Message(content: content,
                                       created: Date(timeIntervalSince1970: TimeInterval(createdTimestamp.seconds)),
-                                                     senderId: senderId,
-                                                     senderName: senderName)
+                                      senderId: senderId,
+                                      senderName: senderName)
                 switch diff.type {
                 case .added:
                     CoreDataStack.shared.performMessageAction(message: message, channelId: self.channelId, actionType: .add)
                 case .modified:
-                        CoreDataStack.shared.performMessageAction(message: message, channelId: self.channelId, actionType: .edit)
+                    CoreDataStack.shared.performMessageAction(message: message, channelId: self.channelId, actionType: .edit)
                 case .removed:
                     CoreDataStack.shared.performMessageAction(message: message, channelId: self.channelId, actionType: .remove)
                 }
             }
-//            self.updateTableView()
         }
     }
     
     private func updateTableView() {
-        tableView.reloadData()
         guard let messageCount = fetchedResultsController.fetchedObjects?.count, messageCount > 0 else { return }
-        tableView.scrollToRow(at: IndexPath(row: messageCount - 1, section: 0), at: .bottom, animated: false)
+        self.tableView.scrollToRow(at: IndexPath(row: messageCount - 1, section: 0), at: .bottom, animated: true)
     }
-
+    
     private func configureGestures() {
         let notifier = NotificationCenter.default
         notifier.addObserver(self,
@@ -210,6 +208,8 @@ extension ConversationViewController: NSFetchedResultsControllerDelegate {
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.tableView.endUpdates()
+        
+        self.updateTableView()
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
