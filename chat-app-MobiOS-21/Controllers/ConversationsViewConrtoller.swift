@@ -23,10 +23,11 @@ class ConversationsViewController: UIViewController {
         let sort2 = NSSortDescriptor(key: "name", ascending: true)
         fetchRequest.sortDescriptors = [sort1, sort2]
         fetchRequest.resultType = .managedObjectResultType
+        fetchRequest.fetchBatchSize = 20
         
         let fetchedRequestController = NSFetchedResultsController(
             fetchRequest: fetchRequest,
-            managedObjectContext: CoreDataStack.shared.backgroundContext,
+            managedObjectContext: CoreDataStack.shared.mainContext,
             sectionNameKeyPath: nil,
             cacheName: nil)
         
@@ -39,8 +40,8 @@ class ConversationsViewController: UIViewController {
         super.viewDidLoad()
         
         configureUI()
-        fetchCoreData()
         fetchChanellsData()
+        fetchCoreData()
     }
     
     // MARK: - Private
@@ -120,6 +121,16 @@ class ConversationsViewController: UIViewController {
                        actionStyles: [.default, .default],
                        actions: [showThemesSwiftVC, showThemesObjcVC])
     }
+    
+    private func validateIndexPath(_ indexPath: IndexPath) -> Bool {
+        if let sections = self.fetchedResultsController.sections,
+            indexPath.section < sections.count {
+            if indexPath.row < sections[indexPath.section].numberOfObjects {
+                return true
+            }
+        }
+        return false
+    }
     // MARK: - IBActions
     @IBAction func tapProfileBtn(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Profile", bundle: nil)
@@ -155,13 +166,17 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ConversationsTableCell.reuseIdentifire, for: indexPath) as? ConversationsTableCell else { fatalError() }
         let channel = fetchedResultsController.object(at: indexPath)
-        cell.configureCell(with: channel)
+        if self.validateIndexPath(indexPath) {
+            cell.configureCell(with: channel)
+        } else {
+            debugPrint("Attempting to configure a cell for an indexPath that is out of bounds: \(indexPath)")
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let channel = fetchedResultsController.object(at: indexPath)
-        let vc = ConversationViewController(channelId: channel.identifier ?? "")
+        let vc = ConversationViewController(channelId: channel.identifier ?? "", dbChannelId: channel.identifier ?? "")
         vc.title = channel.name
         navigationController?.pushViewController(vc, animated: true)
     }
