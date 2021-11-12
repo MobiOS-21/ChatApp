@@ -27,6 +27,7 @@ class ConversationViewController: UIViewController {
         fetchRequest.sortDescriptors = [sort1]
         fetchRequest.resultType = .managedObjectResultType
         fetchRequest.fetchBatchSize = 20
+        fetchRequest.fetchLimit = 20
         
         let fetchedRequestController = NSFetchedResultsController(
             fetchRequest: fetchRequest,
@@ -78,6 +79,7 @@ class ConversationViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(ConversationTableCell.self, forCellReuseIdentifier: ConversationTableCell.reuseIdentifier)
         tableView.separatorStyle = .none
+        tableView.contentOffset = .zero
         
         let constraints = [
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -146,7 +148,9 @@ class ConversationViewController: UIViewController {
     
     private func updateTableView() {
         guard let messageCount = fetchedResultsController.fetchedObjects?.count, messageCount > 0 else { return }
-        self.tableView.scrollToRow(at: IndexPath(row: messageCount - 1, section: 0), at: .bottom, animated: true)
+        DispatchQueue.main.async {[weak self] in
+            self?.tableView.scrollToRow(at: IndexPath(row: messageCount - 1, section: 0), at: .bottom, animated: true)
+        }
     }
     
     private func configureGestures() {

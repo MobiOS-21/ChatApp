@@ -40,8 +40,8 @@ class ConversationsViewController: UIViewController {
         super.viewDidLoad()
         
         configureUI()
-        fetchChanellsData()
         fetchCoreData()
+        fetchChanellsData()
     }
     
     // MARK: - Private
