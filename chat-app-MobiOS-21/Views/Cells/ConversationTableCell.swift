@@ -71,7 +71,7 @@ class ConversationTableCell: UITableViewCell {
         trailingConstraint = containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
     }
     
-    func configureCell(with model: MessageCellConfiguration) {
+    func configureCell(with model: DBMessage) {
         messageLabel.text = model.content
         userNameLabel.text = model.senderName
         if let deviceId = UIDevice.current.identifierForVendor?.uuidString, model.senderId == deviceId {

@@ -7,20 +7,40 @@
 
 import UIKit
 import FirebaseFirestore
+import CoreData
 
 class ConversationsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
-    private lazy var channels: [Channel] = []
     private lazy var reference = db.collection("channels")
     
     private lazy var db = Firestore.firestore()
+    
+    // MARK: Lazy Stored Properties
+    lazy var fetchedResultsController: NSFetchedResultsController<DBChannel> = {
+        let fetchRequest = DBChannel.fetchRequest()
+        let sort1 = NSSortDescriptor(key: "lastActivity", ascending: false)
+        let sort2 = NSSortDescriptor(key: "name", ascending: true)
+        fetchRequest.sortDescriptors = [sort1, sort2]
+        fetchRequest.resultType = .managedObjectResultType
+        fetchRequest.fetchBatchSize = 20
+        
+        let fetchedRequestController = NSFetchedResultsController(
+            fetchRequest: fetchRequest,
+            managedObjectContext: CoreDataStack.shared.mainContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+        
+        fetchedRequestController.delegate = self
+        return fetchedRequestController
+    }()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureUI()
+        fetchCoreData()
         fetchChanellsData()
     }
     
@@ -30,14 +50,20 @@ class ConversationsViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
     }
     
+    private func fetchCoreData() {
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            debugPrint(error.localizedDescription)
+        }
+    }
     private func fetchChanellsData() {
-        reference.addSnapshotListener {[weak self] querySnapshot, error in
-            guard let self = self,
-                  let snapshot = querySnapshot else {
+        reference.addSnapshotListener {querySnapshot, error in
+            guard let snapshot = querySnapshot else {
                 print("Error fetching documents: \(error!)")
                 return
             }
-
+            
             snapshot.documentChanges.forEach { diff in
                 var name: String = ""
                 var lastActivity: Date?
@@ -53,25 +79,14 @@ class ConversationsViewController: UIViewController {
                                       lastActivity: lastActivity)
                 switch diff.type {
                 case .added:
-                    self.channels.append(channel)
                     CoreDataStack.shared.performChannelAction(channel: channel, actionType: .add)
                 case .modified:
-                    if let index = self.channels.firstIndex(where: { $0.identifier == diff.document.documentID }) {
-                        self.channels[index] = channel
-                        CoreDataStack.shared.performChannelAction(channel: channel, actionType: .edit)
-                    }
+                    CoreDataStack.shared.performChannelAction(channel: channel, actionType: .edit)
                 case .removed:
-                    self.channels.removeAll(where: { $0.identifier == channel.identifier })
                     CoreDataStack.shared.performChannelAction(channel: channel, actionType: .remove)
                 }
             }
-            self.updateTableView()
         }
-    }
-    
-    private func updateTableView() {
-        channels.sort(by: { $0.lastActivity ?? Date(timeIntervalSince1970: 0) > $1.lastActivity ?? Date(timeIntervalSince1970: 0) })
-        tableView.reloadData()
     }
     
     private func logThemeChanging(selectedTheme: UIColor) {
@@ -106,6 +121,16 @@ class ConversationsViewController: UIViewController {
                        actionStyles: [.default, .default],
                        actions: [showThemesSwiftVC, showThemesObjcVC])
     }
+    
+    private func validateIndexPath(_ indexPath: IndexPath) -> Bool {
+        if let sections = self.fetchedResultsController.sections,
+            indexPath.section < sections.count {
+            if indexPath.row < sections[indexPath.section].numberOfObjects {
+                return true
+            }
+        }
+        return false
+    }
     // MARK: - IBActions
     @IBAction func tapProfileBtn(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Profile", bundle: nil)
@@ -118,7 +143,7 @@ class ConversationsViewController: UIViewController {
         alert.addTextField { textField in
             textField.placeholder = "Enter channel name"
         }
-
+        
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         alert.addAction(UIAlertAction(title: "Create", style: .default, handler: {[weak self] _ in
             guard let self = self, let channelName = alert.textFields?.first?.text  else { return }
@@ -135,26 +160,77 @@ class ConversationsViewController: UIViewController {
 
 extension ConversationsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return channels.count
+        return fetchedResultsController.fetchedObjects?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ConversationsTableCell.reuseIdentifire, for: indexPath) as? ConversationsTableCell else { fatalError() }
-        
-        cell.configureCell(with: channels[indexPath.row])
+        let channel = fetchedResultsController.object(at: indexPath)
+        if self.validateIndexPath(indexPath) {
+            cell.configureCell(with: channel)
+        } else {
+            debugPrint("Attempting to configure a cell for an indexPath that is out of bounds: \(indexPath)")
+        }
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let channel = channels[indexPath.row]
-        let vc = ConversationViewController(channel: channel)
+        let channel = fetchedResultsController.object(at: indexPath)
+        let vc = ConversationViewController(channelId: channel.identifier ?? "", dbChannelId: channel.identifier ?? "")
         vc.title = channel.name
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            guard let channelId = fetchedResultsController.object(at: indexPath).identifier else { return }
+            reference.document(channelId).delete()
+        }
     }
 }
 
 extension ConversationsViewController: ThemesViewControllerDelegate {
     func themesViewController(_ controller: ThemesViewController, didSelectTheme selectedTheme: UIColor) {
         logThemeChanging(selectedTheme: selectedTheme)
+    }
+}
+
+// MARK: - NSFetchedResultsControllerDelegate
+extension ConversationsViewController: NSFetchedResultsControllerDelegate {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.tableView.beginUpdates()
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.tableView.endUpdates()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any,
+                    at indexPath: IndexPath?,
+                    for type: NSFetchedResultsChangeType,
+                    newIndexPath: IndexPath?) {
+        
+        switch type {
+        case .insert:
+            guard let newIndexPath = newIndexPath else { return }
+            tableView.insertRows(at: [newIndexPath], with: .automatic)
+        case .move:
+            guard let newIndexPath = newIndexPath, let indexPath = indexPath else { return }
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.insertRows(at: [newIndexPath], with: .automatic)
+        case .update:
+            guard let indexPath = indexPath else { return }
+            if let cell = tableView.cellForRow(at: indexPath) as? ConversationsTableCell {
+                guard let channel = controller.object(at: indexPath) as? DBChannel else { return }
+                cell.configureCell(with: channel)
+            }
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        case .delete:
+            guard let indexPath = indexPath else { return }
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        default:
+            print("switch type is default")
+        }
     }
 }

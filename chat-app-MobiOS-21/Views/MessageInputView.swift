@@ -51,8 +51,8 @@ class MessageInputView: UIView, UITextFieldDelegate {
             textField.heightAnchor.constraint(equalToConstant: 32),
             textField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             
+            sendButton.centerYAnchor.constraint(equalTo: textField.centerYAnchor),
             sendButton.leadingAnchor.constraint(equalTo: textField.trailingAnchor, constant: 16),
-            sendButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
             sendButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
         ]
         NSLayoutConstraint.activate(constraints)

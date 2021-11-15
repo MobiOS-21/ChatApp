@@ -14,7 +14,7 @@ final class ConversationsTableCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var lastMessageLabel: UILabel!
     
-    func configureCell(with model: ChannelsCellConfiguration) {
+    func configureCell(with model: DBChannel) {
         userNameLabel.text = model.name
         if let date = model.lastActivity {
             dateLabel.text = Calendar.current.isDateInToday(date) ? date.toString(format: "HH:mm") : date.toString(format: "dd MMM")

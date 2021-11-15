@@ -7,17 +7,37 @@
 
 import UIKit
 import FirebaseFirestore
+import CoreData
 
 class ConversationViewController: UIViewController {
     // MARK: - Properties
-    private var messages: [Message] = []
-    private let channel: Channel
+    private let channelId: String
+    private let dbChannelId: String
     // MARK: - Firestore
     private lazy var db = Firestore.firestore()
     private lazy var reference: CollectionReference = {
-        return db.collection("channels").document(channel.identifier).collection("messages")
+        return db.collection("channels").document(channelId).collection("messages")
     }()
     
+    // MARK: Lazy Stored Properties
+    lazy var fetchedResultsController: NSFetchedResultsController<DBMessage> = {
+        let fetchRequest = DBMessage.fetchRequest()
+        let sort1 = NSSortDescriptor(key: "created", ascending: true)
+        fetchRequest.predicate = NSPredicate(format: "channel.identifier == %@", dbChannelId)
+        fetchRequest.sortDescriptors = [sort1]
+        fetchRequest.resultType = .managedObjectResultType
+        fetchRequest.fetchBatchSize = 20
+        fetchRequest.fetchLimit = 20
+        
+        let fetchedRequestController = NSFetchedResultsController(
+            fetchRequest: fetchRequest,
+            managedObjectContext: CoreDataStack.shared.mainContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+        
+        fetchedRequestController.delegate = self
+        return fetchedRequestController
+    }()
     // MARK: - UI
     private let tableView = UITableView(frame: .zero, style: .plain)
     private let messageInputView = MessageInputView()
@@ -25,8 +45,9 @@ class ConversationViewController: UIViewController {
     private var bottomConstraint: NSLayoutConstraint?
     
     // MARK: - Lifecycle
-    init(channel: Channel) {
-        self.channel = channel
+    init(channelId: String, dbChannelId: String) {
+        self.channelId = channelId
+        self.dbChannelId = dbChannelId
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -39,6 +60,7 @@ class ConversationViewController: UIViewController {
         
         configureUI()
         configureGestures()
+        fetchCoreData()
         fetchChanelMessages()
     }
     
@@ -57,6 +79,7 @@ class ConversationViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(ConversationTableCell.self, forCellReuseIdentifier: ConversationTableCell.reuseIdentifier)
         tableView.separatorStyle = .none
+        tableView.contentOffset = .zero
         
         let constraints = [
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -71,6 +94,14 @@ class ConversationViewController: UIViewController {
         NSLayoutConstraint.activate(constraints)
         bottomConstraint = messageInputView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         bottomConstraint?.isActive = true
+    }
+    
+    private func fetchCoreData() {
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            debugPrint(error.localizedDescription)
+        }
     }
     
     private func fetchChanelMessages() {
@@ -101,33 +132,27 @@ class ConversationViewController: UIViewController {
                 if senderName.isEmpty { senderName = "No name" }
                 let message = Message(content: content,
                                       created: Date(timeIntervalSince1970: TimeInterval(createdTimestamp.seconds)),
-                                                     senderId: senderId,
-                                                     senderName: senderName)
+                                      senderId: senderId,
+                                      senderName: senderName)
                 switch diff.type {
                 case .added:
-                    self.messages.append(message)
-                    CoreDataStack.shared.performMessageAction(message: message, channelId: self.channel.identifier, actionType: .add)
+                    CoreDataStack.shared.performMessageAction(message: message, channelId: self.channelId, actionType: .add)
                 case .modified:
-                    if let index = self.messages.firstIndex(where: { $0.senderId == senderId && $0.created == message.created }) {
-                        self.messages[index] = message
-                        CoreDataStack.shared.performMessageAction(message: message, channelId: self.channel.identifier, actionType: .edit)
-                    }
+                    CoreDataStack.shared.performMessageAction(message: message, channelId: self.channelId, actionType: .edit)
                 case .removed:
-                    self.messages.removeAll(where: { $0.senderId == senderId && $0.created == message.created })
-                    CoreDataStack.shared.performMessageAction(message: message, channelId: self.channel.identifier, actionType: .remove)
+                    CoreDataStack.shared.performMessageAction(message: message, channelId: self.channelId, actionType: .remove)
                 }
             }
-            self.updateTableView()
         }
     }
     
     private func updateTableView() {
-        messages.sort(by: { $0.created < $1.created })
-        tableView.reloadData()
-        guard messages.count > 0 else { return }
-        tableView.scrollToRow(at: IndexPath(row: messages.count - 1, section: 0), at: .bottom, animated: false)
+        guard let messageCount = fetchedResultsController.fetchedObjects?.count, messageCount > 0 else { return }
+        DispatchQueue.main.async {[weak self] in
+            self?.tableView.scrollToRow(at: IndexPath(row: messageCount - 1, section: 0), at: .bottom, animated: true)
+        }
     }
-
+    
     private func configureGestures() {
         let notifier = NotificationCenter.default
         notifier.addObserver(self,
@@ -168,12 +193,55 @@ class ConversationViewController: UIViewController {
 
 extension ConversationViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return messages.count
+        return fetchedResultsController.fetchedObjects?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ConversationTableCell.reuseIdentifier, for: indexPath) as? ConversationTableCell else { fatalError()}
-        cell.configureCell(with: messages[indexPath.row])
+        let message = fetchedResultsController.object(at: indexPath)
+        cell.configureCell(with: message)
         return cell
+    }
+}
+
+// MARK: - NSFetchedResultsControllerDelegate
+extension ConversationViewController: NSFetchedResultsControllerDelegate {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.tableView.beginUpdates()
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.tableView.endUpdates()
+        
+        self.updateTableView()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any,
+                    at indexPath: IndexPath?,
+                    for type: NSFetchedResultsChangeType,
+                    newIndexPath: IndexPath?) {
+        
+        switch type {
+        case .insert:
+            guard let newIndexPath = newIndexPath else { return }
+            tableView.insertRows(at: [newIndexPath], with: .none)
+        case .move:
+            guard let newIndexPath = newIndexPath, let indexPath = indexPath else { return }
+            tableView.deleteRows(at: [indexPath], with: .none)
+            tableView.insertRows(at: [newIndexPath], with: .none)
+        case .update:
+            guard let indexPath = indexPath else { return }
+            if let cell = tableView.cellForRow(at: indexPath) as? ConversationsTableCell {
+                guard let channel = controller.object(at: indexPath) as? DBChannel else { return }
+                cell.configureCell(with: channel)
+            }
+            tableView.reloadRows(at: [indexPath], with: .none)
+        case .delete:
+            guard let indexPath = indexPath else { return }
+            tableView.deleteRows(at: [indexPath], with: .none)
+        default:
+            print("switch type is default")
+        }
     }
 }
