@@ -11,12 +11,17 @@ enum DBAction {
     case add, edit, remove
 }
 
-class CoreDataStack {
-    static let shared = CoreDataStack()
-    private init() {}
-    
+protocol CoreDataStackProtocol {
+    var mainContext: NSManagedObjectContext { get }
+    var backgroundContext: NSManagedObjectContext { get }
+    func performChannelAction(channel: Channel, actionType: DBAction)
+    func performMessageAction(message: Message, channelId: String, actionType: DBAction) 
+    func printSQLiteDB()
+}
+
+class CoreDataStack: CoreDataStackProtocol {
     // MARK: - Core Data stack
-    lazy var persistentContainer: NSPersistentContainer = {
+    private lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Chat")
         container.loadPersistentStores(completionHandler: { (_, error) in
             if let error = error as NSError? {

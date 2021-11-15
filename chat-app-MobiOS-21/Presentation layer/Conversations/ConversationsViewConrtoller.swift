@@ -11,11 +11,6 @@ import CoreData
 
 class ConversationsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
-    
-    private lazy var reference = db.collection("channels")
-    
-    private lazy var db = Firestore.firestore()
-    
     // MARK: Lazy Stored Properties
     lazy var fetchedResultsController: NSFetchedResultsController<DBChannel> = {
         let fetchRequest = DBChannel.fetchRequest()
@@ -58,35 +53,6 @@ class ConversationsViewController: UIViewController {
         }
     }
     private func fetchChanellsData() {
-        reference.addSnapshotListener {querySnapshot, error in
-            guard let snapshot = querySnapshot else {
-                print("Error fetching documents: \(error!)")
-                return
-            }
-            
-            snapshot.documentChanges.forEach { diff in
-                var name: String = ""
-                var lastActivity: Date?
-                if let documentName = diff.document["name"] as? String {
-                    name = documentName
-                }
-                if let documentDate = diff.document["lastActivity"] as? Timestamp {
-                    lastActivity = Date(timeIntervalSince1970: TimeInterval(documentDate.seconds))
-                }
-                let channel = Channel(identifier: diff.document.documentID,
-                                      name: name,
-                                      lastMessage: diff.document["lastMessage"] as? String,
-                                      lastActivity: lastActivity)
-                switch diff.type {
-                case .added:
-                    CoreDataStack.shared.performChannelAction(channel: channel, actionType: .add)
-                case .modified:
-                    CoreDataStack.shared.performChannelAction(channel: channel, actionType: .edit)
-                case .removed:
-                    CoreDataStack.shared.performChannelAction(channel: channel, actionType: .remove)
-                }
-            }
-        }
     }
     
     private func logThemeChanging(selectedTheme: UIColor) {

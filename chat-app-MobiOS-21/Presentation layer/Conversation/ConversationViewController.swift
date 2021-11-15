@@ -13,12 +13,6 @@ class ConversationViewController: UIViewController {
     // MARK: - Properties
     private let channelId: String
     private let dbChannelId: String
-    // MARK: - Firestore
-    private lazy var db = Firestore.firestore()
-    private lazy var reference: CollectionReference = {
-        return db.collection("channels").document(channelId).collection("messages")
-    }()
-    
     // MARK: Lazy Stored Properties
     lazy var fetchedResultsController: NSFetchedResultsController<DBMessage> = {
         let fetchRequest = DBMessage.fetchRequest()
@@ -105,45 +99,6 @@ class ConversationViewController: UIViewController {
     }
     
     private func fetchChanelMessages() {
-        reference.addSnapshotListener {[weak self] querySnapshot, error in
-            guard let self = self,
-                  let snapshot = querySnapshot else {
-                      print("Error fetching documents: \(String(describing: error))")
-                      return
-                  }
-            
-            snapshot.documentChanges.forEach { diff in
-                guard let content = diff.document["content"] as? String else {
-                    fatalError()
-                }
-                guard let createdTimestamp = diff.document["created"] as? Timestamp else {
-                    fatalError()
-                }
-                var senderId: String = ""
-                // сделал так потому что кто-то кидает senderID, а кто-то senderId
-                if let senderID = diff.document["senderID"] as? String {
-                    senderId = senderID
-                } else if let senderID = diff.document["senderId"] as? String {
-                    senderId = senderID
-                }
-                guard var senderName = diff.document["senderName"] as? String else {
-                    fatalError()
-                }
-                if senderName.isEmpty { senderName = "No name" }
-                let message = Message(content: content,
-                                      created: Date(timeIntervalSince1970: TimeInterval(createdTimestamp.seconds)),
-                                      senderId: senderId,
-                                      senderName: senderName)
-                switch diff.type {
-                case .added:
-                    CoreDataStack.shared.performMessageAction(message: message, channelId: self.channelId, actionType: .add)
-                case .modified:
-                    CoreDataStack.shared.performMessageAction(message: message, channelId: self.channelId, actionType: .edit)
-                case .removed:
-                    CoreDataStack.shared.performMessageAction(message: message, channelId: self.channelId, actionType: .remove)
-                }
-            }
-        }
     }
     
     private func updateTableView() {
@@ -169,8 +124,6 @@ class ConversationViewController: UIViewController {
     }
     
     private func sendMessage(message: String) {
-        let message = Message(content: message, created: Date())
-        self.reference.addDocument(data: message.toDict)
     }
     
     // MARK: - Objc

@@ -7,10 +7,14 @@
 
 import Foundation
 
-class OperationDataManager: ProfileDataManagerProtocol {
+class OperationDataService: ProfileDataServiceProtocol {
+    private let fileManager: ProfileFileManagerProtocol
+    init(fileManager: ProfileFileManagerProtocol) {
+        self.fileManager = fileManager
+    }
+    
     func saveData(profile: ProfileModel, completion: @escaping (FileManagerStatus) -> Void) {
-        let saveOpeartion = SaveProfileOperation()
-        saveOpeartion.profile = profile
+        let saveOpeartion = SaveProfileOperation(fileManager: fileManager, profile: profile)
         saveOpeartion.resultCompletion = { status in
             completion(status)
         }
@@ -21,7 +25,7 @@ class OperationDataManager: ProfileDataManagerProtocol {
     }
     
     func readData(completion: @escaping (FileManagerStatus) -> Void) {
-        let readOpeartion = ReadProfileOperation()
+        let readOpeartion = ReadProfileOperation(fileManager: fileManager)
         readOpeartion.resultCompletion = { status in
             completion(status)
         }
@@ -34,19 +38,28 @@ class OperationDataManager: ProfileDataManagerProtocol {
 
 class ReadProfileOperation: Operation {
     var resultCompletion: ((FileManagerStatus) -> Void)?
+    private let fileManager: ProfileFileManagerProtocol
+    
+    init(fileManager: ProfileFileManagerProtocol) {
+        self.fileManager = fileManager
+    }
+    
     override func main() {
-        resultCompletion?(ProfileFileManager.shared.readProfileInfo())
+        resultCompletion?(fileManager.readProfileInfo())
     }
 }
 
 class SaveProfileOperation: Operation {
     var resultCompletion: ((FileManagerStatus) -> Void)?
-    var profile: ProfileModel?
+    private let profile: ProfileModel
+    private let fileManager: ProfileFileManagerProtocol
+    
+    init(fileManager: ProfileFileManagerProtocol, profile: ProfileModel) {
+        self.fileManager = fileManager
+        self.profile = profile
+    }
+    
     override func main() {
-        guard let profile = profile else {
-            resultCompletion?(.error)
-            return
-        }
-        resultCompletion?(ProfileFileManager.shared.saveProfile(profile: profile))
+        resultCompletion?(fileManager.saveProfile(profile: profile))
     }
 }

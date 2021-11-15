@@ -7,20 +7,17 @@
 
 import Foundation
 
-protocol ProfileDataManagerProtocol {
-    func saveData(profile: ProfileModel, completion: @escaping (FileManagerStatus) -> Void)
-    func readData(completion: @escaping (FileManagerStatus) -> Void)
+protocol ProfileFileManagerProtocol {
+    func saveProfile(profile: ProfileModel) -> FileManagerStatus
+    func readProfileInfo() -> FileManagerStatus
+    var currentProfile: ProfileModel? { get }
 }
 
 enum FileManagerStatus {
     case success, error
 }
 
-class ProfileFileManager {
-    static let shared = ProfileFileManager()
-    
-    private init() {}
-    
+class ProfileFileManager: ProfileFileManagerProtocol {
     var currentProfile: ProfileModel?
     
     func saveProfile(profile: ProfileModel) -> FileManagerStatus {
