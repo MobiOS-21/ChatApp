@@ -12,12 +12,14 @@ import CoreData
 class ConversationViewController: UIViewController {
     // MARK: - Properties
     private let channelId: String
-    private let dbChannelId: String
+    private let coreDataMessageService: CoreDataMessageServiceProtocol
+    private let firestoreService: FireStoreServiceProtocol
+    private let gcdService: ProfileDataServiceProtocol
     // MARK: Lazy Stored Properties
-    lazy var fetchedResultsController: NSFetchedResultsController<DBMessage> = {
+    private lazy var fetchedResultsController: NSFetchedResultsController<DBMessage> = {
         let fetchRequest = DBMessage.fetchRequest()
         let sort1 = NSSortDescriptor(key: "created", ascending: true)
-        fetchRequest.predicate = NSPredicate(format: "channel.identifier == %@", dbChannelId)
+        fetchRequest.predicate = NSPredicate(format: "channel.identifier == %@", channelId)
         fetchRequest.sortDescriptors = [sort1]
         fetchRequest.resultType = .managedObjectResultType
         fetchRequest.fetchBatchSize = 20
@@ -25,7 +27,7 @@ class ConversationViewController: UIViewController {
         
         let fetchedRequestController = NSFetchedResultsController(
             fetchRequest: fetchRequest,
-            managedObjectContext: CoreDataStack.shared.mainContext,
+            managedObjectContext: coreDataMessageService.mainContext,
             sectionNameKeyPath: nil,
             cacheName: nil)
         
@@ -39,9 +41,14 @@ class ConversationViewController: UIViewController {
     private var bottomConstraint: NSLayoutConstraint?
     
     // MARK: - Lifecycle
-    init(channelId: String, dbChannelId: String) {
+    init(channelId: String,
+         coreDataMessageService: CoreDataMessageServiceProtocol,
+         firestoreService: FireStoreServiceProtocol,
+         gcdService: ProfileDataServiceProtocol) {
         self.channelId = channelId
-        self.dbChannelId = dbChannelId
+        self.coreDataMessageService = coreDataMessageService
+        self.firestoreService = firestoreService
+        self.gcdService = gcdService
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -52,6 +59,7 @@ class ConversationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        gcdService.readData { _ in }
         configureUI()
         configureGestures()
         fetchCoreData()
@@ -99,6 +107,10 @@ class ConversationViewController: UIViewController {
     }
     
     private func fetchChanelMessages() {
+        firestoreService.fetchMessages(channelId: channelId) {[weak self] message, action  in
+            guard let self = self else { return }
+            self.coreDataMessageService.performMessageAction(message: message, channelId: self.channelId, actionType: action)
+        }
     }
     
     private func updateTableView() {
@@ -124,6 +136,7 @@ class ConversationViewController: UIViewController {
     }
     
     private func sendMessage(message: String) {
+        firestoreService.createMessage(channelId: channelId, message: message, senderName: gcdService.currentProfile?.userName ?? "No name")
     }
     
     // MARK: - Objc

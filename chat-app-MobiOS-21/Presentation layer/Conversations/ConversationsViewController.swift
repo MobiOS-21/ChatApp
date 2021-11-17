@@ -11,6 +11,9 @@ import CoreData
 
 class ConversationsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
+    var coreDataChannelService: CoreDataChannelServiceProtocol?
+    var firestoreService: FireStoreServiceProtocol?
+    var presentationService: PresentationAssemblyProtocol?
     // MARK: Lazy Stored Properties
     lazy var fetchedResultsController: NSFetchedResultsController<DBChannel> = {
         let fetchRequest = DBChannel.fetchRequest()
@@ -20,9 +23,13 @@ class ConversationsViewController: UIViewController {
         fetchRequest.resultType = .managedObjectResultType
         fetchRequest.fetchBatchSize = 20
         
+        guard let coreDataService = coreDataChannelService else {
+            fatalError()
+        }
+
         let fetchedRequestController = NSFetchedResultsController(
             fetchRequest: fetchRequest,
-            managedObjectContext: CoreDataStack.shared.mainContext,
+            managedObjectContext: coreDataService.mainContext,
             sectionNameKeyPath: nil,
             cacheName: nil)
         
@@ -39,6 +46,15 @@ class ConversationsViewController: UIViewController {
         fetchChanellsData()
     }
     
+    // MARK: - ConfigureVC Properties
+    func setServices(coreDataChannelService: CoreDataChannelServiceProtocol,
+                     firestoreService: FireStoreServiceProtocol,
+                     presentationService: PresentationAssemblyProtocol) {
+        self.coreDataChannelService = coreDataChannelService
+        self.firestoreService = firestoreService
+        self.presentationService = presentationService
+    }
+    
     // MARK: - Private
     private func configureUI() {
         tableView.estimatedRowHeight = 30
@@ -53,6 +69,10 @@ class ConversationsViewController: UIViewController {
         }
     }
     private func fetchChanellsData() {
+        firestoreService?.fetchChannels {[weak self] channel, action  in
+            guard let self = self else { return }
+            self.coreDataChannelService?.performChannelAction(channel: channel, actionType: action)
+        }
     }
     
     private func logThemeChanging(selectedTheme: UIColor) {
@@ -68,18 +88,16 @@ class ConversationsViewController: UIViewController {
     
     private func showAlertForThemesVC() {
         let showThemesSwiftVC: (UIAlertAction) -> Void = {[weak self] _ in
-            guard let self = self else { return }
-            let storyboard = UIStoryboard(name: "Conversations", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "ThemesVCSwift")
-            (vc as? ThemesViewControllerSwift)?.didSelectThemeClosure = self.logThemeChanging(selectedTheme:)
+            guard let self = self,
+                  let vc = self.presentationService?.swiftThemesViewController()else { return }
+            vc.didSelectThemeClosure = self.logThemeChanging(selectedTheme:)
             self.present(vc, animated: true)
         }
         
         let showThemesObjcVC: (UIAlertAction) -> Void = {[weak self] _ in
-            guard let self = self else { return }
-            let storyboard = UIStoryboard(name: "Conversations", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "ThemesVC")
-            (vc as? ThemesViewController)?.delegate = self
+            guard let self = self,
+            let vc = self.presentationService?.objcThemesViewController()else { return }
+            vc.delegate = self
             self.present(vc, animated: true)
         }
         self.openAlert(message: "Select themes view controller type",
@@ -99,8 +117,7 @@ class ConversationsViewController: UIViewController {
     }
     // MARK: - IBActions
     @IBAction func tapProfileBtn(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Profile", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "ProfileVC")
+        guard let vc = presentationService?.profileViewController() else { return }
         self.present(vc, animated: true)
     }
     
@@ -113,8 +130,7 @@ class ConversationsViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         alert.addAction(UIAlertAction(title: "Create", style: .default, handler: {[weak self] _ in
             guard let self = self, let channelName = alert.textFields?.first?.text  else { return }
-            let channel = Channel(identifier: UUID().uuidString, name: channelName, lastMessage: nil, lastActivity: nil)
-            self.reference.addDocument(data: channel.dictionary)
+            self.firestoreService?.createChannel(channelName: channelName)
         }))
         present(alert, animated: true, completion: nil)
     }
@@ -142,7 +158,7 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let channel = fetchedResultsController.object(at: indexPath)
-        let vc = ConversationViewController(channelId: channel.identifier ?? "", dbChannelId: channel.identifier ?? "")
+        guard let vc = presentationService?.conversationViewController(channelId: channel.identifier ?? "") else { return }
         vc.title = channel.name
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -150,7 +166,8 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             guard let channelId = fetchedResultsController.object(at: indexPath).identifier else { return }
-            reference.document(channelId).delete()
+            firestoreService?.deleteChannel(channelId: channelId)
+            
         }
     }
 }

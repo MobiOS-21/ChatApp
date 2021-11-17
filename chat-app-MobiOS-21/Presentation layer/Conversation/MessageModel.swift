@@ -23,7 +23,7 @@ class Message: MessageCellConfiguration {
     init(content: String,
          created: Date,
          senderId: String = UIDevice.current.identifierForVendor?.uuidString ?? "",
-         senderName: String = ProfileFileManager.shared.currentProfile?.userName ?? "No name") {
+         senderName: String /*= ProfileFileManager.shared.currentProfile?.userName ?? "No name"*/) {
         self.content = content
         self.created = created
         self.senderId = senderId

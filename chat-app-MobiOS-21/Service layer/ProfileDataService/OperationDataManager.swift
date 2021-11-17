@@ -8,7 +8,9 @@
 import Foundation
 
 class OperationDataService: ProfileDataServiceProtocol {
+    lazy var currentProfile: ProfileModel? = fileManager.currentProfile
     private let fileManager: ProfileFileManagerProtocol
+    
     init(fileManager: ProfileFileManagerProtocol) {
         self.fileManager = fileManager
     }
@@ -17,6 +19,10 @@ class OperationDataService: ProfileDataServiceProtocol {
         let saveOpeartion = SaveProfileOperation(fileManager: fileManager, profile: profile)
         saveOpeartion.resultCompletion = { status in
             completion(status)
+            guard let profile = self.currentProfile else { return }
+            NotificationCenter.default.post(name: Notification.Name("didEditProfile"),
+                                            object: nil,
+                                            userInfo: ["profile": profile])
         }
         
         let queue = OperationQueue()

@@ -10,18 +10,19 @@ import FirebaseFirestore
 
 // MARK: Protocol
 protocol FireStoreServiceProtocol {
-    func fetchChannels(completion: @escaping (Channel) -> Void)
+    func fetchChannels(completion: @escaping (Channel, DBAction) -> Void)
     func createChannel(channelName: String)
-    func fetchMessages(channelId: String, completion: @escaping (Message) -> Void)
-    func createMessage(channelId: String, message: String)
+    func deleteChannel(channelId: String)
+    func fetchMessages(channelId: String, completion: @escaping (Message, DBAction) -> Void)
+    func createMessage(channelId: String, message: String, senderName: String)
 }
 
 class FireStoreService: FireStoreServiceProtocol {
     // MARK: - Properties
     private lazy var reference = db.collection("channels")
     private lazy var db = Firestore.firestore()
-    //MARK: - FireStoreServiceProtocol
-    func fetchChannels(completion: @escaping (Channel) -> Void) {
+    // MARK: - FireStoreServiceProtocol
+    func fetchChannels(completion: @escaping (Channel, DBAction) -> Void) {
         reference.addSnapshotListener {querySnapshot, error in
             guard let snapshot = querySnapshot else {
                 print("Error fetching documents: \(error!)")
@@ -43,11 +44,11 @@ class FireStoreService: FireStoreServiceProtocol {
                                       lastActivity: lastActivity)
                 switch diff.type {
                 case .added:
-                    CoreDataStack.shared.performChannelAction(channel: channel, actionType: .add)
+                    completion(channel, .add)
                 case .modified:
-                    CoreDataStack.shared.performChannelAction(channel: channel, actionType: .edit)
+                    completion(channel, .edit)
                 case .removed:
-                    CoreDataStack.shared.performChannelAction(channel: channel, actionType: .remove)
+                    completion(channel, .remove)
                 }
             }
         }
@@ -58,7 +59,11 @@ class FireStoreService: FireStoreServiceProtocol {
         reference.addDocument(data: channel.dictionary)
     }
     
-    func fetchMessages(channelId: String, completion: @escaping (Message) -> Void) {
+    func deleteChannel(channelId: String) {
+        reference.document(channelId).delete()
+    }
+    
+    func fetchMessages(channelId: String, completion: @escaping (Message, DBAction) -> Void) {
         let messageReference = reference.document(channelId).collection("messages")
         messageReference.addSnapshotListener {querySnapshot, error in
             guard  let snapshot = querySnapshot else {
@@ -90,19 +95,19 @@ class FireStoreService: FireStoreServiceProtocol {
                                       senderName: senderName)
                 switch diff.type {
                 case .added:
-                    CoreDataStack.shared.performMessageAction(message: message, channelId: channelId, actionType: .add)
+                    completion(message, .add)
                 case .modified:
-                    CoreDataStack.shared.performMessageAction(message: message, channelId: channelId, actionType: .edit)
+                    completion(message, .edit)
                 case .removed:
-                    CoreDataStack.shared.performMessageAction(message: message, channelId: channelId, actionType: .remove)
+                    completion(message, .remove)
                 }
             }
         }
     }
     
-    func createMessage(channelId: String, message: String) {
+    func createMessage(channelId: String, message: String, senderName: String) {
         let messageReference = reference.document(channelId).collection("messages")
-        let message = Message(content: message, created: Date())
+        let message = Message(content: message, created: Date(), senderName: senderName)
         messageReference.addDocument(data: message.toDict)
     }
 }

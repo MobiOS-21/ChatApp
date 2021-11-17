@@ -24,13 +24,21 @@ final class ProfileViewController: UIViewController, ImagePickerDelegate {
     
     private lazy var imagePicker: ImagePickerHelper = ImagePickerHelper(presentationController: self, delegate: self)
     private var currentState: ProfileScreenState = .disabled
-    private let currentProfile = ProfileFileManager.shared.currentProfile
-    private var currentFileManager: ProfileDataManagerProtocol = GCDDataManager()
+    private var currentProfile: ProfileModel? {
+        didSet {
+            DispatchQueue.main.async {
+                self.setupProfileInfo()
+            }
+        }
+    }
+    private lazy var currentFileManager: ProfileDataServiceProtocol? = gcdService
+    private var gcdService: ProfileDataServiceProtocol?
+    private var operationService: ProfileDataServiceProtocol?
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupProfileInfo()
-        
+    
+        getProfile()
         let notifier = NotificationCenter.default
         notifier.addObserver(self,
                              selector: #selector(keyboardWillShowNotification(_:)),
@@ -74,7 +82,22 @@ final class ProfileViewController: UIViewController, ImagePickerDelegate {
         checkFieldsChanges()
     }
     
+    func setupServices(gcdService: ProfileDataServiceProtocol?, operationService: ProfileDataServiceProtocol?) {
+        self.gcdService = gcdService
+        self.operationService = operationService
+    }
+    
     // MARK: - Private
+    private func getProfile() {
+        currentFileManager?.readData { [weak self] status in
+            guard let self = self, status == .success else {
+                self?.currentProfile = nil
+                return
+            }
+            self.currentProfile = self.currentFileManager?.currentProfile
+        }
+    }
+    
     private func checkFieldsChanges() {
         if currentState != .changeProfile {
             currentState = .changeProfile
@@ -85,7 +108,7 @@ final class ProfileViewController: UIViewController, ImagePickerDelegate {
     final private func setupDefaultImage() {
         guard let userName = userNameTF.text else { return }
         let userInitials = Array(userName.components(separatedBy: " ").compactMap({ $0.first }).prefix(2))
-        let initialsFontSize = userAvatar.frame.width / 3
+        let initialsFontSize = userInitials.count == 2 ? userAvatar.frame.width / 3 : userAvatar.frame.width / 4
         userAvatar.image = String(userInitials).image(withAttributes: [.font: UIFont.systemFont(ofSize: initialsFontSize, weight: .bold)])
     }
     
@@ -94,7 +117,7 @@ final class ProfileViewController: UIViewController, ImagePickerDelegate {
         userDescriptionTV.text = currentProfile?.userDecription
         if let imageData = currentProfile?.userAvater {
             userAvatar.image = UIImage(data: imageData)
-        } else if currentProfile?.userName != nil {
+        } else {
             setupDefaultImage()
         }
     }
@@ -180,7 +203,7 @@ final class ProfileViewController: UIViewController, ImagePickerDelegate {
     }
     
     private func saveProfileInfo() {
-        currentFileManager.saveData(profile: configureNewProfile()) {[weak self] status in
+        currentFileManager?.saveData(profile: configureNewProfile()) {[weak self] status in
             guard let self = self else { return }
             switch status {
             case .success:
@@ -208,14 +231,14 @@ final class ProfileViewController: UIViewController, ImagePickerDelegate {
     
     @IBAction func tappedSaveGCDBtn(_ sender: Any) {
         currentState = .saving
-        currentFileManager = GCDDataManager()
+        currentFileManager = gcdService
         updateUI()
         saveProfileInfo()
     }
     
     @IBAction func tappedSaveOperationBtn(_ sender: Any) {
         currentState = .saving
-        currentFileManager = OperationDataManager()
+        currentFileManager = operationService
         updateUI()
         saveProfileInfo()
     }

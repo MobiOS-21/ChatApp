@@ -5,9 +5,8 @@
 //  Created by Александр Дергилёв on 15.11.2021.
 //
 
-
 class RootAssembly {
     lazy var presentationAssembly: PresentationAssemblyProtocol = PresentationAssembly(serviceAssembly: self.serviceAssembly)
     private lazy var serviceAssembly: ServiceAssemblyProtocol = ServiceAssembly(coreAssembly: self.coreAssembly)
-    private lazy var coreAssembly: CoreAssemblyProtocol = CoreAssembly()
+    lazy var coreAssembly: CoreAssemblyProtocol = CoreAssembly()
 }

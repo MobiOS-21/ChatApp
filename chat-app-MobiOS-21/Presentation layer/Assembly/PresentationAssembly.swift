@@ -25,17 +25,25 @@ class PresentationAssembly: PresentationAssemblyProtocol {
     func conversationsViewController() -> ConversationsViewController {
         let storyboard = UIStoryboard(name: "Conversations", bundle: nil)
         guard let vc = storyboard.instantiateViewController(withIdentifier: "ConversationsVC") as? ConversationsViewController else { fatalError()}
+        vc.setServices(coreDataChannelService: serviceAssembly.coreDataChannelService,
+                       firestoreService: serviceAssembly.fireStoreService,
+                       presentationService: self)
         return vc
     }
     
     func conversationViewController(channelId: String) -> ConversationViewController {
-        let vc = ConversationViewController(channelId: channelId, dbChannelId: channelId)
+        let vc = ConversationViewController(channelId: channelId,
+                                            coreDataMessageService: serviceAssembly.coreDataMessageService,
+                                            firestoreService: serviceAssembly.fireStoreService,
+                                            gcdService: serviceAssembly.gcdService)
         return vc
     }
     
     func profileViewController() -> ProfileViewController {
         let storyboard = UIStoryboard(name: "Profile", bundle: nil)
         guard let vc = storyboard.instantiateViewController(withIdentifier: "ProfileVC") as? ProfileViewController else { fatalError()}
+        vc.setupServices(gcdService: serviceAssembly.gcdService,
+                         operationService: serviceAssembly.operationService)
         return vc
     }
     
