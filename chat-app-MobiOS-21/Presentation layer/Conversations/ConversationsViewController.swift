@@ -11,48 +11,22 @@ import CoreData
 
 class ConversationsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
-    var coreDataChannelService: CoreDataChannelServiceProtocol?
-    var firestoreService: FireStoreServiceProtocol?
-    var presentationService: PresentationAssemblyProtocol?
-    // MARK: Lazy Stored Properties
-    lazy var fetchedResultsController: NSFetchedResultsController<DBChannel> = {
-        let fetchRequest = DBChannel.fetchRequest()
-        let sort1 = NSSortDescriptor(key: "lastActivity", ascending: false)
-        let sort2 = NSSortDescriptor(key: "name", ascending: true)
-        fetchRequest.sortDescriptors = [sort1, sort2]
-        fetchRequest.resultType = .managedObjectResultType
-        fetchRequest.fetchBatchSize = 20
-        
-        guard let coreDataService = coreDataChannelService else {
-            fatalError()
-        }
-
-        let fetchedRequestController = NSFetchedResultsController(
-            fetchRequest: fetchRequest,
-            managedObjectContext: coreDataService.mainContext,
-            sectionNameKeyPath: nil,
-            cacheName: nil)
-        
-        fetchedRequestController.delegate = self
-        return fetchedRequestController
-    }()
-    
+    // MARK: - Properties
+    private var presentationService: PresentationAssemblyProtocol?
+    private var channelViewModel: ChannelViewModelProtocol?
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureUI()
         fetchCoreData()
-        fetchChanellsData()
+        channelViewModel?.fetchChannels()
     }
     
     // MARK: - ConfigureVC Properties
-    func setServices(coreDataChannelService: CoreDataChannelServiceProtocol,
-                     firestoreService: FireStoreServiceProtocol,
-                     presentationService: PresentationAssemblyProtocol) {
-        self.coreDataChannelService = coreDataChannelService
-        self.firestoreService = firestoreService
+    func setProperties(presentationService: PresentationAssemblyProtocol, channelViewModel: ChannelViewModelProtocol) {
         self.presentationService = presentationService
+        self.channelViewModel = channelViewModel
     }
     
     // MARK: - Private
@@ -63,18 +37,12 @@ class ConversationsViewController: UIViewController {
     
     private func fetchCoreData() {
         do {
-            try fetchedResultsController.performFetch()
+            try channelViewModel?.fetchedResultsController.performFetch()
         } catch {
             debugPrint(error.localizedDescription)
         }
     }
-    private func fetchChanellsData() {
-        firestoreService?.fetchChannels {[weak self] channel, action  in
-            guard let self = self else { return }
-            self.coreDataChannelService?.performChannelAction(channel: channel, actionType: action)
-        }
-    }
-    
+
     private func logThemeChanging(selectedTheme: UIColor) {
         debugPrint("Theme is \(String(describing: selectedTheme))")
         save(selectedTheme: selectedTheme)
@@ -107,7 +75,7 @@ class ConversationsViewController: UIViewController {
     }
     
     private func validateIndexPath(_ indexPath: IndexPath) -> Bool {
-        if let sections = self.fetchedResultsController.sections,
+        if let sections = channelViewModel?.fetchedResultsController.sections,
             indexPath.section < sections.count {
             if indexPath.row < sections[indexPath.section].numberOfObjects {
                 return true
@@ -122,15 +90,15 @@ class ConversationsViewController: UIViewController {
     }
     
     @IBAction func tapCreateChannelBtn(_ sender: Any) {
-        let alert = UIAlertController(title: "Create channel", message: "Alert Message", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Create channel", message: nil, preferredStyle: .alert)
         alert.addTextField { textField in
             textField.placeholder = "Enter channel name"
         }
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         alert.addAction(UIAlertAction(title: "Create", style: .default, handler: {[weak self] _ in
-            guard let self = self, let channelName = alert.textFields?.first?.text  else { return }
-            self.firestoreService?.createChannel(channelName: channelName)
+            guard let self = self, let channelName = alert.textFields?.first?.text, !channelName.isEmpty  else { return }
+            self.channelViewModel?.createChannel(channelName: channelName)
         }))
         present(alert, animated: true, completion: nil)
     }
@@ -142,12 +110,12 @@ class ConversationsViewController: UIViewController {
 
 extension ConversationsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fetchedResultsController.fetchedObjects?.count ?? 0
+        return channelViewModel?.fetchedResultsController.fetchedObjects?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ConversationsTableCell.reuseIdentifire, for: indexPath) as? ConversationsTableCell else { fatalError() }
-        let channel = fetchedResultsController.object(at: indexPath)
+        guard let channel = channelViewModel?.fetchedResultsController.object(at: indexPath) else { fatalError() }
         if self.validateIndexPath(indexPath) {
             cell.configureCell(with: channel)
         } else {
@@ -157,7 +125,7 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let channel = fetchedResultsController.object(at: indexPath)
+        guard let channel = channelViewModel?.fetchedResultsController.object(at: indexPath) else { fatalError() }
         guard let vc = presentationService?.conversationViewController(channelId: channel.identifier ?? "") else { return }
         vc.title = channel.name
         navigationController?.pushViewController(vc, animated: true)
@@ -165,8 +133,8 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            guard let channelId = fetchedResultsController.object(at: indexPath).identifier else { return }
-            firestoreService?.deleteChannel(channelId: channelId)
+            guard let channelId = channelViewModel?.fetchedResultsController.object(at: indexPath).identifier else { return }
+            channelViewModel?.deleteChannel(channelId: channelId)
             
         }
     }

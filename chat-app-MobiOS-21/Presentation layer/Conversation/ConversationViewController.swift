@@ -12,28 +12,7 @@ import CoreData
 class ConversationViewController: UIViewController {
     // MARK: - Properties
     private let channelId: String
-    private let coreDataMessageService: CoreDataMessageServiceProtocol
-    private let firestoreService: FireStoreServiceProtocol
-    private let gcdService: ProfileDataServiceProtocol
-    // MARK: Lazy Stored Properties
-    private lazy var fetchedResultsController: NSFetchedResultsController<DBMessage> = {
-        let fetchRequest = DBMessage.fetchRequest()
-        let sort1 = NSSortDescriptor(key: "created", ascending: true)
-        fetchRequest.predicate = NSPredicate(format: "channel.identifier == %@", channelId)
-        fetchRequest.sortDescriptors = [sort1]
-        fetchRequest.resultType = .managedObjectResultType
-        fetchRequest.fetchBatchSize = 20
-        fetchRequest.fetchLimit = 20
-        
-        let fetchedRequestController = NSFetchedResultsController(
-            fetchRequest: fetchRequest,
-            managedObjectContext: coreDataMessageService.mainContext,
-            sectionNameKeyPath: nil,
-            cacheName: nil)
-        
-        fetchedRequestController.delegate = self
-        return fetchedRequestController
-    }()
+    private let messageViewModel: MessageViewModelProtocol
     // MARK: - UI
     private let tableView = UITableView(frame: .zero, style: .plain)
     private let messageInputView = MessageInputView()
@@ -41,14 +20,9 @@ class ConversationViewController: UIViewController {
     private var bottomConstraint: NSLayoutConstraint?
     
     // MARK: - Lifecycle
-    init(channelId: String,
-         coreDataMessageService: CoreDataMessageServiceProtocol,
-         firestoreService: FireStoreServiceProtocol,
-         gcdService: ProfileDataServiceProtocol) {
+    init(channelId: String, messageViewModel: MessageViewModelProtocol) {
         self.channelId = channelId
-        self.coreDataMessageService = coreDataMessageService
-        self.firestoreService = firestoreService
-        self.gcdService = gcdService
+        self.messageViewModel = messageViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -59,11 +33,10 @@ class ConversationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        gcdService.readData { _ in }
         configureUI()
         configureGestures()
         fetchCoreData()
-        fetchChanelMessages()
+        messageViewModel.fetchMessages()
     }
     
     // MARK: - Private
@@ -71,7 +44,7 @@ class ConversationViewController: UIViewController {
         view.addSubview(tableView)
         view.addSubview(messageInputView)
         
-        messageInputView.sendButtonCallback = sendMessage(message:)
+        messageInputView.sendButtonCallback = messageViewModel.sendMessage(message:)
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         messageInputView.translatesAutoresizingMaskIntoConstraints = false
@@ -100,21 +73,14 @@ class ConversationViewController: UIViewController {
     
     private func fetchCoreData() {
         do {
-            try fetchedResultsController.performFetch()
+            try messageViewModel.fetchedResultsController.performFetch()
         } catch {
             debugPrint(error.localizedDescription)
         }
     }
     
-    private func fetchChanelMessages() {
-        firestoreService.fetchMessages(channelId: channelId) {[weak self] message, action  in
-            guard let self = self else { return }
-            self.coreDataMessageService.performMessageAction(message: message, channelId: self.channelId, actionType: action)
-        }
-    }
-    
     private func updateTableView() {
-        guard let messageCount = fetchedResultsController.fetchedObjects?.count, messageCount > 0 else { return }
+        guard let messageCount = messageViewModel.fetchedResultsController.fetchedObjects?.count, messageCount > 0 else { return }
         DispatchQueue.main.async {[weak self] in
             self?.tableView.scrollToRow(at: IndexPath(row: messageCount - 1, section: 0), at: .bottom, animated: true)
         }
@@ -133,10 +99,6 @@ class ConversationViewController: UIViewController {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
         self.view.addGestureRecognizer(tapGesture)
-    }
-    
-    private func sendMessage(message: String) {
-        firestoreService.createMessage(channelId: channelId, message: message, senderName: gcdService.currentProfile?.userName ?? "No name")
     }
     
     // MARK: - Objc
@@ -159,12 +121,12 @@ class ConversationViewController: UIViewController {
 
 extension ConversationViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fetchedResultsController.fetchedObjects?.count ?? 0
+        return messageViewModel.fetchedResultsController.fetchedObjects?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ConversationTableCell.reuseIdentifier, for: indexPath) as? ConversationTableCell else { fatalError()}
-        let message = fetchedResultsController.object(at: indexPath)
+        let message = messageViewModel.fetchedResultsController.object(at: indexPath)
         cell.configureCell(with: message)
         return cell
     }

@@ -25,17 +25,17 @@ class PresentationAssembly: PresentationAssemblyProtocol {
     func conversationsViewController() -> ConversationsViewController {
         let storyboard = UIStoryboard(name: "Conversations", bundle: nil)
         guard let vc = storyboard.instantiateViewController(withIdentifier: "ConversationsVC") as? ConversationsViewController else { fatalError()}
-        vc.setServices(coreDataChannelService: serviceAssembly.coreDataChannelService,
-                       firestoreService: serviceAssembly.fireStoreService,
-                       presentationService: self)
+        let viewModel = channelViewModel()
+        viewModel.fetchedResultsController.delegate = vc
+        vc.setProperties(presentationService: self, channelViewModel: viewModel)
         return vc
     }
     
     func conversationViewController(channelId: String) -> ConversationViewController {
+        let viewModel = messageViewModel(channelId: channelId)
         let vc = ConversationViewController(channelId: channelId,
-                                            coreDataMessageService: serviceAssembly.coreDataMessageService,
-                                            firestoreService: serviceAssembly.fireStoreService,
-                                            gcdService: serviceAssembly.gcdService)
+                                            messageViewModel: viewModel)
+        viewModel.fetchedResultsController.delegate = vc
         return vc
     }
     
@@ -57,5 +57,17 @@ class PresentationAssembly: PresentationAssemblyProtocol {
         let storyboard = UIStoryboard(name: "Themes", bundle: nil)
         guard let vc = storyboard.instantiateViewController(withIdentifier: "ThemesVC") as? ThemesViewController else { fatalError() }
         return vc
+    }
+    
+    // MARK: - ViewModelAssembly
+    private func channelViewModel() -> ChannelViewModelProtocol {
+        return ChannelViewModel(coreDataChannelService: serviceAssembly.coreDataChannelService,
+                                firestoreService: serviceAssembly.fireStoreService)
+    }
+    
+    private func messageViewModel(channelId: String) -> MessageViewModelProtocol {
+        return MessageViewModel(coreDataMessageService: serviceAssembly.coreDataMessageService,
+                                firestoreService: serviceAssembly.fireStoreService,
+                                gcdService: serviceAssembly.gcdService, channelId: channelId)
     }
 }
