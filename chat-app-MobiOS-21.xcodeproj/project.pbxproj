@@ -36,6 +36,10 @@
 		3AD474FC274C0FC700374662 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD474FB274C0FC700374662 /* NetworkService.swift */; };
 		3AD474FE274C110900374662 /* RequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD474FD274C110900374662 /* RequestFactory.swift */; };
 		3AD47500274C120A00374662 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD474FF274C120A00374662 /* Request.swift */; };
+		3AD47503274C165600374662 /* PhotosCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD47502274C165600374662 /* PhotosCollectionVC.swift */; };
+		3AD47505274C198E00374662 /* PhotosCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD47504274C198E00374662 /* PhotosCollectionCell.swift */; };
+		3AD47507274C1A1700374662 /* ImageView+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD47506274C1A1700374662 /* ImageView+extensions.swift */; };
+		3AD47509274C1B1700374662 /* PhotosViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD47508274C1B1700374662 /* PhotosViewModel.swift */; };
 		3AE6DDDF26F90F4A00191D7A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE6DDDE26F90F4A00191D7A /* AppDelegate.swift */; };
 		3AE6DDE626F90F4A00191D7A /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AE6DDE426F90F4A00191D7A /* Profile.storyboard */; };
 		3AE6DDE826F90F4B00191D7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3AE6DDE726F90F4B00191D7A /* Assets.xcassets */; };
@@ -90,6 +94,10 @@
 		3AD474FB274C0FC700374662 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		3AD474FD274C110900374662 /* RequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestFactory.swift; sourceTree = "<group>"; };
 		3AD474FF274C120A00374662 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		3AD47502274C165600374662 /* PhotosCollectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionVC.swift; sourceTree = "<group>"; };
+		3AD47504274C198E00374662 /* PhotosCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionCell.swift; sourceTree = "<group>"; };
+		3AD47506274C1A1700374662 /* ImageView+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageView+extensions.swift"; sourceTree = "<group>"; };
+		3AD47508274C1B1700374662 /* PhotosViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewModel.swift; sourceTree = "<group>"; };
 		3AE6DDDB26F90F4A00191D7A /* chat-app-MobiOS-21.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "chat-app-MobiOS-21.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AE6DDDE26F90F4A00191D7A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3AE6DDE526F90F4A00191D7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Profile.storyboard; sourceTree = "<group>"; };
@@ -164,6 +172,7 @@
 				3A0060D2270B8DCD0047EFAE /* Date+extensions.swift */,
 				3AEE4AD8271770AB006A63C0 /* UserDefaults+extensions.swift */,
 				3A12BFC1272884D400D86C17 /* Codable+extension.swift */,
+				3AD47506274C1A1700374662 /* ImageView+extensions.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -185,6 +194,16 @@
 				3AD474FD274C110900374662 /* RequestFactory.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		3AD47501274C163100374662 /* Photos */ = {
+			isa = PBXGroup;
+			children = (
+				3AD47502274C165600374662 /* PhotosCollectionVC.swift */,
+				3AD47504274C198E00374662 /* PhotosCollectionCell.swift */,
+				3AD47508274C1B1700374662 /* PhotosViewModel.swift */,
+			);
+			path = Photos;
 			sourceTree = "<group>";
 		};
 		3AE6DDD226F90F4A00191D7A = {
@@ -244,6 +263,7 @@
 				3AEE76E52742DC0000AABDFB /* Conversations */,
 				3AEE76E62742DCC700AABDFB /* Conversation */,
 				3AEE76E72742DD3000AABDFB /* Profile */,
+				3AD47501274C163100374662 /* Photos */,
 				3AFF11922714C169005991C5 /* Themes */,
 				3AEE76EA2742DD8100AABDFB /* Custom views */,
 			);
@@ -577,18 +597,22 @@
 				3AEC2F0B274578D900481D4A /* CoreDataChannelService.swift in Sources */,
 				3AEC2F0D27457A2D00481D4A /* CoreDataMessageService.swift in Sources */,
 				3A3154F52731AD1C00FE980A /* Chat.xcdatamodeld in Sources */,
+				3AD47509274C1B1700374662 /* PhotosViewModel.swift in Sources */,
 				3A44DC0327024E4100F45CB3 /* String+extensions.swift in Sources */,
 				3AAA3AD42746C8690083F0B9 /* MessageViewModel.swift in Sources */,
 				3A721A07270CC79C001A7DCC /* ConversationTableCell.swift in Sources */,
 				3AD474F7274C05D600374662 /* Parser.swift in Sources */,
 				3AEE4AD727176BD3006A63C0 /* ThemesSwift.swift in Sources */,
 				3A0060D3270B8DCD0047EFAE /* Date+extensions.swift in Sources */,
+				3AD47503274C165600374662 /* PhotosCollectionVC.swift in Sources */,
 				3AEE76F72742E20E00AABDFB /* FireStoreService.swift in Sources */,
 				3A31550D2731B05800FE980A /* DBChannel+CoreDataClass.swift in Sources */,
 				3A0060D1270B889D0047EFAE /* ChannelModel.swift in Sources */,
 				3A31550A2731B03600FE980A /* DBChannel+CoreDataProperties.swift in Sources */,
 				3A0060CE270B83690047EFAE /* ConversationsTableCell.swift in Sources */,
 				3AAA3AD22746C3730083F0B9 /* ChannelViewModel.swift in Sources */,
+				3AD47505274C198E00374662 /* PhotosCollectionCell.swift in Sources */,
+				3AD47507274C1A1700374662 /* ImageView+extensions.swift in Sources */,
 				3A2F46332733CAFE00CA9ECB /* CoreDataStack.swift in Sources */,
 				3A3155092731B03600FE980A /* DBMessage+CoreDataProperties.swift in Sources */,
 				3AD474F9274C05FD00374662 /* RequestSender.swift in Sources */,

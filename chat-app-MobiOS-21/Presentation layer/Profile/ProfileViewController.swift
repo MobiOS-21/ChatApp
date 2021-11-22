@@ -23,6 +23,7 @@ final class ProfileViewController: UIViewController, ImagePickerDelegate {
     @IBOutlet var scrollView: UIScrollView!
     
     private lazy var imagePicker: ImagePickerHelper = ImagePickerHelper(presentationController: self, delegate: self)
+    
     private var currentState: ProfileScreenState = .disabled
     private var currentProfile: ProfileModel? {
         didSet {
@@ -34,6 +35,7 @@ final class ProfileViewController: UIViewController, ImagePickerDelegate {
     private lazy var currentFileManager: ProfileDataServiceProtocol? = gcdService
     private var gcdService: ProfileDataServiceProtocol?
     private var operationService: ProfileDataServiceProtocol?
+    private var presentationService: PresentationAssemblyProtocol?
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +62,7 @@ final class ProfileViewController: UIViewController, ImagePickerDelegate {
         
         configureUI()
     }
-    
+
     @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
         view.endEditing(true)
     }
@@ -82,9 +84,12 @@ final class ProfileViewController: UIViewController, ImagePickerDelegate {
         checkFieldsChanges()
     }
     
-    func setupServices(gcdService: ProfileDataServiceProtocol?, operationService: ProfileDataServiceProtocol?) {
+    func setupServices(gcdService: ProfileDataServiceProtocol?,
+                       operationService: ProfileDataServiceProtocol?,
+                       presentationService: PresentationAssemblyProtocol?) {
         self.gcdService = gcdService
         self.operationService = operationService
+        self.presentationService = presentationService
     }
     
     // MARK: - Private
@@ -222,7 +227,7 @@ final class ProfileViewController: UIViewController, ImagePickerDelegate {
 
     // MARK: - IBActions
     @IBAction func tappedEditAvaterButton(_ sender: Any) {
-        imagePicker.present(from: userAvatar)
+        imagePicker.present(from: userAvatar, actions: [downloadImagesAction()])
     }
     
     @IBAction func tappedCloseBtn(_ sender: Any) {
@@ -255,6 +260,22 @@ final class ProfileViewController: UIViewController, ImagePickerDelegate {
         }
     }
     
+    private func downloadImagesAction() -> UIAlertAction {
+        let action = UIAlertAction(title: "Download", style: .default) {[weak self] _ in
+            guard let vc = self?.presentationService?.photosViewController() else { return }
+            vc.selectImageCallback = self?.selectImageFromNetwork(url:)
+            let nc = UINavigationController(rootViewController: vc)
+            nc.modalPresentationStyle = .overFullScreen
+            self?.present(nc, animated: true, completion: nil)
+        }
+        return action
+    }
+    
+    private func selectImageFromNetwork(url: URL) {
+        currentState = .changeProfile
+        updateUI()
+        userAvatar.setImage(from: url)
+    }
     // MARK: - ImagePickerDelegate
     func didSelect(image: UIImage?) {
         guard let image = image else { return }

@@ -22,7 +22,7 @@ class NetwrokService: NetworkServiceProtocol {
         requestSender.send(config: RequestFactory.imagesConfig()) { result in
             switch result {
             case .success(let response):
-                let urls = response.hits.compactMap({ URL(string: $0.previewURL) })
+                let urls = response.hits.compactMap({ URL(string: $0.webformatURL) })
                 completionHandler(.success(urls))
             case .failure(let error):
                 completionHandler(.failure(error))

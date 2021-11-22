@@ -19,7 +19,7 @@ struct ImagesResponse: Codable {
 
 // MARK: - Hit
 struct Hit: Codable {
-    let previewURL: String
+    let webformatURL: String
 }
 
 class ImageItemParser: IParser {

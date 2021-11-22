@@ -26,8 +26,9 @@ class ImagesRequest: IRequest {
     }
     
     private func generateRequest() {
-        guard var urlComponents = URLComponents(string: "https://pixabay.com/api") else { return }
-        urlComponents.queryItems = [URLQueryItem(name: "key", value: apiKey)]
+        guard var urlComponents = URLComponents(string: "https://pixabay.com/api/") else { return }
+        urlComponents.queryItems = [URLQueryItem(name: "key", value: apiKey),
+        URLQueryItem(name: "per_page", value: "200")]
         guard let url = urlComponents.url else { return }
         urlRequest = URLRequest(url: url)
     }
