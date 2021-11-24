@@ -22,6 +22,7 @@
 		3A31550A2731B03600FE980A /* DBChannel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3155082731B03600FE980A /* DBChannel+CoreDataProperties.swift */; };
 		3A31550D2731B05800FE980A /* DBChannel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A31550B2731B05800FE980A /* DBChannel+CoreDataClass.swift */; };
 		3A31550E2731B05800FE980A /* DBMessage+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A31550C2731B05800FE980A /* DBMessage+CoreDataClass.swift */; };
+		3A3A73B7274EBDFE0063733E /* ConcurencySender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3A73B6274EBDFE0063733E /* ConcurencySender.swift */; };
 		3A44DBFC27023AF800F45CB3 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A44DBFB27023AF800F45CB3 /* ProfileViewController.swift */; };
 		3A44DBFF27024BD500F45CB3 /* ImagePickerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A44DBFE27024BD500F45CB3 /* ImagePickerHelper.swift */; };
 		3A44DC0127024C8200F45CB3 /* UIViewController+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A44DC0027024C8200F45CB3 /* UIViewController+extensions.swift */; };
@@ -80,6 +81,7 @@
 		3A3155082731B03600FE980A /* DBChannel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBChannel+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3A31550B2731B05800FE980A /* DBChannel+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBChannel+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3A31550C2731B05800FE980A /* DBMessage+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBMessage+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3A3A73B6274EBDFE0063733E /* ConcurencySender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcurencySender.swift; sourceTree = "<group>"; };
 		3A44DBFB27023AF800F45CB3 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		3A44DBFE27024BD500F45CB3 /* ImagePickerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerHelper.swift; sourceTree = "<group>"; };
 		3A44DC0027024C8200F45CB3 /* UIViewController+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+extensions.swift"; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				3AD474F6274C05D600374662 /* Parser.swift */,
 				3AD474F8274C05FD00374662 /* RequestSender.swift */,
 				3AD474FF274C120A00374662 /* Request.swift */,
+				3A3A73B6274EBDFE0063733E /* ConcurencySender.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -607,6 +610,7 @@
 				3AD47503274C165600374662 /* PhotosCollectionVC.swift in Sources */,
 				3AEE76F72742E20E00AABDFB /* FireStoreService.swift in Sources */,
 				3A31550D2731B05800FE980A /* DBChannel+CoreDataClass.swift in Sources */,
+				3A3A73B7274EBDFE0063733E /* ConcurencySender.swift in Sources */,
 				3A0060D1270B889D0047EFAE /* ChannelModel.swift in Sources */,
 				3A31550A2731B03600FE980A /* DBChannel+CoreDataProperties.swift in Sources */,
 				3A0060CE270B83690047EFAE /* ConversationsTableCell.swift in Sources */,
@@ -788,7 +792,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZDR42PTGTK;
 				INFOPLIST_FILE = "chat-app-MobiOS-21/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -813,7 +817,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZDR42PTGTK;
 				INFOPLIST_FILE = "chat-app-MobiOS-21/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

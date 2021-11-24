@@ -9,6 +9,8 @@ import Foundation
 
 protocol PhotosViewModelProtocol {
     func fetchImages(completion: @escaping (([URL]) -> Void))
+    @available(iOS 15.0.0, *)
+    func fetchConcurencyImages(completion: @escaping (([URL]) -> Void)) async throws
 }
 
 class PhotosViewModel: PhotosViewModelProtocol {
@@ -21,6 +23,18 @@ class PhotosViewModel: PhotosViewModelProtocol {
     
     func fetchImages(completion: @escaping (([URL]) -> Void)) {
         networkService.fetchImages { result in
+            switch result {
+            case .success(let response):
+                completion(response)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    @available(iOS 15.0.0, *)
+    func fetchConcurencyImages(completion: @escaping (([URL]) -> Void)) async throws {
+        try await networkService.fetchConcurencyImages { result in
             switch result {
             case .success(let response):
                 completion(response)

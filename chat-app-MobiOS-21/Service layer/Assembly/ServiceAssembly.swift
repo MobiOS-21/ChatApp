@@ -20,7 +20,8 @@ class ServiceAssembly: ServiceAssemblyProtocol {
     lazy var fireStoreService: FireStoreServiceProtocol = FireStoreService()
     lazy var gcdService: ProfileDataServiceProtocol = GCDDataService(fileManager: coreAssembly.fileManagerComponent)
     lazy var operationService: ProfileDataServiceProtocol = OperationDataService(fileManager: coreAssembly.fileManagerComponent)
-    lazy var networkService: NetworkServiceProtocol = NetwrokService(requestSender: coreAssembly.requestSender)
+    lazy var networkService: NetworkServiceProtocol = NetwrokService(requestSender: coreAssembly.requestSender,
+                                                                     concurencySender: coreAssembly.concurencySender)
     
     private let coreAssembly: CoreAssemblyProtocol
     

@@ -80,6 +80,19 @@ final class PhotosCollectionVC: UIViewController {
         }
     }
     
+    @available(iOS 15.0.0, *)
+    private func concurencyFetchDataSource() async throws {
+        Task {
+            do {
+                try await photosViewModel.fetchConcurencyImages { urls in
+                    
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
     @objc private func closeVC() {
         self.dismiss(animated: true, completion: nil)
     }

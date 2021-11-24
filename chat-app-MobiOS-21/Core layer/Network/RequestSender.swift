@@ -34,7 +34,7 @@ protocol IRequestSender {
 }
 
 class RequestSender: IRequestSender {
-    let session = URLSession.shared
+    private let session = URLSession.shared
     
     func send<Parser>(config: RequestConfig<Parser>,
                       completionHandler: @escaping (Result<Parser.Model, Error>) -> Void) where Parser: IParser {
