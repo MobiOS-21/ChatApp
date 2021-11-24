@@ -33,8 +33,16 @@ class ConversationTableCell: UITableViewCell {
         sv.axis = .vertical
         return sv
     }()
+    
+    private let photoImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFit
+        return iv
+    }()
+    
     private var leadingConstraint: NSLayoutConstraint?
     private var trailingConstraint: NSLayoutConstraint?
+    private var imageHeightConstraint: NSLayoutConstraint?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -49,11 +57,13 @@ class ConversationTableCell: UITableViewCell {
     
     private func configureLayout() {
         contentView.addSubview(containerView)
-        contentView.addSubview(messageStackView)
+        containerView.addSubview(photoImageView)
+        containerView.addSubview(messageStackView)
         messageStackView.addArrangedSubview(userNameLabel)
         messageStackView.addArrangedSubview(messageLabel)
         messageStackView.translatesAutoresizingMaskIntoConstraints = false
         containerView.translatesAutoresizingMaskIntoConstraints = false
+        photoImageView.translatesAutoresizingMaskIntoConstraints = false
         containerView.layer.cornerRadius = 16
         let constraints = [
             containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
@@ -63,16 +73,42 @@ class ConversationTableCell: UITableViewCell {
             messageStackView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 16),
             messageStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
             messageStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-            messageStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -16)
+            
+            photoImageView.topAnchor.constraint(equalTo: messageStackView.bottomAnchor, constant: 8),
+            photoImageView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -16),
+            photoImageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            photoImageView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            photoImageView.widthAnchor.constraint(equalToConstant: 3 / 4 * contentView.frame.width - 2 * 16)
         ]
         NSLayoutConstraint.activate(constraints)
         
         leadingConstraint = containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16)
         trailingConstraint = containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
+        imageHeightConstraint = photoImageView.heightAnchor.constraint(equalToConstant: 150)
     }
     
     func configureCell(with model: DBMessage) {
-        messageLabel.text = model.content
+        if model.content?.isValidURL == true, let url = URL(string: model.content ?? "") {
+            messageLabel.isHidden = true
+            imageHeightConstraint?.isActive = true
+            photoImageView.setImage(from: url) {[weak self] result in
+                DispatchQueue.main.async {
+                    if result == false {
+                        self?.messageLabel.isHidden = false
+                        self?.imageHeightConstraint?.isActive = false
+                        self?.messageLabel.text = (model.content ?? "") + "\n url isn't supported"
+                    } else {
+                        self?.messageLabel.isHidden = true
+                        self?.imageHeightConstraint?.isActive = true
+                    }
+                }
+            }
+        } else {
+            imageHeightConstraint?.isActive = false
+            photoImageView.isHidden = true
+            messageLabel.text = model.content
+        }
+        
         userNameLabel.text = model.senderName
         if let deviceId = UIDevice.current.identifierForVendor?.uuidString, model.senderId == deviceId {
             trailingConstraint?.isActive = true
@@ -89,10 +125,14 @@ class ConversationTableCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        messageLabel.isHidden = false
         messageLabel.text = nil
         userNameLabel.text = nil
         userNameLabel.isHidden = false
+        photoImageView.isHidden = false
+        photoImageView.image = nil
         trailingConstraint?.isActive = false
         leadingConstraint?.isActive = false
+        imageHeightConstraint?.isActive = false
     }
 }

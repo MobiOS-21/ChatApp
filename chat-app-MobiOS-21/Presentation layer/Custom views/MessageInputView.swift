@@ -9,10 +9,17 @@ import UIKit
 
 class MessageInputView: UIView, UITextFieldDelegate {
     var sendButtonCallback: ((String) -> Void)?
+    var imageBtnCallback: (() -> Void)?
     
     private let sendButton: UIButton = {
         let btn = UIButton()
         btn.setImage(UIImage(named: "icon_send"), for: .normal)
+        return btn
+    }()
+    
+    private let addImageBtn: UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage(named: "addImage"), for: .normal)
         return btn
     }()
     
@@ -28,13 +35,17 @@ class MessageInputView: UIView, UITextFieldDelegate {
         return tf
     }()
     
-    init() {
+    init(parentVC: ConversationViewController) {
         super.init(frame: .zero)
         self.backgroundColor = UIColor(named: "messageInputBGColor")
         addSubview(sendButton)
         addSubview(textField)
+        addSubview(addImageBtn)
+        
+        parentVC.delegate = self
         
         sendButton.addTarget(self, action: #selector(tapToSendBtn), for: .touchUpInside)
+        addImageBtn.addTarget(self, action: #selector(tapAddImageBtn), for: .touchUpInside)
         configureLayout()
     }
     
@@ -45,12 +56,20 @@ class MessageInputView: UIView, UITextFieldDelegate {
     private func configureLayout() {
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         textField.translatesAutoresizingMaskIntoConstraints = false
+        addImageBtn.translatesAutoresizingMaskIntoConstraints = false
         
         let constraints = [
+            addImageBtn.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            addImageBtn.heightAnchor.constraint(equalToConstant: 30),
+            addImageBtn.widthAnchor.constraint(equalToConstant: 30),
+            addImageBtn.centerYAnchor.constraint(equalTo: textField.centerYAnchor),
+            
             textField.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
             textField.heightAnchor.constraint(equalToConstant: 32),
-            textField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            textField.leadingAnchor.constraint(equalTo: addImageBtn.trailingAnchor, constant: 16),
             
+            sendButton.heightAnchor.constraint(equalToConstant: 20),
+            sendButton.widthAnchor.constraint(equalToConstant: 20),
             sendButton.centerYAnchor.constraint(equalTo: textField.centerYAnchor),
             sendButton.leadingAnchor.constraint(equalTo: textField.trailingAnchor, constant: 16),
             sendButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
@@ -62,5 +81,15 @@ class MessageInputView: UIView, UITextFieldDelegate {
         guard let message = textField.text, !message.isEmpty else { return }
         sendButtonCallback?(message)
         textField.text = nil
+    }
+    
+    @objc private func tapAddImageBtn() {
+        imageBtnCallback?()
+    }
+}
+
+extension MessageInputView: ConversationProtocol {
+    func sendImage(url: URL) {
+        textField.text = url.absoluteString
     }
 }

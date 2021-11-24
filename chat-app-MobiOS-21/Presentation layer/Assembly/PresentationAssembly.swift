@@ -35,7 +35,8 @@ class PresentationAssembly: PresentationAssemblyProtocol {
     func conversationViewController(channelId: String) -> ConversationViewController {
         let viewModel = messageViewModel(channelId: channelId)
         let vc = ConversationViewController(channelId: channelId,
-                                            messageViewModel: viewModel)
+                                            messageViewModel: viewModel,
+                                            presentationService: self)
         viewModel.fetchedResultsController.delegate = vc
         return vc
     }
