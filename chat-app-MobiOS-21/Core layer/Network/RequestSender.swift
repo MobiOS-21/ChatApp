@@ -10,9 +10,23 @@ import Foundation
 enum NetworkError: Error {
     case badURL
     case parsingError
-    case clientError
     case serverError
     case noData
+}
+
+extension NetworkError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .noData:
+            return "Received neither error nor data"
+        case .parsingError:
+            return "Got data in unexpected format, it might be error description"
+        case .badURL:
+            return "URL is incorrect :("
+        case .serverError:
+            return "Server error"
+        }
+    }
 }
 
 protocol IRequestSender {
