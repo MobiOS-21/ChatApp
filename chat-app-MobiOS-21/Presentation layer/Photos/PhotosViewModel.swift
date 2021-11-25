@@ -10,11 +10,10 @@ import Foundation
 protocol PhotosViewModelProtocol {
     func fetchImages(completion: @escaping (([URL]) -> Void))
     @available(iOS 15.0.0, *)
-    func fetchConcurencyImages(completion: @escaping (([URL]) -> Void)) async throws
+    func fetchConcurencyImages() async throws -> [URL]
 }
 
 class PhotosViewModel: PhotosViewModelProtocol {
-    
     private let networkService: NetworkServiceProtocol
     
     init(networkService: NetworkServiceProtocol) {
@@ -33,14 +32,7 @@ class PhotosViewModel: PhotosViewModelProtocol {
     }
     
     @available(iOS 15.0.0, *)
-    func fetchConcurencyImages(completion: @escaping (([URL]) -> Void)) async throws {
-        try await networkService.fetchConcurencyImages { result in
-            switch result {
-            case .success(let response):
-                completion(response)
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
+    func fetchConcurencyImages() async throws -> [URL] {
+        try await networkService.fetchConcurencyImages()
     }
 }

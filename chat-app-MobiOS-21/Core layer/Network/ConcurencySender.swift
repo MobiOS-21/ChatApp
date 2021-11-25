@@ -9,26 +9,19 @@ import Foundation
 
 protocol IConcurrencySender {
     @available(iOS 15.0.0, *)
-    func send<Parser>(config: RequestConfig<Parser>,
-                      completionHandler: @escaping (Result<Parser.Model, Error>) -> Void) async throws
+    func send<Parser>(config: RequestConfig<Parser>) async throws -> Parser.Model
 }
 
-class ConcurrencySender: IConcurrencySender {
-    private let session = URLSession.shared
+class ConcurrencySender: IConcurrencySender {    private let session = URLSession.shared
     @available(iOS 15.0.0, *)
-    func send<Parser>(config: RequestConfig<Parser>,
-                      completionHandler: @escaping (Result<Parser.Model, Error>) -> Void) async throws where Parser: IParser {
+    func send<Parser>(config: RequestConfig<Parser>) async throws -> Parser.Model where Parser: IParser {
         guard let urlRequest = config.request.urlRequest else {
-            completionHandler(.failure(NetworkError.badURL))
-            return
+            throw NetworkError.badURL
         }
-        
         let (data, _) = try await session.data(for: urlRequest)
-        
         guard let parsedModel: Parser.Model = config.parser.parse(data: data) else {
-            completionHandler(.failure(NetworkError.parsingError))
-            return
+            throw NetworkError.parsingError
         }
-        completionHandler(.success(parsedModel))
+        return parsedModel
     }
 }

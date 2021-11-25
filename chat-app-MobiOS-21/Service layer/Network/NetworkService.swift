@@ -10,7 +10,7 @@ import Foundation
 protocol NetworkServiceProtocol {
     func fetchImages(completionHandler: @escaping (Result<[URL], Error>) -> Void)
     @available(iOS 15.0.0, *)
-    func fetchConcurencyImages(completionHandler: @escaping (Result<[URL], Error>) -> Void) async throws
+    func fetchConcurencyImages() async throws -> [URL]
 }
 
 class NetwrokService: NetworkServiceProtocol {
@@ -35,15 +35,8 @@ class NetwrokService: NetworkServiceProtocol {
     }
     
     @available(iOS 15.0.0, *)
-    func fetchConcurencyImages(completionHandler: @escaping (Result<[URL], Error>) -> Void) async throws {
-        try await concurencySender.send(config: RequestFactory.imagesConfig()) { result in
-            switch result {
-            case .success(let response):
-                let urls = response.hits.compactMap({ URL(string: $0.webformatURL) })
-                completionHandler(.success(urls))
-            case .failure(let error):
-                completionHandler(.failure(error))
-            }
-        }
+    func fetchConcurencyImages() async throws -> [URL] {
+        try await concurencySender.send(config: RequestFactory.imagesConfig())
+            .hits.compactMap({ URL(string: $0.webformatURL) })
     }
 }

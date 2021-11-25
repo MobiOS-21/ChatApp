@@ -14,9 +14,11 @@ final class PhotosCollectionVC: UIViewController {
         didSet {
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
+                self.activityIndicator.stopAnimating()
             }
         }
     }
+    
     private let photosViewModel: PhotosViewModelProtocol
     // MARK: - UI
     private lazy var collectionView: UICollectionView = {
@@ -72,10 +74,13 @@ final class PhotosCollectionVC: UIViewController {
     }
     
     private func fetchDataSource() {
-        photosViewModel.fetchImages {[weak self] urls in
-            self?.dataSource = urls
-            DispatchQueue.main.async {
-                self?.activityIndicator.stopAnimating()
+        if #available(iOS 15.0, *) {
+            Task {
+                try await concurencyFetchDataSource()
+            }
+        } else {
+            photosViewModel.fetchImages {[weak self] urls in
+                self?.dataSource = urls
             }
         }
     }
@@ -84,9 +89,7 @@ final class PhotosCollectionVC: UIViewController {
     private func concurencyFetchDataSource() async throws {
         Task {
             do {
-                try await photosViewModel.fetchConcurencyImages { urls in
-                    
-                }
+                self.dataSource = try await photosViewModel.fetchConcurencyImages()
             } catch {
                 print(error.localizedDescription)
             }
