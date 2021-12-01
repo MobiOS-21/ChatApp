@@ -14,6 +14,7 @@ protocol PresentationAssemblyProtocol {
     func swiftThemesViewController() -> ThemesViewControllerSwift
     func objcThemesViewController() -> ThemesViewController
     func photosViewController() -> PhotosCollectionVC
+    func animotors() -> AnimatorsProtocol
 }
 
 class PresentationAssembly: PresentationAssemblyProtocol {
@@ -65,6 +66,10 @@ class PresentationAssembly: PresentationAssemblyProtocol {
     func photosViewController() -> PhotosCollectionVC {
         let vc = PhotosCollectionVC(photosViewModel: photosViewModel())
         return vc
+    }
+    
+    func animotors() -> AnimatorsProtocol {
+        return Animators()
     }
     
     // MARK: - ViewModelAssembly

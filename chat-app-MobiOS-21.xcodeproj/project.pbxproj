@@ -32,6 +32,7 @@
 		3A721A09270CC904001A7DCC /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A721A08270CC904001A7DCC /* MessageModel.swift */; };
 		3AAA3AD22746C3730083F0B9 /* ChannelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAA3AD12746C3730083F0B9 /* ChannelViewModel.swift */; };
 		3AAA3AD42746C8690083F0B9 /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAA3AD32746C8690083F0B9 /* MessageViewModel.swift */; };
+		3AB485F32757EC58004AB96B /* Animators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB485F22757EC58004AB96B /* Animators.swift */; };
 		3AD474F7274C05D600374662 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD474F6274C05D600374662 /* Parser.swift */; };
 		3AD474F9274C05FD00374662 /* RequestSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD474F8274C05FD00374662 /* RequestSender.swift */; };
 		3AD474FC274C0FC700374662 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD474FB274C0FC700374662 /* NetworkService.swift */; };
@@ -91,6 +92,7 @@
 		3A721A08270CC904001A7DCC /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
 		3AAA3AD12746C3730083F0B9 /* ChannelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelViewModel.swift; sourceTree = "<group>"; };
 		3AAA3AD32746C8690083F0B9 /* MessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
+		3AB485F22757EC58004AB96B /* Animators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animators.swift; sourceTree = "<group>"; };
 		3AD474F6274C05D600374662 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		3AD474F8274C05FD00374662 /* RequestSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestSender.swift; sourceTree = "<group>"; };
 		3AD474FB274C0FC700374662 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
@@ -179,6 +181,14 @@
 			path = extensions;
 			sourceTree = "<group>";
 		};
+		3AB485F12757EC3C004AB96B /* Animators */ = {
+			isa = PBXGroup;
+			children = (
+				3AB485F22757EC58004AB96B /* Animators.swift */,
+			);
+			path = Animators;
+			sourceTree = "<group>";
+		};
 		3AD474F5274C04F000374662 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -263,6 +273,7 @@
 			isa = PBXGroup;
 			children = (
 				3AEE76FC2742E85900AABDFB /* Assembly */,
+				3AB485F12757EC3C004AB96B /* Animators */,
 				3AEE76E52742DC0000AABDFB /* Conversations */,
 				3AEE76E62742DCC700AABDFB /* Conversation */,
 				3AEE76E72742DD3000AABDFB /* Profile */,
@@ -601,6 +612,7 @@
 				3AEC2F0D27457A2D00481D4A /* CoreDataMessageService.swift in Sources */,
 				3A3154F52731AD1C00FE980A /* Chat.xcdatamodeld in Sources */,
 				3AD47509274C1B1700374662 /* PhotosViewModel.swift in Sources */,
+				3AB485F32757EC58004AB96B /* Animators.swift in Sources */,
 				3A44DC0327024E4100F45CB3 /* String+extensions.swift in Sources */,
 				3AAA3AD42746C8690083F0B9 /* MessageViewModel.swift in Sources */,
 				3A721A07270CC79C001A7DCC /* ConversationTableCell.swift in Sources */,
