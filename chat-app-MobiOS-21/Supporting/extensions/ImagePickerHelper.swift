@@ -12,7 +12,6 @@ public protocol ImagePickerDelegate: AnyObject {
 }
 
 open class ImagePickerHelper: NSObject {
-    
     private let pickerController: UIImagePickerController
     private weak var presentationController: UIViewController?
     private weak var delegate: ImagePickerDelegate?
@@ -41,7 +40,7 @@ open class ImagePickerHelper: NSObject {
         }
     }
     
-    public func present(from sourceView: UIView) {
+    public func present(from sourceView: UIView, actions: [UIAlertAction]) {
         guard presentationController?.canOpenCamera() == true else {
             return
         }
@@ -51,6 +50,9 @@ open class ImagePickerHelper: NSObject {
             alertController.addAction(action)
         }
         if let action = self.action(for: .photoLibrary, title: "Photo library") {
+            alertController.addAction(action)
+        }
+        for action in actions {
             alertController.addAction(action)
         }
         

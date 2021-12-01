@@ -9,18 +9,25 @@ import UIKit
 import FirebaseFirestore
 import CoreData
 
+protocol ConversationProtocol: AnyObject {
+    func sendImage(url: URL)
+}
+
 class ConversationViewController: UIViewController {
     // MARK: - Properties
     private let channelId: String
     private let messageViewModel: MessageViewModelProtocol
+    weak var delegate: ConversationProtocol?
+    private let presentationService: PresentationAssemblyProtocol
     // MARK: - UI
     private let tableView = UITableView(frame: .zero, style: .plain)
-    private let messageInputView = MessageInputView()
+    private lazy var messageInputView = MessageInputView(parentVC: self)
     
     private var bottomConstraint: NSLayoutConstraint?
     
     // MARK: - Lifecycle
-    init(channelId: String, messageViewModel: MessageViewModelProtocol) {
+    init(channelId: String, messageViewModel: MessageViewModelProtocol, presentationService: PresentationAssemblyProtocol) {
+        self.presentationService = presentationService
         self.channelId = channelId
         self.messageViewModel = messageViewModel
         super.init(nibName: nil, bundle: nil)
@@ -45,6 +52,7 @@ class ConversationViewController: UIViewController {
         view.addSubview(messageInputView)
         
         messageInputView.sendButtonCallback = messageViewModel.sendMessage(message:)
+        messageInputView.imageBtnCallback = openPhotosVC
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         messageInputView.translatesAutoresizingMaskIntoConstraints = false
@@ -99,6 +107,17 @@ class ConversationViewController: UIViewController {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
         self.view.addGestureRecognizer(tapGesture)
+    }
+    
+    private func openPhotosVC() {
+        let vc = presentationService.photosViewController()
+        vc.selectImageCallback = {[weak self] url in
+            guard let self = self else { return }
+            self.delegate?.sendImage(url: url)
+        }
+        let nc = UINavigationController(rootViewController: vc)
+        nc.modalPresentationStyle = .overFullScreen
+        self.present(nc, animated: true, completion: nil)
     }
     
     // MARK: - Objc

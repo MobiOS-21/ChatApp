@@ -13,6 +13,7 @@ protocol PresentationAssemblyProtocol {
     func profileViewController() -> ProfileViewController
     func swiftThemesViewController() -> ThemesViewControllerSwift
     func objcThemesViewController() -> ThemesViewController
+    func photosViewController() -> PhotosCollectionVC
 }
 
 class PresentationAssembly: PresentationAssemblyProtocol {
@@ -34,7 +35,8 @@ class PresentationAssembly: PresentationAssemblyProtocol {
     func conversationViewController(channelId: String) -> ConversationViewController {
         let viewModel = messageViewModel(channelId: channelId)
         let vc = ConversationViewController(channelId: channelId,
-                                            messageViewModel: viewModel)
+                                            messageViewModel: viewModel,
+                                            presentationService: self)
         viewModel.fetchedResultsController.delegate = vc
         return vc
     }
@@ -43,7 +45,8 @@ class PresentationAssembly: PresentationAssemblyProtocol {
         let storyboard = UIStoryboard(name: "Profile", bundle: nil)
         guard let vc = storyboard.instantiateViewController(withIdentifier: "ProfileVC") as? ProfileViewController else { fatalError()}
         vc.setupServices(gcdService: serviceAssembly.gcdService,
-                         operationService: serviceAssembly.operationService)
+                         operationService: serviceAssembly.operationService,
+                         presentationService: self)
         return vc
     }
     
@@ -59,6 +62,11 @@ class PresentationAssembly: PresentationAssemblyProtocol {
         return vc
     }
     
+    func photosViewController() -> PhotosCollectionVC {
+        let vc = PhotosCollectionVC(photosViewModel: photosViewModel())
+        return vc
+    }
+    
     // MARK: - ViewModelAssembly
     private func channelViewModel() -> ChannelViewModelProtocol {
         return ChannelViewModel(coreDataChannelService: serviceAssembly.coreDataChannelService,
@@ -69,5 +77,9 @@ class PresentationAssembly: PresentationAssemblyProtocol {
         return MessageViewModel(coreDataMessageService: serviceAssembly.coreDataMessageService,
                                 firestoreService: serviceAssembly.fireStoreService,
                                 gcdService: serviceAssembly.gcdService, channelId: channelId)
+    }
+    
+    private func photosViewModel() -> PhotosViewModelProtocol {
+        return PhotosViewModel(networkService: serviceAssembly.networkService)
     }
 }

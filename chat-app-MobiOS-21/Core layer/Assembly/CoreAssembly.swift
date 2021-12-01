@@ -8,9 +8,13 @@
 protocol CoreAssemblyProtocol {
     var coreDataStack: CoreDataStackProtocol { get set }
     var fileManagerComponent: ProfileFileManagerProtocol { get }
+    var requestSender: IRequestSender { get }
+    var concurencySender: IConcurrencySender { get }
 }
 
 class CoreAssembly: CoreAssemblyProtocol {
     lazy var fileManagerComponent: ProfileFileManagerProtocol = ProfileFileManager()
     lazy var coreDataStack: CoreDataStackProtocol = CoreDataStack()
+    lazy var requestSender: IRequestSender = RequestSender()
+    lazy var concurencySender: IConcurrencySender = ConcurrencySender()
 }
