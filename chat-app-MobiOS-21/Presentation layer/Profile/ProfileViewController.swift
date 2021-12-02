@@ -178,7 +178,7 @@ final class ProfileViewController: UIViewController, ImagePickerDelegate {
             userNameTF.isUserInteractionEnabled = true
         }
         if [.editStart, .changeProfile].contains(currentState) {
-            guard let shakeAnimation = presentationService?.animotors().buttonShakeAnimation(duration: 0.3) else { return }
+            guard let shakeAnimation = presentationService?.animators().buttonShakeAnimation(duration: 0.3) else { return }
             editButton.layer.add(shakeAnimation, forKey: "shakeIt")
         } else {
             editButton.layer.removeAnimation(forKey: "shakeIt")

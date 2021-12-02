@@ -11,6 +11,7 @@ import UIKit
 protocol AnimatorsProtocol {
     func buttonShakeAnimation(duration: TimeInterval) -> CAAnimationGroup
     func getEmmitter(with image: UIImage) -> CAEmitterLayer
+    func controllerTransitionAnimation(animationDuration: Double, animationType: AnimationType) -> UIViewControllerAnimatedTransitioning
 }
 
 class Animators: AnimatorsProtocol {
@@ -56,5 +57,9 @@ class Animators: AnimatorsProtocol {
         cell.alphaSpeed = -0.3
         cell.spin = 45 * .pi / 180
         return [cell]
+    }
+    
+    func controllerTransitionAnimation(animationDuration: Double, animationType: AnimationType) -> UIViewControllerAnimatedTransitioning {
+        ControllerTransitionAnimation(animationDuration: animationDuration, animationType: animationType)
     }
 }

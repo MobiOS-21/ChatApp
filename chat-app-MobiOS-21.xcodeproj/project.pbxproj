@@ -46,6 +46,7 @@
 		3AE6DDE626F90F4A00191D7A /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AE6DDE426F90F4A00191D7A /* Profile.storyboard */; };
 		3AE6DDE826F90F4B00191D7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3AE6DDE726F90F4B00191D7A /* Assets.xcassets */; };
 		3AE6DDEB26F90F4B00191D7A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AE6DDE926F90F4B00191D7A /* LaunchScreen.storyboard */; };
+		3AEB6FF82759682000FC139F /* ControllerTransitionAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEB6FF72759682000FC139F /* ControllerTransitionAnimation.swift */; };
 		3AEC2F0B274578D900481D4A /* CoreDataChannelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEC2F0A274578D900481D4A /* CoreDataChannelService.swift */; };
 		3AEC2F0D27457A2D00481D4A /* CoreDataMessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEC2F0C27457A2D00481D4A /* CoreDataMessageService.swift */; };
 		3AEE4AD5271769FD006A63C0 /* ThemesViewControllerSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE4AD4271769FD006A63C0 /* ThemesViewControllerSwift.swift */; };
@@ -108,6 +109,7 @@
 		3AE6DDE726F90F4B00191D7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3AE6DDEA26F90F4B00191D7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3AE6DDEC26F90F4B00191D7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3AEB6FF72759682000FC139F /* ControllerTransitionAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerTransitionAnimation.swift; sourceTree = "<group>"; };
 		3AEC2F0A274578D900481D4A /* CoreDataChannelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataChannelService.swift; sourceTree = "<group>"; };
 		3AEC2F0C27457A2D00481D4A /* CoreDataMessageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataMessageService.swift; sourceTree = "<group>"; };
 		3AEE4AD4271769FD006A63C0 /* ThemesViewControllerSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesViewControllerSwift.swift; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				3AB485F22757EC58004AB96B /* Animators.swift */,
+				3AEB6FF72759682000FC139F /* ControllerTransitionAnimation.swift */,
 			);
 			path = Animators;
 			sourceTree = "<group>";
@@ -636,6 +639,7 @@
 				3AEE76F42742E15300AABDFB /* ServiceAssembly.swift in Sources */,
 				3A721A09270CC904001A7DCC /* MessageModel.swift in Sources */,
 				3A0060CB270B817E0047EFAE /* ConversationsViewController.swift in Sources */,
+				3AEB6FF82759682000FC139F /* ControllerTransitionAnimation.swift in Sources */,
 				3A31550E2731B05800FE980A /* DBMessage+CoreDataClass.swift in Sources */,
 				3AEE4AD5271769FD006A63C0 /* ThemesViewControllerSwift.swift in Sources */,
 				3A12BFC2272884D400D86C17 /* Codable+extension.swift in Sources */,

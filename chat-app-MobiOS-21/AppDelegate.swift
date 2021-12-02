@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let rootAssembly = RootAssembly()
     private lazy var emitterLayer: CAEmitterLayer = {
         guard let image = UIImage(named: "tinkoffLogo") else { return CAEmitterLayer() }
-        let layer = rootAssembly.presentationAssembly.animotors().getEmmitter(with: image)
+        let layer = rootAssembly.presentationAssembly.animators().getEmmitter(with: image)
         layer.lifetime = 0
         return layer
     }()
