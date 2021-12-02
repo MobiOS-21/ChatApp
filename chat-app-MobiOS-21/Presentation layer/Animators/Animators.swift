@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import UIKit
 
 protocol AnimatorsProtocol {
     func buttonShakeAnimation(duration: TimeInterval) -> CAAnimationGroup
+    func getEmmitter(with image: UIImage) -> CAEmitterLayer
 }
 
 class Animators: AnimatorsProtocol {
@@ -32,5 +34,27 @@ class Animators: AnimatorsProtocol {
         shakeGroup.repeatCount = .infinity
         shakeGroup.duration = duration
         return shakeGroup
+    }
+    
+    func getEmmitter(with image: UIImage) -> CAEmitterLayer {
+        let emitter = CAEmitterLayer()
+        emitter.emitterShape = .circle
+        emitter.emitterCells = generateEmitterCells(with: image)
+        return emitter
+    }
+    
+    private func generateEmitterCells(with image: UIImage) -> [CAEmitterCell] {
+        let cell = CAEmitterCell()
+        cell.contents = image.cgImage
+        cell.birthRate = 5
+        cell.lifetime = 2
+        cell.lifetimeRange = 1
+        cell.scale = 0.08
+        cell.emissionRange = 360 * .pi / 180
+        cell.velocity = 10
+        cell.velocityRange = 10
+        cell.alphaSpeed = -0.3
+        cell.spin = 45 * .pi / 180
+        return [cell]
     }
 }

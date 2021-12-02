@@ -28,7 +28,7 @@ class ConversationsViewController: UIViewController {
         self.presentationService = presentationService
         self.channelViewModel = channelViewModel
     }
-    
+
     // MARK: - Private
     private func configureUI() {
         tableView.estimatedRowHeight = 30
