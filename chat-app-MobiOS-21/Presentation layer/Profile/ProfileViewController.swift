@@ -129,6 +129,7 @@ final class ProfileViewController: UIViewController, ImagePickerDelegate {
     
     final private func configureUI() {
         editButton.layer.cornerRadius = 14
+
         userAvatar.layer.cornerRadius = userAvatar.frame.width / 2
         
         userDescriptionTV.layer.borderWidth = 1.0
@@ -175,6 +176,12 @@ final class ProfileViewController: UIViewController, ImagePickerDelegate {
             userDescriptionTV.isUserInteractionEnabled = true
             saveBtnContainer.isUserInteractionEnabled = true
             userNameTF.isUserInteractionEnabled = true
+        }
+        if [.editStart, .changeProfile].contains(currentState) {
+            guard let shakeAnimation = presentationService?.animators().buttonShakeAnimation(duration: 0.3) else { return }
+            editButton.layer.add(shakeAnimation, forKey: "shakeIt")
+        } else {
+            editButton.layer.removeAnimation(forKey: "shakeIt")
         }
     }
     

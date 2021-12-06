@@ -22,7 +22,6 @@ class ServiceAssembly: ServiceAssemblyProtocol {
     lazy var operationService: ProfileDataServiceProtocol = OperationDataService(fileManager: coreAssembly.fileManagerComponent)
     lazy var networkService: NetworkServiceProtocol = NetwrokService(requestSender: coreAssembly.requestSender,
                                                                      concurencySender: coreAssembly.concurencySender)
-    
     private let coreAssembly: CoreAssemblyProtocol
     
     init(coreAssembly: CoreAssemblyProtocol) {

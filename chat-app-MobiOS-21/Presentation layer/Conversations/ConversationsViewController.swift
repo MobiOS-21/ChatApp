@@ -42,7 +42,7 @@ class ConversationsViewController: UIViewController {
             debugPrint(error.localizedDescription)
         }
     }
-
+    
     private func logThemeChanging(selectedTheme: UIColor) {
         debugPrint("Theme is \(String(describing: selectedTheme))")
         save(selectedTheme: selectedTheme)
@@ -64,7 +64,7 @@ class ConversationsViewController: UIViewController {
         
         let showThemesObjcVC: (UIAlertAction) -> Void = {[weak self] _ in
             guard let self = self,
-            let vc = self.presentationService?.objcThemesViewController()else { return }
+                  let vc = self.presentationService?.objcThemesViewController()else { return }
             vc.delegate = self
             self.present(vc, animated: true)
         }
@@ -76,7 +76,7 @@ class ConversationsViewController: UIViewController {
     
     private func validateIndexPath(_ indexPath: IndexPath) -> Bool {
         if let sections = channelViewModel?.fetchedResultsController.sections,
-            indexPath.section < sections.count {
+           indexPath.section < sections.count {
             if indexPath.row < sections[indexPath.section].numberOfObjects {
                 return true
             }
@@ -86,6 +86,8 @@ class ConversationsViewController: UIViewController {
     // MARK: - IBActions
     @IBAction func tapProfileBtn(_ sender: Any) {
         guard let vc = presentationService?.profileViewController() else { return }
+        vc.modalPresentationStyle = .fullScreen
+        vc.transitioningDelegate = self
         self.present(vc, animated: true)
     }
     
@@ -135,7 +137,6 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
         if editingStyle == .delete {
             guard let channelId = channelViewModel?.fetchedResultsController.object(at: indexPath).identifier else { return }
             channelViewModel?.deleteChannel(channelId: channelId)
-            
         }
     }
 }
@@ -183,5 +184,19 @@ extension ConversationsViewController: NSFetchedResultsControllerDelegate {
         default:
             print("switch type is default")
         }
+    }
+}
+
+extension ConversationsViewController: UIViewControllerTransitioningDelegate {
+    func animationController(forPresented presented: UIViewController,
+                             presenting: UIViewController,
+                             source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return presentationService?.animators().controllerTransitionAnimation(animationDuration: 3.5,
+                                                                              animationType: .present)
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return presentationService?.animators().controllerTransitionAnimation(animationDuration: 3.5,
+                                                                              animationType: .dismiss)
     }
 }
