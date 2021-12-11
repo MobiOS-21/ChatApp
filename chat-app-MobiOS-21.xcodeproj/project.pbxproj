@@ -29,6 +29,10 @@
 		3A44DC0327024E4100F45CB3 /* String+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A44DC0227024E4100F45CB3 /* String+extensions.swift */; };
 		3A4DE43B2764CF3E006BF615 /* ProfileFileManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DE43A2764CF3E006BF615 /* ProfileFileManagerMock.swift */; };
 		3A4DE43D2764D2C2006BF615 /* TestGCDDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DE43C2764D2C2006BF615 /* TestGCDDataManager.swift */; };
+		3A4DE4402764D7EE006BF615 /* RequestSenderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DE43F2764D7EE006BF615 /* RequestSenderMock.swift */; };
+		3A4DE4422764D88F006BF615 /* ImageRequestMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DE4412764D88F006BF615 /* ImageRequestMock.swift */; };
+		3A4DE4442764D909006BF615 /* ImageItemParserMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DE4432764D909006BF615 /* ImageItemParserMock.swift */; };
+		3A4DE4462764DC22006BF615 /* TestNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DE4452764DC22006BF615 /* TestNetworkService.swift */; };
 		3A721A05270CC432001A7DCC /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A721A04270CC432001A7DCC /* ConversationViewController.swift */; };
 		3A721A07270CC79C001A7DCC /* ConversationTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A721A06270CC79C001A7DCC /* ConversationTableCell.swift */; };
 		3A721A09270CC904001A7DCC /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A721A08270CC904001A7DCC /* MessageModel.swift */; };
@@ -114,6 +118,10 @@
 		3A44DC0227024E4100F45CB3 /* String+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+extensions.swift"; sourceTree = "<group>"; };
 		3A4DE43A2764CF3E006BF615 /* ProfileFileManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFileManagerMock.swift; sourceTree = "<group>"; };
 		3A4DE43C2764D2C2006BF615 /* TestGCDDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestGCDDataManager.swift; sourceTree = "<group>"; };
+		3A4DE43F2764D7EE006BF615 /* RequestSenderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestSenderMock.swift; sourceTree = "<group>"; };
+		3A4DE4412764D88F006BF615 /* ImageRequestMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRequestMock.swift; sourceTree = "<group>"; };
+		3A4DE4432764D909006BF615 /* ImageItemParserMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageItemParserMock.swift; sourceTree = "<group>"; };
+		3A4DE4452764DC22006BF615 /* TestNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestNetworkService.swift; sourceTree = "<group>"; };
 		3A721A04270CC432001A7DCC /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
 		3A721A06270CC79C001A7DCC /* ConversationTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableCell.swift; sourceTree = "<group>"; };
 		3A721A08270CC904001A7DCC /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
@@ -236,9 +244,20 @@
 		3A4DE4392764CE54006BF615 /* CoreMocks */ = {
 			isa = PBXGroup;
 			children = (
+				3A4DE43E2764D7D7006BF615 /* Network */,
 				3A4DE43A2764CF3E006BF615 /* ProfileFileManagerMock.swift */,
 			);
 			path = CoreMocks;
+			sourceTree = "<group>";
+		};
+		3A4DE43E2764D7D7006BF615 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				3A4DE43F2764D7EE006BF615 /* RequestSenderMock.swift */,
+				3A4DE4412764D88F006BF615 /* ImageRequestMock.swift */,
+				3A4DE4432764D909006BF615 /* ImageItemParserMock.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		3AB22A3A275E855F00C4DE06 /* chat-app-MobiOS-21UITests */ = {
@@ -257,6 +276,7 @@
 				3A4DE4392764CE54006BF615 /* CoreMocks */,
 				3AB22A4A275E856A00C4DE06 /* chat_app_MobiOS_21Tests.swift */,
 				3A4DE43C2764D2C2006BF615 /* TestGCDDataManager.swift */,
+				3A4DE4452764DC22006BF615 /* TestNetworkService.swift */,
 			);
 			path = "chat-app-MobiOS-21Tests";
 			sourceTree = "<group>";
@@ -783,8 +803,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A4DE4462764DC22006BF615 /* TestNetworkService.swift in Sources */,
+				3A4DE4422764D88F006BF615 /* ImageRequestMock.swift in Sources */,
 				3A4DE43D2764D2C2006BF615 /* TestGCDDataManager.swift in Sources */,
 				3AB22A4B275E856A00C4DE06 /* chat_app_MobiOS_21Tests.swift in Sources */,
+				3A4DE4442764D909006BF615 /* ImageItemParserMock.swift in Sources */,
+				3A4DE4402764D7EE006BF615 /* RequestSenderMock.swift in Sources */,
 				3A4DE43B2764CF3E006BF615 /* ProfileFileManagerMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
