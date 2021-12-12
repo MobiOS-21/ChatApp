@@ -15,6 +15,7 @@
 		3A0C3184272B1163001B63BC /* MessageInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0C3183272B1163001B63BC /* MessageInputView.swift */; };
 		3A0C3186272B1AEA001B63BC /* PaddingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0C3185272B1AEA001B63BC /* PaddingTextField.swift */; };
 		3A12BFC2272884D400D86C17 /* Codable+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A12BFC1272884D400D86C17 /* Codable+extension.swift */; };
+		3A2CC06B2766607D00ACE42B /* TestNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2CC06A2766607D00ACE42B /* TestNetworkService.swift */; };
 		3A2F46332733CAFE00CA9ECB /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2F46322733CAFE00CA9ECB /* CoreDataStack.swift */; };
 		3A3092342727314700BE31BE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3A3092332727314700BE31BE /* GoogleService-Info.plist */; };
 		3A3154F52731AD1C00FE980A /* Chat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3A3154F32731AD1C00FE980A /* Chat.xcdatamodeld */; };
@@ -32,7 +33,7 @@
 		3A4DE4402764D7EE006BF615 /* RequestSenderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DE43F2764D7EE006BF615 /* RequestSenderMock.swift */; };
 		3A4DE4422764D88F006BF615 /* ImageRequestMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DE4412764D88F006BF615 /* ImageRequestMock.swift */; };
 		3A4DE4442764D909006BF615 /* ImageItemParserMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DE4432764D909006BF615 /* ImageItemParserMock.swift */; };
-		3A4DE4462764DC22006BF615 /* TestNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DE4452764DC22006BF615 /* TestNetworkService.swift */; };
+		3A4DE4462764DC22006BF615 /* TestNetworkCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DE4452764DC22006BF615 /* TestNetworkCore.swift */; };
 		3A721A05270CC432001A7DCC /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A721A04270CC432001A7DCC /* ConversationViewController.swift */; };
 		3A721A07270CC79C001A7DCC /* ConversationTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A721A06270CC79C001A7DCC /* ConversationTableCell.swift */; };
 		3A721A09270CC904001A7DCC /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A721A08270CC904001A7DCC /* MessageModel.swift */; };
@@ -40,7 +41,6 @@
 		3AAA3AD42746C8690083F0B9 /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAA3AD32746C8690083F0B9 /* MessageViewModel.swift */; };
 		3AB22A3C275E855F00C4DE06 /* chat_app_MobiOS_21UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB22A3B275E855F00C4DE06 /* chat_app_MobiOS_21UITests.swift */; };
 		3AB22A3E275E855F00C4DE06 /* chat_app_MobiOS_21UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB22A3D275E855F00C4DE06 /* chat_app_MobiOS_21UITestsLaunchTests.swift */; };
-		3AB22A4B275E856A00C4DE06 /* chat_app_MobiOS_21Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB22A4A275E856A00C4DE06 /* chat_app_MobiOS_21Tests.swift */; };
 		3AB22A52275E85AA00C4DE06 /* UIProfileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB22A51275E85AA00C4DE06 /* UIProfileTests.swift */; };
 		3AB485F32757EC58004AB96B /* Animators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB485F22757EC58004AB96B /* Animators.swift */; };
 		3AD474F7274C05D600374662 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD474F6274C05D600374662 /* Parser.swift */; };
@@ -104,6 +104,7 @@
 		3A0C3183272B1163001B63BC /* MessageInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputView.swift; sourceTree = "<group>"; };
 		3A0C3185272B1AEA001B63BC /* PaddingTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingTextField.swift; sourceTree = "<group>"; };
 		3A12BFC1272884D400D86C17 /* Codable+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Codable+extension.swift"; sourceTree = "<group>"; };
+		3A2CC06A2766607D00ACE42B /* TestNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestNetworkService.swift; sourceTree = "<group>"; };
 		3A2F46322733CAFE00CA9ECB /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		3A3092332727314700BE31BE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3A3154F42731AD1C00FE980A /* Chat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Chat.xcdatamodel; sourceTree = "<group>"; };
@@ -121,7 +122,7 @@
 		3A4DE43F2764D7EE006BF615 /* RequestSenderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestSenderMock.swift; sourceTree = "<group>"; };
 		3A4DE4412764D88F006BF615 /* ImageRequestMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRequestMock.swift; sourceTree = "<group>"; };
 		3A4DE4432764D909006BF615 /* ImageItemParserMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageItemParserMock.swift; sourceTree = "<group>"; };
-		3A4DE4452764DC22006BF615 /* TestNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestNetworkService.swift; sourceTree = "<group>"; };
+		3A4DE4452764DC22006BF615 /* TestNetworkCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestNetworkCore.swift; sourceTree = "<group>"; };
 		3A721A04270CC432001A7DCC /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
 		3A721A06270CC79C001A7DCC /* ConversationTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableCell.swift; sourceTree = "<group>"; };
 		3A721A08270CC904001A7DCC /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
@@ -131,7 +132,6 @@
 		3AB22A3B275E855F00C4DE06 /* chat_app_MobiOS_21UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chat_app_MobiOS_21UITests.swift; sourceTree = "<group>"; };
 		3AB22A3D275E855F00C4DE06 /* chat_app_MobiOS_21UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chat_app_MobiOS_21UITestsLaunchTests.swift; sourceTree = "<group>"; };
 		3AB22A48275E856A00C4DE06 /* chat-app-MobiOS-21Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "chat-app-MobiOS-21Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3AB22A4A275E856A00C4DE06 /* chat_app_MobiOS_21Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chat_app_MobiOS_21Tests.swift; sourceTree = "<group>"; };
 		3AB22A51275E85AA00C4DE06 /* UIProfileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIProfileTests.swift; sourceTree = "<group>"; };
 		3AB485F22757EC58004AB96B /* Animators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animators.swift; sourceTree = "<group>"; };
 		3AD474F6274C05D600374662 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
@@ -274,9 +274,9 @@
 			isa = PBXGroup;
 			children = (
 				3A4DE4392764CE54006BF615 /* CoreMocks */,
-				3AB22A4A275E856A00C4DE06 /* chat_app_MobiOS_21Tests.swift */,
 				3A4DE43C2764D2C2006BF615 /* TestGCDDataManager.swift */,
-				3A4DE4452764DC22006BF615 /* TestNetworkService.swift */,
+				3A4DE4452764DC22006BF615 /* TestNetworkCore.swift */,
+				3A2CC06A2766607D00ACE42B /* TestNetworkService.swift */,
 			);
 			path = "chat-app-MobiOS-21Tests";
 			sourceTree = "<group>";
@@ -803,12 +803,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A4DE4462764DC22006BF615 /* TestNetworkService.swift in Sources */,
+				3A4DE4462764DC22006BF615 /* TestNetworkCore.swift in Sources */,
 				3A4DE4422764D88F006BF615 /* ImageRequestMock.swift in Sources */,
 				3A4DE43D2764D2C2006BF615 /* TestGCDDataManager.swift in Sources */,
-				3AB22A4B275E856A00C4DE06 /* chat_app_MobiOS_21Tests.swift in Sources */,
 				3A4DE4442764D909006BF615 /* ImageItemParserMock.swift in Sources */,
 				3A4DE4402764D7EE006BF615 /* RequestSenderMock.swift in Sources */,
+				3A2CC06B2766607D00ACE42B /* TestNetworkService.swift in Sources */,
 				3A4DE43B2764CF3E006BF615 /* ProfileFileManagerMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
