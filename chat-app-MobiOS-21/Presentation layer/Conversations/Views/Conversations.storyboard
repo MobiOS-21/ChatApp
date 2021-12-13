@@ -91,6 +91,9 @@
                         </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem title="Profile" id="zSb-Mg-idV">
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="profileButton"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="tapProfileBtn:" destination="Y6W-OH-hqX" id="qAM-K9-LMb"/>
                                 </connections>

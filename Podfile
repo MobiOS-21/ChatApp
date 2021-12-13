@@ -10,4 +10,9 @@ target 'chat-app-MobiOS-21' do
 pod 'Firebase/Auth'
 pod 'Firebase/Firestore'
 pod 'SwiftLint'
+
+target 'chat-app-MobiOS-21Tests' do
+  inherit! :search_paths
+  #pod 'Firebase/firestore'
+end
 end

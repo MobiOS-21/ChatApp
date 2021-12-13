@@ -15,6 +15,7 @@
 		3A0C3184272B1163001B63BC /* MessageInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0C3183272B1163001B63BC /* MessageInputView.swift */; };
 		3A0C3186272B1AEA001B63BC /* PaddingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0C3185272B1AEA001B63BC /* PaddingTextField.swift */; };
 		3A12BFC2272884D400D86C17 /* Codable+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A12BFC1272884D400D86C17 /* Codable+extension.swift */; };
+		3A2CC06B2766607D00ACE42B /* TestNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2CC06A2766607D00ACE42B /* TestNetworkService.swift */; };
 		3A2F46332733CAFE00CA9ECB /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2F46322733CAFE00CA9ECB /* CoreDataStack.swift */; };
 		3A3092342727314700BE31BE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3A3092332727314700BE31BE /* GoogleService-Info.plist */; };
 		3A3154F52731AD1C00FE980A /* Chat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3A3154F32731AD1C00FE980A /* Chat.xcdatamodeld */; };
@@ -27,11 +28,20 @@
 		3A44DBFF27024BD500F45CB3 /* ImagePickerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A44DBFE27024BD500F45CB3 /* ImagePickerHelper.swift */; };
 		3A44DC0127024C8200F45CB3 /* UIViewController+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A44DC0027024C8200F45CB3 /* UIViewController+extensions.swift */; };
 		3A44DC0327024E4100F45CB3 /* String+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A44DC0227024E4100F45CB3 /* String+extensions.swift */; };
+		3A4DE43B2764CF3E006BF615 /* ProfileFileManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DE43A2764CF3E006BF615 /* ProfileFileManagerMock.swift */; };
+		3A4DE43D2764D2C2006BF615 /* TestGCDDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DE43C2764D2C2006BF615 /* TestGCDDataManager.swift */; };
+		3A4DE4402764D7EE006BF615 /* RequestSenderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DE43F2764D7EE006BF615 /* RequestSenderMock.swift */; };
+		3A4DE4422764D88F006BF615 /* ImageRequestMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DE4412764D88F006BF615 /* ImageRequestMock.swift */; };
+		3A4DE4442764D909006BF615 /* ImageItemParserMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DE4432764D909006BF615 /* ImageItemParserMock.swift */; };
+		3A4DE4462764DC22006BF615 /* TestNetworkCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DE4452764DC22006BF615 /* TestNetworkCore.swift */; };
 		3A721A05270CC432001A7DCC /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A721A04270CC432001A7DCC /* ConversationViewController.swift */; };
 		3A721A07270CC79C001A7DCC /* ConversationTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A721A06270CC79C001A7DCC /* ConversationTableCell.swift */; };
 		3A721A09270CC904001A7DCC /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A721A08270CC904001A7DCC /* MessageModel.swift */; };
 		3AAA3AD22746C3730083F0B9 /* ChannelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAA3AD12746C3730083F0B9 /* ChannelViewModel.swift */; };
 		3AAA3AD42746C8690083F0B9 /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAA3AD32746C8690083F0B9 /* MessageViewModel.swift */; };
+		3AB22A3C275E855F00C4DE06 /* chat_app_MobiOS_21UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB22A3B275E855F00C4DE06 /* chat_app_MobiOS_21UITests.swift */; };
+		3AB22A3E275E855F00C4DE06 /* chat_app_MobiOS_21UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB22A3D275E855F00C4DE06 /* chat_app_MobiOS_21UITestsLaunchTests.swift */; };
+		3AB22A52275E85AA00C4DE06 /* UIProfileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB22A51275E85AA00C4DE06 /* UIProfileTests.swift */; };
 		3AB485F32757EC58004AB96B /* Animators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB485F22757EC58004AB96B /* Animators.swift */; };
 		3AD474F7274C05D600374662 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD474F6274C05D600374662 /* Parser.swift */; };
 		3AD474F9274C05FD00374662 /* RequestSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD474F8274C05FD00374662 /* RequestSender.swift */; };
@@ -64,8 +74,26 @@
 		3AFC1D232720B3A80042E71E /* OperationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFC1D222720B3A80042E71E /* OperationDataManager.swift */; };
 		3AFF11962714C3B7005991C5 /* ThemesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFF11952714C3B7005991C5 /* ThemesViewController.m */; };
 		3AFF119A2714C5F2005991C5 /* Themes.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFF11992714C5F2005991C5 /* Themes.m */; };
+		B9D12B1E3C550C772111AC68 /* Pods_chat_app_MobiOS_21Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF0CF4D4C8331E8DB50B055D /* Pods_chat_app_MobiOS_21Tests.framework */; };
 		BA100AB67FAC02686772B7A3 /* Pods_chat_app_MobiOS_21.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5242AEDD5B6B0B736493A820 /* Pods_chat_app_MobiOS_21.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3AB22A3F275E855F00C4DE06 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3AE6DDD326F90F4A00191D7A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3AE6DDDA26F90F4A00191D7A;
+			remoteInfo = "chat-app-MobiOS-21";
+		};
+		3AB22A4C275E856A00C4DE06 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3AE6DDD326F90F4A00191D7A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3AE6DDDA26F90F4A00191D7A;
+			remoteInfo = "chat-app-MobiOS-21";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		3A0060C8270B7FD90047EFAE /* Conversations.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Conversations.storyboard; sourceTree = "<group>"; };
@@ -76,6 +104,7 @@
 		3A0C3183272B1163001B63BC /* MessageInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputView.swift; sourceTree = "<group>"; };
 		3A0C3185272B1AEA001B63BC /* PaddingTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingTextField.swift; sourceTree = "<group>"; };
 		3A12BFC1272884D400D86C17 /* Codable+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Codable+extension.swift"; sourceTree = "<group>"; };
+		3A2CC06A2766607D00ACE42B /* TestNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestNetworkService.swift; sourceTree = "<group>"; };
 		3A2F46322733CAFE00CA9ECB /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		3A3092332727314700BE31BE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3A3154F42731AD1C00FE980A /* Chat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Chat.xcdatamodel; sourceTree = "<group>"; };
@@ -88,11 +117,22 @@
 		3A44DBFE27024BD500F45CB3 /* ImagePickerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerHelper.swift; sourceTree = "<group>"; };
 		3A44DC0027024C8200F45CB3 /* UIViewController+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+extensions.swift"; sourceTree = "<group>"; };
 		3A44DC0227024E4100F45CB3 /* String+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+extensions.swift"; sourceTree = "<group>"; };
+		3A4DE43A2764CF3E006BF615 /* ProfileFileManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFileManagerMock.swift; sourceTree = "<group>"; };
+		3A4DE43C2764D2C2006BF615 /* TestGCDDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestGCDDataManager.swift; sourceTree = "<group>"; };
+		3A4DE43F2764D7EE006BF615 /* RequestSenderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestSenderMock.swift; sourceTree = "<group>"; };
+		3A4DE4412764D88F006BF615 /* ImageRequestMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRequestMock.swift; sourceTree = "<group>"; };
+		3A4DE4432764D909006BF615 /* ImageItemParserMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageItemParserMock.swift; sourceTree = "<group>"; };
+		3A4DE4452764DC22006BF615 /* TestNetworkCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestNetworkCore.swift; sourceTree = "<group>"; };
 		3A721A04270CC432001A7DCC /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
 		3A721A06270CC79C001A7DCC /* ConversationTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableCell.swift; sourceTree = "<group>"; };
 		3A721A08270CC904001A7DCC /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
 		3AAA3AD12746C3730083F0B9 /* ChannelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelViewModel.swift; sourceTree = "<group>"; };
 		3AAA3AD32746C8690083F0B9 /* MessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
+		3AB22A39275E855F00C4DE06 /* chat-app-MobiOS-21UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "chat-app-MobiOS-21UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3AB22A3B275E855F00C4DE06 /* chat_app_MobiOS_21UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chat_app_MobiOS_21UITests.swift; sourceTree = "<group>"; };
+		3AB22A3D275E855F00C4DE06 /* chat_app_MobiOS_21UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chat_app_MobiOS_21UITestsLaunchTests.swift; sourceTree = "<group>"; };
+		3AB22A48275E856A00C4DE06 /* chat-app-MobiOS-21Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "chat-app-MobiOS-21Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3AB22A51275E85AA00C4DE06 /* UIProfileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIProfileTests.swift; sourceTree = "<group>"; };
 		3AB485F22757EC58004AB96B /* Animators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animators.swift; sourceTree = "<group>"; };
 		3AD474F6274C05D600374662 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		3AD474F8274C05FD00374662 /* RequestSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestSender.swift; sourceTree = "<group>"; };
@@ -132,11 +172,29 @@
 		3AFF11992714C5F2005991C5 /* Themes.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Themes.m; sourceTree = "<group>"; };
 		3AFF119B2714C7E6005991C5 /* ThemesViewControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThemesViewControllerDelegate.h; sourceTree = "<group>"; };
 		4A327EF7CBD3D3AAD5EB8053 /* Pods-chat-app-MobiOS-21.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-chat-app-MobiOS-21.debug.xcconfig"; path = "Target Support Files/Pods-chat-app-MobiOS-21/Pods-chat-app-MobiOS-21.debug.xcconfig"; sourceTree = "<group>"; };
+		4A80322E7F4B3CFA1AA04F91 /* Pods-chat-app-MobiOS-21Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-chat-app-MobiOS-21Tests.debug.xcconfig"; path = "Target Support Files/Pods-chat-app-MobiOS-21Tests/Pods-chat-app-MobiOS-21Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		5242AEDD5B6B0B736493A820 /* Pods_chat_app_MobiOS_21.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_chat_app_MobiOS_21.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF0CF4D4C8331E8DB50B055D /* Pods_chat_app_MobiOS_21Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_chat_app_MobiOS_21Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6A2CC0D84AF0668C1B1B596 /* Pods-chat-app-MobiOS-21Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-chat-app-MobiOS-21Tests.release.xcconfig"; path = "Target Support Files/Pods-chat-app-MobiOS-21Tests/Pods-chat-app-MobiOS-21Tests.release.xcconfig"; sourceTree = "<group>"; };
 		F8BEDC468708FEE8C5B9C51B /* Pods-chat-app-MobiOS-21.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-chat-app-MobiOS-21.release.xcconfig"; path = "Target Support Files/Pods-chat-app-MobiOS-21/Pods-chat-app-MobiOS-21.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		3AB22A36275E855F00C4DE06 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3AB22A45275E856A00C4DE06 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9D12B1E3C550C772111AC68 /* Pods_chat_app_MobiOS_21Tests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3AE6DDD826F90F4A00191D7A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -183,6 +241,46 @@
 			path = extensions;
 			sourceTree = "<group>";
 		};
+		3A4DE4392764CE54006BF615 /* CoreMocks */ = {
+			isa = PBXGroup;
+			children = (
+				3A4DE43E2764D7D7006BF615 /* Network */,
+				3A4DE43A2764CF3E006BF615 /* ProfileFileManagerMock.swift */,
+			);
+			path = CoreMocks;
+			sourceTree = "<group>";
+		};
+		3A4DE43E2764D7D7006BF615 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				3A4DE43F2764D7EE006BF615 /* RequestSenderMock.swift */,
+				3A4DE4412764D88F006BF615 /* ImageRequestMock.swift */,
+				3A4DE4432764D909006BF615 /* ImageItemParserMock.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		3AB22A3A275E855F00C4DE06 /* chat-app-MobiOS-21UITests */ = {
+			isa = PBXGroup;
+			children = (
+				3AB22A3B275E855F00C4DE06 /* chat_app_MobiOS_21UITests.swift */,
+				3AB22A3D275E855F00C4DE06 /* chat_app_MobiOS_21UITestsLaunchTests.swift */,
+				3AB22A51275E85AA00C4DE06 /* UIProfileTests.swift */,
+			);
+			path = "chat-app-MobiOS-21UITests";
+			sourceTree = "<group>";
+		};
+		3AB22A49275E856A00C4DE06 /* chat-app-MobiOS-21Tests */ = {
+			isa = PBXGroup;
+			children = (
+				3A4DE4392764CE54006BF615 /* CoreMocks */,
+				3A4DE43C2764D2C2006BF615 /* TestGCDDataManager.swift */,
+				3A4DE4452764DC22006BF615 /* TestNetworkCore.swift */,
+				3A2CC06A2766607D00ACE42B /* TestNetworkService.swift */,
+			);
+			path = "chat-app-MobiOS-21Tests";
+			sourceTree = "<group>";
+		};
 		3AB485F12757EC3C004AB96B /* Animators */ = {
 			isa = PBXGroup;
 			children = (
@@ -226,6 +324,8 @@
 			isa = PBXGroup;
 			children = (
 				3AE6DDDD26F90F4A00191D7A /* chat-app-MobiOS-21 */,
+				3AB22A3A275E855F00C4DE06 /* chat-app-MobiOS-21UITests */,
+				3AB22A49275E856A00C4DE06 /* chat-app-MobiOS-21Tests */,
 				3AE6DDDC26F90F4A00191D7A /* Products */,
 				7CB0AC3A03BB993EF7365B9C /* Pods */,
 				D088446AC811E5209E65904C /* Frameworks */,
@@ -236,6 +336,8 @@
 			isa = PBXGroup;
 			children = (
 				3AE6DDDB26F90F4A00191D7A /* chat-app-MobiOS-21.app */,
+				3AB22A39275E855F00C4DE06 /* chat-app-MobiOS-21UITests.xctest */,
+				3AB22A48275E856A00C4DE06 /* chat-app-MobiOS-21Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -456,6 +558,8 @@
 			children = (
 				4A327EF7CBD3D3AAD5EB8053 /* Pods-chat-app-MobiOS-21.debug.xcconfig */,
 				F8BEDC468708FEE8C5B9C51B /* Pods-chat-app-MobiOS-21.release.xcconfig */,
+				4A80322E7F4B3CFA1AA04F91 /* Pods-chat-app-MobiOS-21Tests.debug.xcconfig */,
+				F6A2CC0D84AF0668C1B1B596 /* Pods-chat-app-MobiOS-21Tests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -464,6 +568,7 @@
 			isa = PBXGroup;
 			children = (
 				5242AEDD5B6B0B736493A820 /* Pods_chat_app_MobiOS_21.framework */,
+				BF0CF4D4C8331E8DB50B055D /* Pods_chat_app_MobiOS_21Tests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -471,6 +576,43 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		3AB22A38275E855F00C4DE06 /* chat-app-MobiOS-21UITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3AB22A43275E855F00C4DE06 /* Build configuration list for PBXNativeTarget "chat-app-MobiOS-21UITests" */;
+			buildPhases = (
+				3AB22A35275E855F00C4DE06 /* Sources */,
+				3AB22A36275E855F00C4DE06 /* Frameworks */,
+				3AB22A37275E855F00C4DE06 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3AB22A40275E855F00C4DE06 /* PBXTargetDependency */,
+			);
+			name = "chat-app-MobiOS-21UITests";
+			productName = "chat-app-MobiOS-21UITests";
+			productReference = 3AB22A39275E855F00C4DE06 /* chat-app-MobiOS-21UITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		3AB22A47275E856A00C4DE06 /* chat-app-MobiOS-21Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3AB22A4E275E856A00C4DE06 /* Build configuration list for PBXNativeTarget "chat-app-MobiOS-21Tests" */;
+			buildPhases = (
+				934BDE7C8A01305E720B622B /* [CP] Check Pods Manifest.lock */,
+				3AB22A44275E856A00C4DE06 /* Sources */,
+				3AB22A45275E856A00C4DE06 /* Frameworks */,
+				3AB22A46275E856A00C4DE06 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3AB22A4D275E856A00C4DE06 /* PBXTargetDependency */,
+			);
+			name = "chat-app-MobiOS-21Tests";
+			productName = "chat-app-MobiOS-21Tests";
+			productReference = 3AB22A48275E856A00C4DE06 /* chat-app-MobiOS-21Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		3AE6DDDA26F90F4A00191D7A /* chat-app-MobiOS-21 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3AE6DDEF26F90F4B00191D7A /* Build configuration list for PBXNativeTarget "chat-app-MobiOS-21" */;
@@ -497,9 +639,17 @@
 		3AE6DDD326F90F4A00191D7A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1300;
+				LastSwiftUpdateCheck = 1310;
 				LastUpgradeCheck = 1250;
 				TargetAttributes = {
+					3AB22A38275E855F00C4DE06 = {
+						CreatedOnToolsVersion = 13.1;
+						TestTargetID = 3AE6DDDA26F90F4A00191D7A;
+					};
+					3AB22A47275E856A00C4DE06 = {
+						CreatedOnToolsVersion = 13.1;
+						TestTargetID = 3AE6DDDA26F90F4A00191D7A;
+					};
 					3AE6DDDA26F90F4A00191D7A = {
 						CreatedOnToolsVersion = 12.5.1;
 						LastSwiftMigration = 1300;
@@ -520,11 +670,27 @@
 			projectRoot = "";
 			targets = (
 				3AE6DDDA26F90F4A00191D7A /* chat-app-MobiOS-21 */,
+				3AB22A38275E855F00C4DE06 /* chat-app-MobiOS-21UITests */,
+				3AB22A47275E856A00C4DE06 /* chat-app-MobiOS-21Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		3AB22A37275E855F00C4DE06 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3AB22A46275E856A00C4DE06 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3AE6DDD926F90F4A00191D7A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -576,6 +742,28 @@
 			shellPath = /bin/sh;
 			shellScript = "if which \"${PODS_ROOT}/SwiftLint/swiftlint\" >/dev/null; then\n    ${PODS_ROOT}/SwiftLint/swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
+		934BDE7C8A01305E720B622B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-chat-app-MobiOS-21Tests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		F25026DE1D7BCB62F38192D2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -601,6 +789,30 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3AB22A35275E855F00C4DE06 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3AB22A3E275E855F00C4DE06 /* chat_app_MobiOS_21UITestsLaunchTests.swift in Sources */,
+				3AB22A52275E85AA00C4DE06 /* UIProfileTests.swift in Sources */,
+				3AB22A3C275E855F00C4DE06 /* chat_app_MobiOS_21UITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3AB22A44275E856A00C4DE06 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A4DE4462764DC22006BF615 /* TestNetworkCore.swift in Sources */,
+				3A4DE4422764D88F006BF615 /* ImageRequestMock.swift in Sources */,
+				3A4DE43D2764D2C2006BF615 /* TestGCDDataManager.swift in Sources */,
+				3A4DE4442764D909006BF615 /* ImageItemParserMock.swift in Sources */,
+				3A4DE4402764D7EE006BF615 /* RequestSenderMock.swift in Sources */,
+				3A2CC06B2766607D00ACE42B /* TestNetworkService.swift in Sources */,
+				3A4DE43B2764CF3E006BF615 /* ProfileFileManagerMock.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3AE6DDD726F90F4A00191D7A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -661,6 +873,19 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		3AB22A40275E855F00C4DE06 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3AE6DDDA26F90F4A00191D7A /* chat-app-MobiOS-21 */;
+			targetProxy = 3AB22A3F275E855F00C4DE06 /* PBXContainerItemProxy */;
+		};
+		3AB22A4D275E856A00C4DE06 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3AE6DDDA26F90F4A00191D7A /* chat-app-MobiOS-21 */;
+			targetProxy = 3AB22A4C275E856A00C4DE06 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		3AE6DDE426F90F4A00191D7A /* Profile.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -681,6 +906,106 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		3AB22A41275E855F00C4DE06 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2C9S26XRAC;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mobios.chat-app-MobiOS-21UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "chat-app-MobiOS-21";
+			};
+			name = Debug;
+		};
+		3AB22A42275E855F00C4DE06 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2C9S26XRAC;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mobios.chat-app-MobiOS-21UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "chat-app-MobiOS-21";
+			};
+			name = Release;
+		};
+		3AB22A4F275E856A00C4DE06 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4A80322E7F4B3CFA1AA04F91 /* Pods-chat-app-MobiOS-21Tests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2C9S26XRAC;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mobios.chat-app-MobiOS-21Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/chat-app-MobiOS-21.app/chat-app-MobiOS-21";
+			};
+			name = Debug;
+		};
+		3AB22A50275E856A00C4DE06 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F6A2CC0D84AF0668C1B1B596 /* Pods-chat-app-MobiOS-21Tests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2C9S26XRAC;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mobios.chat-app-MobiOS-21Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/chat-app-MobiOS-21.app/chat-app-MobiOS-21";
+			};
+			name = Release;
+		};
 		3AE6DDED26F90F4B00191D7A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -849,6 +1174,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3AB22A43275E855F00C4DE06 /* Build configuration list for PBXNativeTarget "chat-app-MobiOS-21UITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3AB22A41275E855F00C4DE06 /* Debug */,
+				3AB22A42275E855F00C4DE06 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3AB22A4E275E856A00C4DE06 /* Build configuration list for PBXNativeTarget "chat-app-MobiOS-21Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3AB22A4F275E856A00C4DE06 /* Debug */,
+				3AB22A50275E856A00C4DE06 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		3AE6DDD626F90F4A00191D7A /* Build configuration list for PBXProject "chat-app-MobiOS-21" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1300"
+   LastUpgradeVersion = "1310"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -28,6 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "3AB22A38275E855F00C4DE06"
+               BuildableName = "chat-app-MobiOS-21UITests.xctest"
+               BlueprintName = "chat-app-MobiOS-21UITests"
+               ReferencedContainer = "container:chat-app-MobiOS-21.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "3AB22A47275E856A00C4DE06"
+               BuildableName = "chat-app-MobiOS-21Tests.xctest"
+               BlueprintName = "chat-app-MobiOS-21Tests"
+               ReferencedContainer = "container:chat-app-MobiOS-21.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
