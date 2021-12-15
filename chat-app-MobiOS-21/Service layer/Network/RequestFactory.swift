@@ -9,7 +9,7 @@ import Foundation
 
 struct RequestFactory {
     static func imagesConfig() -> RequestConfig<ImageItemParser> {
-        let request = ImagesRequest(apiKey: "24467046-584c5a0196d90873622b960e0")
+        let request = ImagesRequest(apiKey: API.imageApiKey)
         return RequestConfig(request: request, parser: ImageItemParser())
     }
 }

@@ -28,6 +28,7 @@
 		3A44DBFF27024BD500F45CB3 /* ImagePickerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A44DBFE27024BD500F45CB3 /* ImagePickerHelper.swift */; };
 		3A44DC0127024C8200F45CB3 /* UIViewController+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A44DC0027024C8200F45CB3 /* UIViewController+extensions.swift */; };
 		3A44DC0327024E4100F45CB3 /* String+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A44DC0227024E4100F45CB3 /* String+extensions.swift */; };
+		3A4AA839276A7BEE00DEE325 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4AA838276A7BEE00DEE325 /* Configuration.swift */; };
 		3A4DE43B2764CF3E006BF615 /* ProfileFileManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DE43A2764CF3E006BF615 /* ProfileFileManagerMock.swift */; };
 		3A4DE43D2764D2C2006BF615 /* TestGCDDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DE43C2764D2C2006BF615 /* TestGCDDataManager.swift */; };
 		3A4DE4402764D7EE006BF615 /* RequestSenderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DE43F2764D7EE006BF615 /* RequestSenderMock.swift */; };
@@ -117,6 +118,8 @@
 		3A44DBFE27024BD500F45CB3 /* ImagePickerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerHelper.swift; sourceTree = "<group>"; };
 		3A44DC0027024C8200F45CB3 /* UIViewController+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+extensions.swift"; sourceTree = "<group>"; };
 		3A44DC0227024E4100F45CB3 /* String+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+extensions.swift"; sourceTree = "<group>"; };
+		3A4AA837276A79C200DEE325 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		3A4AA838276A7BEE00DEE325 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		3A4DE43A2764CF3E006BF615 /* ProfileFileManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFileManagerMock.swift; sourceTree = "<group>"; };
 		3A4DE43C2764D2C2006BF615 /* TestGCDDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestGCDDataManager.swift; sourceTree = "<group>"; };
 		3A4DE43F2764D7EE006BF615 /* RequestSenderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestSenderMock.swift; sourceTree = "<group>"; };
@@ -237,6 +240,7 @@
 				3AEE4AD8271770AB006A63C0 /* UserDefaults+extensions.swift */,
 				3A12BFC1272884D400D86C17 /* Codable+extension.swift */,
 				3AD47506274C1A1700374662 /* ImageView+extensions.swift */,
+				3A4AA838276A7BEE00DEE325 /* Configuration.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -353,6 +357,7 @@
 				3AEE76F12742E04900AABDFB /* RootAssembly.swift */,
 				3A3092332727314700BE31BE /* GoogleService-Info.plist */,
 				3AE6DDEC26F90F4B00191D7A /* Info.plist */,
+				3A4AA837276A79C200DEE325 /* Config.xcconfig */,
 			);
 			path = "chat-app-MobiOS-21";
 			sourceTree = "<group>";
@@ -863,6 +868,7 @@
 				3A0C3184272B1163001B63BC /* MessageInputView.swift in Sources */,
 				3AD47500274C120A00374662 /* Request.swift in Sources */,
 				3AD474FE274C110900374662 /* RequestFactory.swift in Sources */,
+				3A4AA839276A7BEE00DEE325 /* Configuration.swift in Sources */,
 				3AFC1D1C272095AB0042E71E /* ProfileFileManager.swift in Sources */,
 				3A721A05270CC432001A7DCC /* ConversationViewController.swift in Sources */,
 				3AEE4AD9271770AB006A63C0 /* UserDefaults+extensions.swift in Sources */,
@@ -1008,6 +1014,7 @@
 		};
 		3AE6DDED26F90F4B00191D7A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3A4AA837276A79C200DEE325 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1069,6 +1076,7 @@
 		};
 		3AE6DDEE26F90F4B00191D7A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3A4AA837276A79C200DEE325 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1132,6 +1140,8 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZDR42PTGTK;
+				IMAGE_API_KEY = "24467046-584c5a0196d90873622b960e0";
+				IMAGE_URL = "https://pixabay.com/api/";
 				INFOPLIST_FILE = "chat-app-MobiOS-21/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1157,6 +1167,8 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZDR42PTGTK;
+				IMAGE_API_KEY = "24467046-584c5a0196d90873622b960e0";
+				IMAGE_URL = "https://pixabay.com/api/";
 				INFOPLIST_FILE = "chat-app-MobiOS-21/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
