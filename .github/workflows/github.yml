@@ -1,0 +1,45 @@
+name: CI
+on: [push]
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.6
+        bundler-cache: true
+    
+    - name: Build and run tests
+      run: |
+        bundle exec fastlane build_and_test
+      
+    - name: Send notification success
+      uses: sarisia/actions-status-discord@v1
+      if: ${{ success() }}
+      with:
+        webhook: ${{ secrets.DISCORD_WEBHOOK }}
+        description: "Build and test to GitHub Pages"
+        title: "CI Test"
+        username: MobiOS
+        image: ${{ secrets.SUCCESS_URL_IMAGE }}
+
+    - name: Send notification failure
+      uses: sarisia/actions-status-discord@v1
+      if: ${{ failure() }}
+      with:
+        webhook: ${{ secrets.DISCORD_WEBHOOK }}
+        title: "CI Test"
+        description: "Build and test to GitHub Pages"
+        username: MobiOS
+        image: ${{ secrets.CRACH_URL_IMAGE }}
+
+    - name: Send notification canceled
+      uses: sarisia/actions-status-discord@v1 
+      if: ${{ cancelled() }}
+      with:
+        webhook: ${{ secrets.DISCORD_WEBHOOK }}
+        title: "Try again"
+        description: "Build and test to GitHub Pages"
+        username: MobiOS
+        image: ${{ secrets.CANCEL_URL_IMAGE }}
