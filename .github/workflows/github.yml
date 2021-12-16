@@ -2,7 +2,7 @@ name: CI
 on: [push]
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: self-hosted
     steps:
     - uses: actions/checkout@v2
     - uses: ruby/setup-ruby@v1
@@ -22,7 +22,6 @@ jobs:
         description: "Build and test to GitHub Pages"
         title: "CI Test"
         username: MobiOS
-        image: ${{ secrets.SUCCESS_URL_IMAGE }}
 
     - name: Send notification failure
       uses: sarisia/actions-status-discord@v1
@@ -32,7 +31,6 @@ jobs:
         title: "CI Test"
         description: "Build and test to GitHub Pages"
         username: MobiOS
-        image: ${{ secrets.CRACH_URL_IMAGE }}
 
     - name: Send notification canceled
       uses: sarisia/actions-status-discord@v1 
@@ -42,4 +40,3 @@ jobs:
         title: "Try again"
         description: "Build and test to GitHub Pages"
         username: MobiOS
-        image: ${{ secrets.CANCEL_URL_IMAGE }}
