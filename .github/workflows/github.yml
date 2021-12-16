@@ -9,7 +9,8 @@ jobs:
       with:
         ruby-version: 2.6
         bundler-cache: true
-    
+      env:
+        ImageOS: macos11
     - name: Build and run tests
       run: |
         bundle exec fastlane build_and_test
